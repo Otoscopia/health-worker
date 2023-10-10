@@ -1,6 +1,7 @@
 import "package:bitsdojo_window/bitsdojo_window.dart";
 import "package:fluent_ui/fluent_ui.dart";
 import "package:styled_widget/styled_widget.dart";
+import 'package:flutter_svg/flutter_svg.dart';
 
 import "package:otoscopia_health_worker/config/themes/colors.dart";
 import "package:otoscopia_health_worker/core/constants/constants.dart";
@@ -15,7 +16,11 @@ class TitleBar extends StatelessWidget {
     return WindowTitleBarBox(
       child: Row(
         children: [
-          // TODO ADD ICON WITH SIZE OF 32x32
+          mediumWidth,
+          SizedBox(
+            width: 20,
+            child: SvgPicture.asset(applicationTitleBarLogo),
+          ),
           mediumWidth,
           const Text(applicationTitle).textColor(primary).bold(),
           Expanded(
