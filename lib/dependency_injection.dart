@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:otoscopia_health_worker/core/models/application_database.dart';
 import 'package:window_manager/window_manager.dart';
 
 import 'core/constants/constants.dart';
@@ -7,6 +8,7 @@ import 'core/models/env_model.dart';
 
 late Client client;
 late Account account;
+late ApplicationDatabase database;
 
 class DependencyInjection {
   static final DependencyInjection _singleton = DependencyInjection._internal();
@@ -18,6 +20,8 @@ class DependencyInjection {
   DependencyInjection._internal();
 
   Future<void> initialize() async {
+    database = await $FloorApplicationDatabase.databaseBuilder('otoscopia.db').build();
+    
     client = Client();
     account = Account(client);
 
