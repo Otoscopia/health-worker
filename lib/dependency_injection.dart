@@ -1,8 +1,8 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
-import 'package:otoscopia_health_worker/core/models/application_database.dart';
 import 'package:window_manager/window_manager.dart';
 
+import 'core/models/application_database.dart';
 import 'core/constants/constants.dart';
 import 'core/models/env_model.dart';
 
@@ -21,7 +21,7 @@ class DependencyInjection {
 
   Future<void> initialize() async {
     database = await $FloorApplicationDatabase.databaseBuilder('otoscopia.db').build();
-    
+
     client = Client();
     account = Account(client);
 
