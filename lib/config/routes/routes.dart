@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/core/widgets/container_box.dart';
 import 'package:health_worker/dependency_injection.dart';
-import 'package:health_worker/features/app/presentation/pages/app.dart';
+import 'package:health_worker/features/app/presentation/pages/dashboard.dart';
 import 'package:health_worker/features/authentication/domain/entity/user_entity.dart';
 import 'package:health_worker/features/authentication/presentation/pages/sign_in.dart';
 import 'package:health_worker/features/authentication/presentation/providers/authentication_provider.dart';
@@ -24,7 +24,7 @@ class Routes extends ConsumerWidget {
         if (snapshot.data == null) {
           return const SignIn();
         } else if (snapshot.data != null) {
-          return const Application();
+          return const Dashboard();
         } else {
           return const ContainerBox(
             child: Center(
