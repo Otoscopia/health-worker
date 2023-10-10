@@ -1,4 +1,4 @@
-name: otoscopia_health_worker
+name: health_worker
 description: A new Flutter project.
 
 publish_to: "none"

@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:otoscopia_health_worker/core/widgets/window_title_bar.dart';
+
+import 'package:health_worker/core/widgets/window_title_bar.dart';
 
 class ContainerBox extends ConsumerWidget {
   final Widget child;

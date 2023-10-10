@@ -1,6 +1,7 @@
 import "package:fluent_ui/fluent_ui.dart";
-import "package:otoscopia_health_worker/config/themes/colors.dart";
 import "package:system_theme/system_theme.dart";
+
+import 'package:health_worker/config/themes/colors.dart';
 
 final FluentThemeData lightTheme = FluentThemeData(
   brightness: Brightness.light,
