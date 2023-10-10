@@ -1,12 +1,15 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:floor/floor.dart';
-import 'package:otoscopia_health_worker/features/authentication/domain/entity/user_entity.dart';
 
-@Entity(tableName: 'user', primaryKeys: ['id'])
+import 'package:health_worker/features/authentication/domain/entity/user_entity.dart';
+
+@Entity(tableName: 'user')
 @entity
 class UserModel extends UserEntity {
+  @PrimaryKey(autoGenerate: true)
+  int id;
+
   UserModel({
+    required this.id,
     required super.uid,
     required super.createdAt,
     required super.updatedAt,
