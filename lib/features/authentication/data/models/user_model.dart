@@ -3,16 +3,13 @@
 import 'package:floor/floor.dart';
 import 'package:otoscopia_health_worker/features/authentication/domain/entity/user_entity.dart';
 
-@Entity(tableName: 'user', primaryKeys: ['ID'])
+@Entity(tableName: 'user', primaryKeys: ['id'])
 @entity
 class UserModel extends UserEntity {
-  int ID;
-
   UserModel({
-    required this.ID,
-    required super.$uid,
-    required super.$createdAt,
-    required super.$updatedAt,
+    required super.uid,
+    required super.createdAt,
+    required super.updatedAt,
     required super.name,
     required super.registration,
     required super.passwordUpdate,

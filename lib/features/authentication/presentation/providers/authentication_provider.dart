@@ -16,9 +16,9 @@ class AuthenticationNotifier extends StateNotifier<UserEntity> {
       User user = await account.get();
 
       state = UserEntity(
-        $uid: user.$id,
-        $createdAt: user.$createdAt,
-        $updatedAt: user.$updatedAt,
+        uid: user.$id,
+        createdAt: user.$createdAt,
+        updatedAt: user.$updatedAt,
         name: user.name,
         registration: user.registration,
         passwordUpdate: user.passwordUpdate,

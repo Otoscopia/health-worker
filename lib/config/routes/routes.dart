@@ -10,7 +10,7 @@ class Routes extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var isAuthenticated = ref.watch(authenticationProvider).$uid;
+    var isAuthenticated = ref.watch(authenticationProvider).uid;
 
     return isAuthenticated != null
         ? const Application()

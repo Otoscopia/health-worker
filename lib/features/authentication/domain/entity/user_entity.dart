@@ -1,8 +1,8 @@
 class UserEntity {
   String? id;
-  String? $uid;
-  String? $createdAt;
-  String? $updatedAt;
+  String? uid;
+  String? createdAt;
+  String? updatedAt;
   String? name;
   String? registration;
   String? passwordUpdate;
@@ -17,9 +17,9 @@ class UserEntity {
 
   UserEntity({
     this.id,
-    this.$uid,
-    this.$createdAt,
-    this.$updatedAt,
+    this.uid,
+    this.createdAt,
+    this.updatedAt,
     this.name,
     this.registration,
     this.passwordUpdate,
