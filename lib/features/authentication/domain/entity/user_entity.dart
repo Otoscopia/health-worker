@@ -1,5 +1,4 @@
 class UserEntity {
-  String? id;
   String? uid;
   String? createdAt;
   String? updatedAt;
@@ -16,7 +15,6 @@ class UserEntity {
   bool? phoneVerification;
 
   UserEntity({
-    this.id,
     this.uid,
     this.createdAt,
     this.updatedAt,
