@@ -85,7 +85,7 @@ class _$ApplicationDatabase extends ApplicationDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `uid` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `name` TEXT, `registration` TEXT, `passwordUpdate` TEXT, `email` TEXT, `phone` TEXT, `accessedAt` TEXT, `prefs` TEXT, `labels` TEXT, `status` INTEGER, `emailVerification` INTEGER, `phoneVerification` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uid` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `name` TEXT, `registration` TEXT, `passwordUpdate` TEXT, `email` TEXT, `phone` TEXT, `accessedAt` TEXT, `prefs` TEXT, `labels` TEXT, `status` INTEGER, `emailVerification` INTEGER, `phoneVerification` INTEGER)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -141,7 +141,7 @@ class _$UserDao extends UserDao {
   Future<List<UserModel>> fetchUser() async {
     return _queryAdapter.queryList('SELECT * FROM user',
         mapper: (Map<String, Object?> row) => UserModel(
-            id: row['id'] as int?,
+            id: row['id'] as int,
             uid: row['uid'] as String?,
             createdAt: row['createdAt'] as String?,
             updatedAt: row['updatedAt'] as String?,
@@ -171,7 +171,7 @@ class _$UserDao extends UserDao {
   Future<UserModel?> findUserByUid(String uid) async {
     return _queryAdapter.query('SELECT * FROM user WHERE uid = ?1',
         mapper: (Map<String, Object?> row) => UserModel(
-            id: row['id'] as int?,
+            id: row['id'] as int,
             uid: row['uid'] as String?,
             createdAt: row['createdAt'] as String?,
             updatedAt: row['updatedAt'] as String?,
