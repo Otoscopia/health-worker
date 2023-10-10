@@ -20,8 +20,6 @@ class DependencyInjection {
   DependencyInjection._internal();
 
   Future<void> initialize() async {
-    database = await $FloorApplicationDatabase.databaseBuilder('otoscopia.db').build();
-
     client = Client();
     account = Account(client);
 
@@ -40,12 +38,12 @@ class DependencyInjection {
       window.show();
     });
 
-    await windowManager.ensureInitialized();
-
-    WindowOptions windowOptions = const WindowOptions(
-      titleBarStyle: TitleBarStyle.hidden
-    );
+    WindowOptions windowOptions = const WindowOptions(titleBarStyle: TitleBarStyle.hidden);
 
     windowManager.waitUntilReadyToShow(windowOptions);
+
+    database = await $FloorApplicationDatabase.databaseBuilder('otoscopia.db').build();
+
+    await windowManager.ensureInitialized();
   }
 }
