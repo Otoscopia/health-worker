@@ -65,3 +65,11 @@ flutter:
           weight: 600
         - asset: assets/fonts/Quicksand-Bold.ttf
           weight: 700
+
+msix_config:
+  display_name: Health Worker
+  publisher_display_name: laurencetroyv
+  identity_name: otoscopia.health.worker
+  msix_version: 1.0.0.0
+  logo_path: C:\path\to\logo.png
+  capabilities: internetClient, location, picturesLibrary, webcam, videosLibrary, lowLevelDevices
