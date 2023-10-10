@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
 const String applicationTitle = "Otoscopia - Health Worker";
+const String applicationLogo = "assets/logo.svg";
 
 // application minimum width and height
 const applicationMinimumSize = Size(1200, 700);
