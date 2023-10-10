@@ -6,7 +6,7 @@ const String applicationTitle = "Otoscopia - Health Worker";
 const applicationMinimumSize = Size(1200, 700);
 const center = Alignment.center;
 
-const String welcomeLabel = "Welcome Back!";
+const String welcomeLabel = "Welcome Back School Nurse!";
 const String passwordLabel = "Password";
 const String emailLabel = "Email Address";
 
