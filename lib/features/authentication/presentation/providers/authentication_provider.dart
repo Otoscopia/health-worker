@@ -1,5 +1,6 @@
 import 'package:appwrite/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:health_worker/core/constants/constants.dart';
 
 import 'package:health_worker/dependency_injection.dart';
 import 'package:health_worker/features/authentication/domain/entity/authentication_entity.dart';
@@ -12,23 +13,40 @@ class AuthenticationNotifier extends StateNotifier<AuthenticationEntity> {
     final container = ProviderContainer();
     final provider = container.read(applicationProvider.notifier);
 
-    setProvider(true, false, "");
+    setProvider(true, false, "", false, false);
 
     try {
       Session session = await account.createEmailSession(email: email, password: password);
       if (session.current) {
         User user = await account.get();
+        setProvider(false, false, "", true, false);
         provider.setUserFromCloud(user);
-        setProvider(true, false, "");
       }
     } catch (error) {
-      setProvider(false, true, error.toString());
+      setProvider(false, true, error.toString(), false, false);
     }
   }
 
-  setProvider(bool loading, bool error, String? errorMessage) {
+  setProvider(bool loading, bool error, String? errorMessage,
+      bool? authenticated, bool? signedOut) {
     state = AuthenticationEntity(
-        loading: loading, error: error, errorMessage: errorMessage);
+        loading: loading,
+        error: error,
+        errorMessage: errorMessage,
+        authenticated: authenticated,
+        signedOut: signedOut);
+  }
+
+  signOut() {
+    setProvider(true, false, "", false, false);
+    try {
+      account.deleteSession(sessionId: currenSession);
+      setProvider(false, false, "", false, true);
+      database.authDao.dropAuthStatus();
+      database.userDao.dropUser();
+    } catch (error) {
+      setProvider(false, true, error.toString(), true, false);
+    }
   }
 }
 
