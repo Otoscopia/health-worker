@@ -6,9 +6,9 @@ import 'config/themes/app_themes.dart';
 import 'core/constants/constants.dart';
 import 'dependency_injection.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DependencyInjection().initialize();
+  await DependencyInjection().initialize();
 
   runApp(
     const ProviderScope(
