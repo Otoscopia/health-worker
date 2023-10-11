@@ -1,3 +1,4 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/core/constants/constants.dart';
@@ -53,7 +54,16 @@ class AuthenticationNotifier extends StateNotifier<UserEntity> {
   }
 
   signOut() async {
-    account.deleteSession(sessionId: currenSession);
+    try {
+      account.deleteSession(sessionId: currenSession);
+    } on AppwriteException catch (error) {
+      if (error.message != null) {
+        if (error.message.toString().contains(offlineErrorMessage)) {
+          state = UserEntity();
+          database.userDao.dropUser();
+        }
+      }
+    }
     state = UserEntity();
     database.userDao.dropUser();
   }
