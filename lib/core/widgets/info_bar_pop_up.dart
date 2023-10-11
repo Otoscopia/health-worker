@@ -7,19 +7,23 @@ Future<void> popUpInfoBar(
   String message,
   int seconds,
 ) {
-  return displayInfoBar(
-    context,
-    duration: Duration(seconds: seconds),
-    builder: (context, close) {
-      return InfoBar(
-        title: Text(title),
-        content: Text(message),
-        action: IconButton(
-          icon: const Icon(FluentIcons.clear),
-          onPressed: close,
-        ),
-        severity: barSeverity,
-      );
-    },
-  );
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    displayInfoBar(
+      context,
+      duration: Duration(seconds: seconds),
+      builder: (context, close) {
+        return InfoBar(
+          title: Text(title),
+          content: Text(message),
+          action: IconButton(
+            icon: const Icon(FluentIcons.clear),
+            onPressed: close,
+          ),
+          severity: barSeverity,
+        );
+      },
+    );
+  });
+
+  return Future.value();
 }
