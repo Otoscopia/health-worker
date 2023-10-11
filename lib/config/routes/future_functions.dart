@@ -31,6 +31,7 @@ loadUser(WidgetRef ref, String? uid) async {
           return user.first.uid;
         }
       }
+      return UserEntity().uid;
     }
     return UserEntity().uid;
   }
