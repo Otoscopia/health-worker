@@ -22,11 +22,10 @@ loadUser(WidgetRef ref, bool? authenticated) async {
     }
   } on AppwriteException catch (error) {
     if (error.message != null) {
-      String errorCode = error.message!.split(',')[0].split(':')[1].trim();
-      if (errorMessageObject.containsKey(errorCode)) {
+      if (error.message!.contains('socket is not connected')) {
         List<UserModel> user = await database.userDao.fetchUser();
 
-        if (user.first.uid != null) {
+        if (user.isNotEmpty) {
           cachedOfflineUserCheckpoint(user, ref);
 
           return true;
