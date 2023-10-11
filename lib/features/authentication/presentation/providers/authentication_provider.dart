@@ -1,5 +1,6 @@
 import 'package:appwrite/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:health_worker/core/constants/constants.dart';
 
 import 'package:health_worker/dependency_injection.dart';
 import 'package:health_worker/features/authentication/data/models/user_model.dart';
@@ -12,7 +13,7 @@ class AuthenticationNotifier extends StateNotifier<UserEntity> {
     List<UserModel> userData = await database.userDao.fetchUser();
 
     UserModel current = UserModel(
-      id: 0,
+      id: userData.length,
       uid: user.$id,
       createdAt: user.$createdAt,
       updatedAt: user.$createdAt,
@@ -52,7 +53,7 @@ class AuthenticationNotifier extends StateNotifier<UserEntity> {
   }
 
   signOut() async {
-    account.deleteSession(sessionId: 'current');
+    account.deleteSession(sessionId: currenSession);
     state = UserEntity();
     database.userDao.dropUser();
   }
