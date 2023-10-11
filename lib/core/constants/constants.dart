@@ -13,6 +13,9 @@ const String welcomeLabel = "Welcome Back School Nurse!";
 const String passwordLabel = "Password";
 const String emailLabel = "Email Address";
 
+const String currenSession = "current";
+const String offlineErrorMessage = "not connected";
+
 // Spacer
 const smallWidth = SizedBox(width: 4);
 const mediumWidth = SizedBox(width: 8);
