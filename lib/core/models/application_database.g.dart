@@ -1,7 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-// ignore_for_file: library_private_types_in_public_api
-
 part of 'application_database.dart';
 
 // **************************************************************************
@@ -65,6 +63,8 @@ class _$ApplicationDatabase extends ApplicationDatabase {
 
   UserDao? _userDaoInstance;
 
+  AuthenticationDao? _authDaoInstance;
+
   Future<sqflite.Database> open(
     String path,
     List<Migration> migrations, [
@@ -88,6 +88,8 @@ class _$ApplicationDatabase extends ApplicationDatabase {
       onCreate: (database, version) async {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uid` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `name` TEXT, `registration` TEXT, `passwordUpdate` TEXT, `email` TEXT, `phone` TEXT, `accessedAt` TEXT, `prefs` TEXT, `labels` TEXT, `status` INTEGER, `emailVerification` INTEGER, `phoneVerification` INTEGER)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `auth_status` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `authenticated` INTEGER, `signedOut` INTEGER, `loading` INTEGER NOT NULL, `error` INTEGER NOT NULL, `errorMessage` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -98,6 +100,11 @@ class _$ApplicationDatabase extends ApplicationDatabase {
   @override
   UserDao get userDao {
     return _userDaoInstance ??= _$UserDao(database, changeListener);
+  }
+
+  @override
+  AuthenticationDao get authDao {
+    return _authDaoInstance ??= _$AuthenticationDao(database, changeListener);
   }
 }
 
@@ -172,5 +179,61 @@ class _$UserDao extends UserDao {
   @override
   Future<void> insertUser(UserModel user) async {
     await _userModelInsertionAdapter.insert(user, OnConflictStrategy.abort);
+  }
+}
+
+class _$AuthenticationDao extends AuthenticationDao {
+  _$AuthenticationDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _authenticationModelInsertionAdapter = InsertionAdapter(
+            database,
+            'auth_status',
+            (AuthenticationModel item) => <String, Object?>{
+                  'id': item.id,
+                  'authenticated': item.authenticated == null
+                      ? null
+                      : (item.authenticated! ? 1 : 0),
+                  'signedOut':
+                      item.signedOut == null ? null : (item.signedOut! ? 1 : 0),
+                  'loading': item.loading ? 1 : 0,
+                  'error': item.error ? 1 : 0,
+                  'errorMessage': item.errorMessage
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<AuthenticationModel>
+      _authenticationModelInsertionAdapter;
+
+  @override
+  Future<List<AuthenticationModel>> fetchAuthStatus() async {
+    return _queryAdapter.queryList('SELECT * FROM auth_status',
+        mapper: (Map<String, Object?> row) => AuthenticationModel(
+            id: row['id'] as int,
+            loading: (row['loading'] as int) != 0,
+            error: (row['error'] as int) != 0,
+            authenticated: row['authenticated'] == null
+                ? null
+                : (row['authenticated'] as int) != 0,
+            signedOut: row['signedOut'] == null
+                ? null
+                : (row['signedOut'] as int) != 0));
+  }
+
+  @override
+  Future<void> dropAuthStatus() async {
+    await _queryAdapter.queryNoReturn('TRUNCATE TABLE auth_status');
+  }
+
+  @override
+  Future<void> insertAuthStatus(AuthenticationModel authStatus) async {
+    await _authenticationModelInsertionAdapter.insert(
+        authStatus, OnConflictStrategy.abort);
   }
 }
