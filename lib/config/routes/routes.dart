@@ -5,14 +5,14 @@ import 'package:health_worker/config/routes/future_functions.dart';
 import 'package:health_worker/core/widgets/container_box.dart';
 import 'package:health_worker/features/app/presentation/pages/dashboard.dart';
 import 'package:health_worker/features/authentication/presentation/pages/sign_in.dart';
-import 'package:health_worker/features/authentication/presentation/providers/authentication_provider.dart';
+import 'package:health_worker/features/authentication/presentation/providers/application_provider.dart.dart';
 
 class Routes extends ConsumerWidget {
   const Routes({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String? uid = ref.watch(authenticationProvider).uid;
+    String? uid = ref.watch(applicationProvider).uid;
 
     return FutureBuilder(
       future: loadUser(ref, uid),

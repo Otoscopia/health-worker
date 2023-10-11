@@ -6,7 +6,7 @@ import 'package:health_worker/core/constants/constants.dart';
 import 'package:health_worker/dependency_injection.dart';
 import 'package:health_worker/features/authentication/data/models/user_model.dart';
 import 'package:health_worker/features/authentication/domain/entity/user_entity.dart';
-import 'package:health_worker/features/authentication/presentation/providers/authentication_provider.dart';
+import 'package:health_worker/features/authentication/presentation/providers/application_provider.dart.dart';
 
 User? cachedUser;
 UserModel? cachedUserOffline;
@@ -39,14 +39,14 @@ loadUser(WidgetRef ref, String? uid) async {
 
 void cachedOfflineUserCheckpoint(List<UserModel> user, WidgetRef ref) {
   if (cachedUserOffline == null || cachedUserOffline!.uid != user.first.uid) {
-    ref.watch(authenticationProvider.notifier).setUserFromDb(user.first);
+    ref.watch(applicationProvider.notifier).setUserFromDb(user.first);
     cachedUserOffline = user.first;
   }
 }
 
 void cachedOnlineUserCheckpoint(User user, WidgetRef ref) {
   if (cachedUser == null || cachedUser!.$id != user.$id) {
-    ref.watch(authenticationProvider.notifier).setUser(user);
+    ref.watch(applicationProvider.notifier).setUserFromCloud(user);
     cachedUser = user;
   }
 }

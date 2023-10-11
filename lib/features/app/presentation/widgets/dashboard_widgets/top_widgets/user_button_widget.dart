@@ -4,14 +4,14 @@ import 'package:getwidget/getwidget.dart';
 
 import 'package:health_worker/config/themes/colors.dart';
 import 'package:health_worker/core/constants/constants.dart';
-import 'package:health_worker/features/authentication/presentation/providers/authentication_provider.dart';
+import 'package:health_worker/features/authentication/presentation/providers/application_provider.dart.dart';
 
 class UserButton extends ConsumerWidget {
   const UserButton({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String? name = ref.watch(authenticationProvider).name;
+    String? name = ref.watch(applicationProvider).name;
     return MouseRegion(
       cursor: SystemMouseCursors.cell,
       child: DropDownButton(
@@ -81,7 +81,7 @@ void showContentDialog(BuildContext context, WidgetRef ref) async {
             child: Button(
               child: const Text(signOutButton),
               onPressed: () {
-                ref.watch(authenticationProvider.notifier).signOut();
+                // ref.watch(authenticationProvider.notifier).signOut();
                 Navigator.pop(context);
               },
             ),
