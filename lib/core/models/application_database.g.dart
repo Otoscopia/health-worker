@@ -168,32 +168,6 @@ class _$UserDao extends UserDao {
   }
 
   @override
-  Future<UserModel?> findUserByUid(String uid) async {
-    return _queryAdapter.query('SELECT * FROM user WHERE uid = ?1',
-        mapper: (Map<String, Object?> row) => UserModel(
-            id: row['id'] as int,
-            uid: row['uid'] as String?,
-            createdAt: row['createdAt'] as String?,
-            updatedAt: row['updatedAt'] as String?,
-            name: row['name'] as String?,
-            registration: row['registration'] as String?,
-            passwordUpdate: row['passwordUpdate'] as String?,
-            email: row['email'] as String?,
-            phone: row['phone'] as String?,
-            accessedAt: row['accessedAt'] as String?,
-            emailVerification: row['emailVerification'] == null
-                ? null
-                : (row['emailVerification'] as int) != 0,
-            phoneVerification: row['phoneVerification'] == null
-                ? null
-                : (row['phoneVerification'] as int) != 0,
-            prefs: row['prefs'] as String?,
-            status: row['status'] == null ? null : (row['status'] as int) != 0,
-            labels: row['labels'] as String?),
-        arguments: [uid]);
-  }
-
-  @override
   Future<void> insertUser(UserModel user) async {
     await _userModelInsertionAdapter.insert(user, OnConflictStrategy.abort);
   }

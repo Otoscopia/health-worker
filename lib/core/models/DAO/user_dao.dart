@@ -13,6 +13,4 @@ abstract class UserDao {
   @Query('DROP TABLE user')
   Future<void> dropUser();
 
-  @Query('SELECT * FROM user WHERE uid = :uid')
-  Future<UserModel?> findUserByUid(String uid);
 }
