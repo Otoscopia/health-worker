@@ -9,7 +9,7 @@ class AuthenticationNotifier extends StateNotifier<UserEntity> {
   AuthenticationNotifier() : super(UserEntity());
 
   setUser(User user) async {
-    UserModel? uid = await database.userDao.findUserByUid(user.$id);
+    List<UserModel> userData = await database.userDao.fetchUser();
 
     UserModel current = UserModel(
       id: 0,
@@ -29,12 +29,16 @@ class AuthenticationNotifier extends StateNotifier<UserEntity> {
       labels: user.labels.toString(),
     );
 
-    if (uid != null) {
+    if (userData.isNotEmpty) {
       state = current;
     } else {
       state = current;
       database.userDao.insertUser(current);
     }
+  }
+
+  setUserFromDb(UserEntity user) {
+    state = user;
   }
 
   signIn(String email, String password) async {
