@@ -1,5 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:health_worker/core/constants/constants.dart';
 import 'package:health_worker/core/widgets/info_bar_pop_up.dart';
 import 'package:health_worker/features/authentication/presentation/providers/authentication_provider.dart';
 
@@ -19,7 +21,13 @@ class SignInButton extends ConsumerWidget {
     String? errorMessage = ref.watch(authenticationProvider).errorMessage;
 
     if (error) {
-      popUpInfoBar(context, InfoBarSeverity.error, "title", "$errorMessage", 10);
+      if (errorMessage != null) {
+        String errorCode = errorMessage.split(',')[0].split(':')[1].trim();
+        if (errorMessageObject.containsKey(errorCode)) {
+          String errorDescription = errorMessageObject[errorCode]!;
+          popUpInfoBar(context, InfoBarSeverity.error, errorLabel, errorDescription, 5);
+        }
+      }
     }
 
     return loading
@@ -27,7 +35,7 @@ class SignInButton extends ConsumerWidget {
         : SizedBox(
             width: 150,
             child: FilledButton(
-              child: const Text("Sign In"),
+              child: const Text(signInButton),
               onPressed: () =>
                   signIn(ref, email.text, password.text, globalKey),
             ),
