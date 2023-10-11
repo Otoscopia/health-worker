@@ -92,7 +92,7 @@ BEGIN
             VALUE "CompanyName", "com.example" "\0"
             VALUE "FileDescription", "otoscopia_health_worker" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "otoscopia_health_worker" "\0"
+            VALUE "InternalName", "health_worker" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "otoscopia_health_worker.exe" "\0"
             VALUE "ProductName", "otoscopia_health_worker" "\0"
