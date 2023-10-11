@@ -5,6 +5,7 @@ import 'package:getwidget/getwidget.dart';
 import 'package:health_worker/config/themes/colors.dart';
 import 'package:health_worker/core/constants/constants.dart';
 import 'package:health_worker/features/authentication/presentation/providers/application_provider.dart.dart';
+import 'package:health_worker/features/authentication/presentation/providers/authentication_provider.dart';
 
 class UserButton extends ConsumerWidget {
   const UserButton({super.key});
@@ -81,7 +82,7 @@ void showContentDialog(BuildContext context, WidgetRef ref) async {
             child: Button(
               child: const Text(signOutButton),
               onPressed: () {
-                // ref.watch(authenticationProvider.notifier).signOut();
+                ref.watch(authenticationProvider.notifier).signOut();
                 Navigator.pop(context);
               },
             ),
