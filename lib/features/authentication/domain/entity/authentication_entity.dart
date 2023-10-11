@@ -1,4 +1,5 @@
 class AuthenticationEntity {
+  final bool? authenticated, signedOut;
   final bool loading, error;
   final String? errorMessage;
 
@@ -6,5 +7,7 @@ class AuthenticationEntity {
     required this.loading,
     required this.error,
     this.errorMessage,
+    this.authenticated,
+    this.signedOut
   });
 }
