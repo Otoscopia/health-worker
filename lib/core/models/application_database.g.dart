@@ -164,7 +164,7 @@ class _$UserDao extends UserDao {
 
   @override
   Future<void> dropUser() async {
-    await _queryAdapter.queryNoReturn('DROP TABLE user');
+    await _queryAdapter.queryNoReturn('TRUNCATE TABLE user');
   }
 
   @override

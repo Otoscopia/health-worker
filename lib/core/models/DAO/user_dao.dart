@@ -10,7 +10,7 @@ abstract class UserDao {
   @Query('SELECT * FROM user')
   Future<List<UserModel>> fetchUser();
 
-  @Query('DROP TABLE user')
+  @Query('TRUNCATE TABLE user')
   Future<void> dropUser();
 
 }
