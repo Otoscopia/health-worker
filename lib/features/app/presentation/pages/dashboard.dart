@@ -19,7 +19,7 @@ class Dashboard extends ConsumerWidget {
       padding: EdgeInsets.zero,
       content: ContainerBox(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: Stack(
             children: [
               ListView(
