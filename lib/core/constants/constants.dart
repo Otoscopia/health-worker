@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:styled_widget/styled_widget.dart';
 
 const String applicationTitle = "Otoscopia - Health Worker";
 const String applicationLogo = "assets/logo.svg";
@@ -45,6 +46,8 @@ const Icon medicalIcon = Icon(Ionicons.warning, color: Colors.white);
 const Icon finalIcon = Icon(Ionicons.checkmark_circle_outline, color: Colors.white);
 const Icon initialIcon = Icon(Ionicons.medical_outline, color: Colors.white);
 
+const Icon closeButtonIcon = Icon(Ionicons.close_outline);
+
 const String searchLabel = "Search Patients";
 const String settingsLabel = "Settings";
 const String signOutPopUpTitle = "Do you wish to log out?";
@@ -62,11 +65,26 @@ const String initial = "Initial Diagnosis";
 const String medical = "Medical Attention";
 const String patientName = "Patient Name";
 
-const String gender = "Gender";
+const String genderLabel = "Gender";
 const String medicalRecordStatus = "Medical Record Status";
 const String uploadedDate = "Uploaded Date";
 
+const String addPatientLabel = "Add Patient";
+const String addPatientCancelTitle = "Cancel Adding new Patient?";
+const String addPatientCancelContent = "If you click proceed, your data will be lost";
+
+const String proceedLabel = "Proceed";
+const String continueLabel = "Continue";
+const String birthdayLabel = "Birthdate";
+const String genderTitle = "Gender*";
+const String maleLabel = "Male";
+const String femaleLabel = "Female";
+Text invalidGender = const Text("Please input a valid gender").fontWeight(FontWeight.w100).textColor(Colors.red.lighter);
+Text invalidBirthdate = const Text("Please select a valid birthdate").fontWeight(FontWeight.w100).textColor(Colors.red.lighter);
+
 const Border borderNone = Border.fromBorderSide(BorderSide.none);
+
+// Sign In Scrreen
 
 const String errorLabel = "Ohh oh!";
 Map<String, String> errorMessageObject = {
@@ -89,3 +107,20 @@ Map<String, String> errorMessageObject = {
       "rule_verification_failed" : "Domain verification failed. Please check if your DNS records are correct and try again.",
       "project_template_default_deletion" : "You can't delete default template. If you are trying to reset your template changes, you can ignore this error as it's already been reset.",
     };
+
+const String schoolNameLabel = "School Name*";
+const String schoolNamePlaceholder = "Iligan City Division Office";
+const String schoolNameError = "Please input a valid school name";
+
+const String schoolIDLabel = "School ID*";
+const String schoolIDPlaceholder = "School ID";
+const String schoolIDError = "Please input a valid school id";
+
+const String fullNameLabel = "Patient Full Name*";
+const String fullNamePlaceholder = "Full Name";
+const String fullNameError = "Please input a valid name";
+
+const String contactNumberLabel = "Patient Contact Number*";
+const String contactNumberPlaceholder = "09XXXXXXXXX";
+const String contactNumberErrorOne = "Please input a valid contact number";
+const String contactNumberErrorTwo = "Contact number must start with 09";
