@@ -65,6 +65,8 @@ class _$ApplicationDatabase extends ApplicationDatabase {
 
   AuthenticationDao? _authDaoInstance;
 
+  PatientDao? _patientDaoInstance;
+
   Future<sqflite.Database> open(
     String path,
     List<Migration> migrations, [
@@ -90,6 +92,8 @@ class _$ApplicationDatabase extends ApplicationDatabase {
             'CREATE TABLE IF NOT EXISTS `user` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `uid` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `name` TEXT, `registration` TEXT, `passwordUpdate` TEXT, `email` TEXT, `phone` TEXT, `accessedAt` TEXT, `prefs` TEXT, `labels` TEXT, `status` INTEGER, `emailVerification` INTEGER, `phoneVerification` INTEGER)');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `auth_status` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `authenticated` INTEGER, `signedOut` INTEGER, `loading` INTEGER NOT NULL, `error` INTEGER NOT NULL, `errorMessage` TEXT)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `patients` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `uid` TEXT NOT NULL, `fullName` TEXT NOT NULL, `gender` TEXT NOT NULL, `birthdate` TEXT NOT NULL, `schoolName` TEXT NOT NULL, `schoolID` TEXT NOT NULL, `genderError` INTEGER, `birthdateError` INTEGER)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -105,6 +109,11 @@ class _$ApplicationDatabase extends ApplicationDatabase {
   @override
   AuthenticationDao get authDao {
     return _authDaoInstance ??= _$AuthenticationDao(database, changeListener);
+  }
+
+  @override
+  PatientDao get patientDao {
+    return _patientDaoInstance ??= _$PatientDao(database, changeListener);
   }
 }
 
@@ -235,5 +244,62 @@ class _$AuthenticationDao extends AuthenticationDao {
   Future<void> insertAuthStatus(AuthenticationModel authStatus) async {
     await _authenticationModelInsertionAdapter.insert(
         authStatus, OnConflictStrategy.abort);
+  }
+}
+
+class _$PatientDao extends PatientDao {
+  _$PatientDao(
+    this.database,
+    this.changeListener,
+  )   : _queryAdapter = QueryAdapter(database),
+        _patientModelInsertionAdapter = InsertionAdapter(
+            database,
+            'patients',
+            (PatientModel item) => <String, Object?>{
+                  'id': item.id,
+                  'uid': item.uid,
+                  'fullName': item.fullName,
+                  'gender': item.gender,
+                  'birthdate': item.birthdate,
+                  'schoolName': item.schoolName,
+                  'schoolID': item.schoolID,
+                  'genderError': item.genderError == null
+                      ? null
+                      : (item.genderError! ? 1 : 0),
+                  'birthdateError': item.birthdateError == null
+                      ? null
+                      : (item.birthdateError! ? 1 : 0)
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<PatientModel> _patientModelInsertionAdapter;
+
+  @override
+  Future<List<PatientModel>> fetchPatients() async {
+    return _queryAdapter.queryList('SELECT * FROM patients',
+        mapper: (Map<String, Object?> row) => PatientModel(
+            id: row['id'] as int?,
+            uid: row['uid'] as String,
+            fullName: row['fullName'] as String,
+            gender: row['gender'] as String,
+            birthdate: row['birthdate'] as String,
+            schoolName: row['schoolName'] as String,
+            schoolID: row['schoolID'] as String));
+  }
+
+  @override
+  Future<void> dropPatient() async {
+    await _queryAdapter.queryNoReturn('TRUNCATE TABLE patients');
+  }
+
+  @override
+  Future<void> insertPatient(PatientModel patient) async {
+    await _patientModelInsertionAdapter.insert(
+        patient, OnConflictStrategy.abort);
   }
 }
