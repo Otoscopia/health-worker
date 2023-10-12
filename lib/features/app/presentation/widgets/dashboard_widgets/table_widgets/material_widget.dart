@@ -18,7 +18,7 @@ class MaterialWidget extends ConsumerWidget {
         border: TableBorder(borderRadius: BorderRadius.circular(4)),
         columns: const [
           material.DataColumn(label: Text(patientName)),
-          material.DataColumn(label: Text(gender)),
+          material.DataColumn(label: Text(genderLabel)),
           material.DataColumn(label: Text(medicalRecordStatus)),
           material.DataColumn(label: Text(uploadedDate)),
         ],
