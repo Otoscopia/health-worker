@@ -10,6 +10,7 @@ import 'package:health_worker/features/app/functions/encryption.dart';
 class PatientNotifier extends StateNotifier<PatientEntity> {
   PatientNotifier()
       : super(PatientEntity(
+            uid: "",
             fullName: "",
             gender: "",
             birthdate: "",
@@ -18,6 +19,7 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
 
   setGender(String gender, bool error) {
     state = PatientEntity(
+        uid: state.uid,
         fullName: state.fullName,
         gender: gender,
         birthdate: state.birthdate,
@@ -29,6 +31,7 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
 
   setBirthdate(String birthdate, bool error) {
     state = PatientEntity(
+        uid: state.uid,
         fullName: state.fullName,
         gender: state.gender,
         birthdate: birthdate,
@@ -71,6 +74,7 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
     database.patientDao.insertPatient(patient);
 
     state = PatientEntity(
+        uid: patientUid,
         fullName: fullName,
         gender: gender,
         birthdate: birthdate,

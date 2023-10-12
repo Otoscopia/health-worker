@@ -6,11 +6,10 @@ import 'package:health_worker/features/app/domain/entity/patient_entity.dart';
 class PatientModel extends PatientEntity {
   @PrimaryKey(autoGenerate: true)
   int? id;
-  String uid;
 
   PatientModel(
       {this.id,
-      required this.uid,
+      required super.uid,
       required super.fullName,
       required super.gender,
       required super.birthdate,
