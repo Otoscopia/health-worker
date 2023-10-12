@@ -5,7 +5,7 @@ import 'package:uuid/uuid.dart';
 import 'package:health_worker/dependency_injection.dart';
 import 'package:health_worker/features/app/data/models/patient_models.dart';
 import 'package:health_worker/features/app/domain/entity/patient_entity.dart';
-import 'package:health_worker/features/app/functions/encryption.dart';
+import 'package:health_worker/features/app/domain/functions/encryption.dart';
 
 class PatientNotifier extends StateNotifier<PatientEntity> {
   PatientNotifier()
