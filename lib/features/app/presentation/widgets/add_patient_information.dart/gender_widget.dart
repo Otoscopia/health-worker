@@ -32,7 +32,7 @@ class _GenderWidgetState extends ConsumerState<GenderWidget> {
                     selected = index;
                   });
 
-                  ref.watch(patientInformationProvider.notifier).setGender(label[index], false);
+                  ref.watch(patientProvider.notifier).setGender(label[index], false);
                 }
               },
             );

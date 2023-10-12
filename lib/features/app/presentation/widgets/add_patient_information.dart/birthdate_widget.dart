@@ -23,14 +23,13 @@ class _BirthdateWidgetState extends ConsumerState<BirthdateWidget> {
         DatePickerField.day,
         DatePickerField.year
       ],
-      endDate: DateTime.now(),
       header: birthdayLabel,
       onChanged: (value) {
         setState(() {
           birthday = value;
         });
 
-        ref.watch(patientInformationProvider.notifier).setBirthdate(birthday.toString(), false);
+        ref.watch(patientProvider.notifier).setBirthdate(birthday.toString(), false);
       },
       selected: birthday,
     );
