@@ -25,6 +25,7 @@ class RightCamera extends ConsumerStatefulWidget {
 
 class _CameraState extends ConsumerState<RightCamera> {
   /// Stores current state info of the camera.
+  // ignore: unused_field
   String _cameraInfo = "Unknown";
 
   /// Stores list of cameras found on device.

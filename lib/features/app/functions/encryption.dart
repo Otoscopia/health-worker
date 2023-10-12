@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:encrypt/encrypt.dart' as encrypt;
-import 'package:flutter/foundation.dart';
 
 encryptionFunction(String data, encrypt.Encrypter encrypter) {
   final iv = encrypt.IV.fromLength(16);
