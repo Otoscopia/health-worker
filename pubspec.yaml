@@ -43,7 +43,7 @@ dev_dependencies:
   msix: ^3.16.4
 
 dependency_overrides:
-  win32: 5.0.6
+  win32: 5.0.9
 
   bitsdojo_window:
     git:
