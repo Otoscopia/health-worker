@@ -47,7 +47,7 @@ class AddPatientButton extends ConsumerWidget {
     } else if (gender.isEmpty) {
       patientRef.setGender("", true);
     } if (globalKey.currentState!.validate() && genderError == false && birthdateError == false) {
-      patientRef.setPatientInformation(fullName.text, gender, birthdate, schoolName.text, schoolID.text);
+      patientRef.setPatientInformation(fullName.text, gender, birthdate, contactNumber.text, schoolName.text, schoolID.text);
 
     Navigator.push(context, FluentPageRoute(builder: (context) => const LeftCamera()));
       
