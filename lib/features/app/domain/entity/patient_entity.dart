@@ -1,5 +1,5 @@
 class PatientEntity {
-  String uid, fullName, gender, birthdate, schoolName, schoolID;
+  String uid, fullName, gender, birthdate, contactNumber, schoolName, schoolID;
   bool? genderError, birthdateError;
 
   PatientEntity(
@@ -7,6 +7,7 @@ class PatientEntity {
       required this.fullName,
       required this.gender,
       required this.birthdate,
+      required this.contactNumber,
       required this.schoolName,
       required this.schoolID,
       this.genderError,

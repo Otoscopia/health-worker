@@ -12,6 +12,7 @@ class PatientModel extends PatientEntity {
       required super.uid,
       required super.fullName,
       required super.gender,
+      required super.contactNumber,
       required super.birthdate,
       required super.schoolName,
       required super.schoolID});
