@@ -425,46 +425,54 @@ class _CameraState extends ConsumerState<LeftCamera> {
                     onPressed: () async {
                       String folder = ref.watch(patientProvider).uid;
                       getApplicationDocumentsDirectory().then((tempDir) {
-                        final Directory dir =
-                            Directory("${tempDir.path}\\Otoscopia\\$folder");
+                        try {
+                          final Directory dir = Directory("${tempDir.path}\\Otoscopia\\$folder");
 
-                        if (dir.listSync().isEmpty) {
+                          if (dir.listSync().isEmpty) {
+                            popUpInfoBar(
+                                context,
+                                InfoBarSeverity.warning,
+                                "Ohh ohh!",
+                                "You cannot continue unless you take a picture or a video",
+                                5);
+                          } else {
+                            List<FileSystemEntity> files = dir.listSync();
+
+                            bool fileExist = false;
+
+                            for (FileSystemEntity file in files) {
+                              if (FileSystemEntity.isFileSync(file.path) &&
+                                  file.path.contains('left-')) {
+                                fileExist = true;
+                                break;
+                              }
+                            }
+
+                            if (fileExist) {
+                              _disposeCurrentCamera();
+
+                              Navigator.push(
+                                context,
+                                FluentPageRoute(
+                                  builder: (context) => const RightCamera(),
+                                ),
+                              );
+                            } else {
+                              popUpInfoBar(
+                                  context,
+                                  InfoBarSeverity.warning,
+                                  "Ohh ohh!",
+                                  "You cannot continue unless you take a picture or a video",
+                                  5);
+                            }
+                          }
+                        } catch (error) {
                           popUpInfoBar(
                               context,
                               InfoBarSeverity.warning,
                               "Ohh ohh!",
                               "You cannot continue unless you take a picture or a video",
                               5);
-                        } else {
-                          List<FileSystemEntity> files = dir.listSync();
-
-                          bool fileExist = false;
-
-                          for (FileSystemEntity file in files) {
-                            if (FileSystemEntity.isFileSync(file.path) &&
-                                file.path.contains('left-')) {
-                              fileExist = true;
-                              break;
-                            }
-                          }
-
-                          if (fileExist) {
-                            _disposeCurrentCamera();
-
-                            Navigator.push(
-                              context,
-                              FluentPageRoute(
-                                builder: (context) => const RightCamera(),
-                              ),
-                            );
-                          } else {
-                            popUpInfoBar(
-                              context,
-                              InfoBarSeverity.warning,
-                              "Ohh ohh!",
-                              "You cannot continue unless you take a picture or a video",
-                              5);
-                          }
                         }
                       });
                     },
