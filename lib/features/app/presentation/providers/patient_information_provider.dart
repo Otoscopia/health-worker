@@ -14,6 +14,7 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
             fullName: "",
             gender: "",
             birthdate: "",
+            contactNumber: "",
             schoolName: "",
             schoolID: ""));
 
@@ -23,6 +24,7 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
         fullName: state.fullName,
         gender: gender,
         birthdate: state.birthdate,
+        contactNumber: state.birthdate,
         schoolName: state.schoolName,
         schoolID: state.schoolID,
         genderError: error,
@@ -35,13 +37,14 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
         fullName: state.fullName,
         gender: state.gender,
         birthdate: birthdate,
+        contactNumber: state.gender,
         schoolName: state.schoolName,
         schoolID: state.schoolID,
         genderError: state.genderError,
         birthdateError: error);
   }
 
-  setPatientInformation(String fullName, String gender, String birthdate, String schoolName, String schoolID) async {
+  setPatientInformation(String fullName, String gender, String birthdate, String contactNumber, String schoolName, String schoolID) async {
     // get user uid from the database
     var user = await database.userDao.fetchUser();
 
@@ -60,6 +63,7 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
     var fullNameEncrypted = encryptionFunction(fullName, encrypter);
     var genderEncrypted = encryptionFunction(gender, encrypter);
     var birthdateEncrypted = encryptionFunction(birthdate, encrypter);
+    var contactNumberEncrypted = encryptionFunction(contactNumber, encrypter);
     var schoolNameEncrypted = encryptionFunction(schoolName, encrypter);
     var schoolIDEncrypted = encryptionFunction(schoolID, encrypter);
 
@@ -68,6 +72,7 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
         fullName: fullNameEncrypted,
         gender: genderEncrypted,
         birthdate: birthdateEncrypted,
+        contactNumber: contactNumberEncrypted,
         schoolName: schoolNameEncrypted,
         schoolID: schoolIDEncrypted);
 
@@ -78,6 +83,7 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
         fullName: fullName,
         gender: gender,
         birthdate: birthdate,
+        contactNumber: contactNumber,
         schoolName: schoolName,
         schoolID: schoolID);
   }
