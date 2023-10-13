@@ -7,6 +7,7 @@ import "package:fluent_ui/fluent_ui.dart";
 import "package:flutter/services.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:health_worker/features/app/domain/functions/encryption.dart';
+import "package:health_worker/features/app/presentation/pages/screening_information.dart";
 import "package:ionicons/ionicons.dart";
 import "package:path_provider/path_provider.dart";
 import "package:styled_widget/styled_widget.dart";
@@ -453,7 +454,7 @@ class _CameraState extends ConsumerState<RightCamera> {
                             Navigator.push(
                               context,
                               FluentPageRoute(
-                                builder: (context) => const RightCamera(),
+                                builder: (context) => const ScreeningInformation(),
                               ),
                             );
                           } else {
