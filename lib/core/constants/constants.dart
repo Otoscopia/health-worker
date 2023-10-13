@@ -124,3 +124,18 @@ const String contactNumberLabel = "Patient Contact Number*";
 const String contactNumberPlaceholder = "09XXXXXXXXX";
 const String contactNumberErrorOne = "Please input a valid contact number";
 const String contactNumberErrorTwo = "Contact number must start with 09";
+
+String dateOfExamination = "Date of Examination";
+String examiner = "Examiner";
+
+String historyOfIllness = "History of Illness";
+String healthWorkerComment = "Health worker comment";
+String frameOfInterest = "Frame of Interest";
+
+const String weight = "Weight";
+const String height = "Height";
+const String temperature = "Temperature";
+const String bloodPressure = "Blood Pressure";
+
+Icon temperatureIcon = const Icon(Ionicons.thermometer);
+Icon bloodPressureIcon = const Icon(Ionicons.git_network);
