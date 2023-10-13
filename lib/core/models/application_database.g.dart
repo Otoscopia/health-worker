@@ -93,7 +93,7 @@ class _$ApplicationDatabase extends ApplicationDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `auth_status` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `authenticated` INTEGER, `signedOut` INTEGER, `loading` INTEGER NOT NULL, `error` INTEGER NOT NULL, `errorMessage` TEXT)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `patients` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `uid` TEXT NOT NULL, `fullName` TEXT NOT NULL, `gender` TEXT NOT NULL, `birthdate` TEXT NOT NULL, `schoolName` TEXT NOT NULL, `schoolID` TEXT NOT NULL, `genderError` INTEGER, `birthdateError` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `patients` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `uid` TEXT NOT NULL, `fullName` TEXT NOT NULL, `gender` TEXT NOT NULL, `birthdate` TEXT NOT NULL, `contactNumber` TEXT NOT NULL, `schoolName` TEXT NOT NULL, `schoolID` TEXT NOT NULL, `genderError` INTEGER, `birthdateError` INTEGER)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -261,6 +261,7 @@ class _$PatientDao extends PatientDao {
                   'fullName': item.fullName,
                   'gender': item.gender,
                   'birthdate': item.birthdate,
+                  'contactNumber': item.contactNumber,
                   'schoolName': item.schoolName,
                   'schoolID': item.schoolID,
                   'genderError': item.genderError == null
@@ -287,6 +288,7 @@ class _$PatientDao extends PatientDao {
             uid: row['uid'] as String,
             fullName: row['fullName'] as String,
             gender: row['gender'] as String,
+            contactNumber: row['contactNumber'] as String,
             birthdate: row['birthdate'] as String,
             schoolName: row['schoolName'] as String,
             schoolID: row['schoolID'] as String));
