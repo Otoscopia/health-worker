@@ -1,15 +1,11 @@
 import "package:fluent_ui/fluent_ui.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "package:health_worker/core/constants/constants.dart";
+import "package:health_worker/core/constants.dart";
+import "package:health_worker/features/authentication/domain/provider/password_provider.dart";
 
 class PasswordTextBox extends ConsumerWidget {
-  const PasswordTextBox({
-    super.key,
-    required this.password,
-  });
-
-  final TextEditingController password;
+  const PasswordTextBox({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,9 +13,8 @@ class PasswordTextBox extends ConsumerWidget {
       label: passwordLabel,
       child: PasswordBox(
         placeholder: passwordLabel,
-        foregroundDecoration:
-            const BoxDecoration(border: Border.fromBorderSide(BorderSide.none)),
-        controller: password,
+        foregroundDecoration: const BoxDecoration(border: Border.fromBorderSide(BorderSide.none)),
+        onChanged: (value) => ref.watch(passwordProvider.notifier).setPassword(value),
       ),
     );
   }
