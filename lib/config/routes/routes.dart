@@ -16,6 +16,7 @@ class Routes extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool authenticated = ref.watch(authenticationProvider).authenticated;
+    bool connected = ref.watch(applicationStateProvider).connected;
     return OfflineBuilder(
       connectivityBuilder: (BuildContext context, ConnectivityResult connectivity, Widget child) {
         final bool connected = connectivity != ConnectivityResult.none;
@@ -28,7 +29,7 @@ class Routes extends ConsumerWidget {
         );
       },
       child: FutureBuilder(
-        future: loadUser(ref, authenticated, ref.watch(applicationStateProvider).connected),
+        future: loadUser(ref, authenticated, connected),
         builder: ((context, snapshot) {
           if (snapshot.data == false) {
             return const SignIn();
