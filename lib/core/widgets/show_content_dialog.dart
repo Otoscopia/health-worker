@@ -1,5 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:health_worker/core/constants/constants.dart';
+import 'package:health_worker/core/constants.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 Future<void> showContentDialog(
