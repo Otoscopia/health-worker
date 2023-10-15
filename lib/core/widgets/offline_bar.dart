@@ -16,7 +16,7 @@ class OfflineBar extends ConsumerWidget {
       right: 0.0,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        color: connected ? null : primary,
+        color: connected ? transparent : primary,
         child: connected
             ? null
             : Row(
