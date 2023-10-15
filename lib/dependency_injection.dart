@@ -1,10 +1,18 @@
+import 'dart:io';
+
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:window_manager/window_manager.dart';
+
+import 'package:health_worker/features/authentication/data/models/user_model.dart';
 
 import 'core/constants/constants.dart';
 
 late FlutterSecureStorage storage;
+late Directory appDir;
+late Isar isar;
 
 class DependencyInjection {
   static final DependencyInjection _singleton = DependencyInjection._internal();
@@ -17,6 +25,10 @@ class DependencyInjection {
 
   Future<void> initialize() async {
     storage = const FlutterSecureStorage();
+
+    appDir = await getApplicationSupportDirectory();
+
+    isar = await Isar.open([UserModelSchema], directory: appDir.parent.path);
 
     doWhenWindowReady(() {
       final window = appWindow;
