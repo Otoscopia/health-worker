@@ -9,7 +9,6 @@ environment:
   sdk: ">=3.1.1 <4.0.0"
 
 dependencies:
-  appwrite: ^11.0.0
   bitsdojo_window: any
   camera: ^0.10.5+5
   camera_windows: ^0.2.1+8
@@ -17,7 +16,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   encrypt: ^5.0.3
   envied: ^0.3.0+3
-  floor: ^1.4.2
   fluent_ui: ^4.7.6
   flutter:
     sdk: flutter
@@ -36,7 +34,6 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.4.6
   envied_generator: ^0.3.0+3
-  floor_generator: ^1.4.2
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
