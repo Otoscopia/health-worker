@@ -1,17 +1,18 @@
 import "package:fluent_ui/fluent_ui.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:health_worker/config/themes/colors.dart";
-import "package:health_worker/features/authentication/presentation/providers/application_provider.dart.dart";
 import "package:intl/intl.dart";
 import "package:ionicons/ionicons.dart";
 import "package:styled_widget/styled_widget.dart";
+
+import "package:health_worker/config/exports.dart";
+import "package:health_worker/features/authentication/exports.dart";
 
 class GreetingCard extends ConsumerWidget {
   const GreetingCard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String? name = ref.watch(applicationProvider).name;
+    String name = ref.watch(userProvider).uid;
     return Card(
       backgroundColor: transparent,
       borderColor: transparent,
