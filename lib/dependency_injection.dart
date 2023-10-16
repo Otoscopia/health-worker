@@ -6,12 +6,14 @@ import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:health_worker/features/authentication/data/models/user_model.dart';
+import 'package:health_worker/features/app/exports.dart';
+import 'package:health_worker/features/authentication/exports.dart';
 
 import 'core/constants/constants.dart';
 
 late FlutterSecureStorage storage;
 late Directory appDir;
+late String applicationPath;
 late Isar isar;
 
 class DependencyInjection {
@@ -28,7 +30,9 @@ class DependencyInjection {
 
     appDir = await getApplicationSupportDirectory();
 
-    isar = await Isar.open([UserModelSchema], directory: appDir.parent.path);
+    applicationPath = appDir.parent.path;
+
+    isar = await Isar.open([UserModelSchema, PatientModelSchema, ScreeningModelSchema], directory: appDir.parent.path);
 
     doWhenWindowReady(() {
       final window = appWindow;
