@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:health_worker/features/app/presentation/widgets/dashboard_widgets/content_widgets/greeting_card.dart';
+
+import 'package:health_worker/features/app/exports.dart';
 
 class ContentWidget extends ConsumerWidget {
   const ContentWidget({super.key});

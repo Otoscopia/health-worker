@@ -1,12 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
-import 'package:health_worker/core/constants/constants.dart';
-
-import 'top_widgets/logo_widget.dart';
-import 'top_widgets/notification_widget.dart';
-import 'top_widgets/setting_widget.dart';
-import 'top_widgets/user_button_widget.dart';
-import '../search_input_box.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/app/exports.dart';
 
 class TopWidget extends StatelessWidget {
   const TopWidget({

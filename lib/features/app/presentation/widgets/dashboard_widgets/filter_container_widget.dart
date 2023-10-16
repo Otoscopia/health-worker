@@ -1,12 +1,8 @@
 import "package:fluent_ui/fluent_ui.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "package:health_worker/core/constants/constants.dart";
-
-import "filter_widgets/final_diagnosis.dart";
-import "filter_widgets/initial_diagnosis.dart";
-import "filter_widgets/medical_attention.dart";
-import "filter_widgets/pending_diagnosis.dart";
+import "package:health_worker/core/exports.dart";
+import "package:health_worker/features/app/exports.dart";
 
 class FilterWidget extends ConsumerWidget {
   const FilterWidget({super.key});

@@ -1,7 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:health_worker/config/themes/colors.dart';
-import 'package:health_worker/core/constants/constants.dart';
+
+import 'package:health_worker/config/exports.dart';
+import 'package:health_worker/core/exports.dart';
 
 class SearchBox extends ConsumerWidget {
   final String label;

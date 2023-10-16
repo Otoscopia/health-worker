@@ -2,13 +2,10 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:health_worker/config/routes/future_functions.dart';
-import 'package:health_worker/core/provider/application_provider.dart';
-import 'package:health_worker/core/widgets.dart';
-import 'package:health_worker/core/widgets/offline_bar.dart';
-import 'package:health_worker/features/app/presentation/pages/dashboard.dart';
-import 'package:health_worker/features/authentication/presentation/pages/sign_in.dart';
-import 'package:health_worker/features/authentication/presentation/provider/authentication_provider.dart';
+import 'future_functions.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/app/exports.dart';
+import 'package:health_worker/features/authentication/exports.dart';
 
 class Routes extends ConsumerWidget {
   const Routes({super.key});

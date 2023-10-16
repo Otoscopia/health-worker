@@ -1,9 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'config/routes/routes.dart';
-import 'config/themes/app_themes.dart';
-import 'core/constants/constants.dart';
+import 'config/exports.dart';
+import 'core/exports.dart';
 import 'dependency_injection.dart';
 
 Future<void> main() async {
