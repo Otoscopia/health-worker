@@ -7,7 +7,6 @@ export 'domain/entity/patient_entity.dart';
 export 'domain/entity/screening_entity.dart';
 
 // domain providers exports
-export 'domain/provider/add_patient_providers/add_patient_error_provider.dart';
 export 'domain/provider/add_patient_providers/birthdate_provider.dart';
 export 'domain/provider/add_patient_providers/contact_number_provider.dart';
 export 'domain/provider/add_patient_providers/fullname_provider.dart';
@@ -50,7 +49,9 @@ export 'presentation/widgets/title_widget.dart';
 // presentation widgets add patient imports
 export 'presentation/widgets/add_patient_information.dart/add_patient_button.dart';
 export 'presentation/widgets/add_patient_information.dart/birthdate_widget.dart';
+export 'presentation/widgets/add_patient_information.dart/birthday_error.dart';
 export 'presentation/widgets/add_patient_information.dart/gender_widget.dart';
+export 'presentation/widgets/add_patient_information.dart/gender_error.dart';
 export 'presentation/widgets/add_patient_information.dart/text_inputs_widgets.dart/contact_number_input.dart';
 export 'presentation/widgets/add_patient_information.dart/text_inputs_widgets.dart/full_name_input.dart';
 export 'presentation/widgets/add_patient_information.dart/text_inputs_widgets.dart/school_id_input.dart';
