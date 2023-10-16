@@ -1,9 +1,11 @@
-import 'package:health_worker/features/authentication/domain/entity/user_entity.dart';
 import 'package:isar/isar.dart';
+
+import 'package:health_worker/features/authentication/exports.dart';
 
 part 'user_model.g.dart';
 
 @collection
+@Name("user")
 class UserModel extends UserEntity {
   Id id = Isar.autoIncrement;
 
