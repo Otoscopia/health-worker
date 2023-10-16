@@ -1,10 +1,8 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:health_worker/core/constants.dart';
-import 'package:health_worker/core/widgets.dart';
-import 'package:health_worker/features/authentication/domain/usecase/sign_in_usecase.dart';
-import 'package:health_worker/features/authentication/presentation/provider/authentication_provider.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/authentication/exports.dart';
 
 class SignInButton extends ConsumerWidget {
   const SignInButton({super.key});
@@ -27,7 +25,7 @@ class SignInButton extends ConsumerWidget {
             width: 150,
             child: FilledButton(
               child: const Text(signInButton),
-              onPressed: () => signIn(context, ref),
+              onPressed: () => SignInUseCase().signIn(context, ref),
             ),
           );
   }
