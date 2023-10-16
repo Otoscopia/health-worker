@@ -1,42 +1,18 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:health_worker/core/constants/constants.dart';
-import 'package:health_worker/core/widgets/container_box.dart';
-import 'package:health_worker/features/app/presentation/providers/patient_information_provider.dart';
-import 'package:health_worker/features/app/presentation/widgets/add_patient_information.dart/add_patient_button.dart';
-import 'package:health_worker/features/app/presentation/widgets/add_patient_information.dart/birthdate_widget.dart';
-import 'package:health_worker/features/app/presentation/widgets/add_patient_information.dart/gender_widget.dart';
-import 'package:health_worker/features/app/presentation/widgets/add_patient_information.dart/text_inputs_widgets.dart/contact_number_input.dart';
-import 'package:health_worker/features/app/presentation/widgets/add_patient_information.dart/text_inputs_widgets.dart/full_name_input.dart';
-import 'package:health_worker/features/app/presentation/widgets/add_patient_information.dart/text_inputs_widgets.dart/school_id_input.dart';
-import 'package:health_worker/features/app/presentation/widgets/add_patient_information.dart/text_inputs_widgets.dart/school_name_input.dart';
-import 'package:health_worker/features/app/presentation/widgets/title_widget.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/app/exports.dart';
 
-class AddPatientInformation extends ConsumerStatefulWidget {
+class AddPatientInformation extends ConsumerWidget {
   const AddPatientInformation({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _AddPatientInformationState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final key = GlobalKey<FormState>();
+    bool genderError = ref.watch(genderErrorProvider);
+    bool birthdayError = ref.watch(birthdateErrorProvider);
 
-class _AddPatientInformationState extends ConsumerState<AddPatientInformation> {
-  final key = GlobalKey<FormState>();
-  TextEditingController fullName = TextEditingController();
-  TextEditingController contactNumber = TextEditingController();
-  TextEditingController schoolName = TextEditingController();
-  TextEditingController schoolID = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    String gender = ref.watch(patientProvider).gender;
-    String birthdate = ref.watch(patientProvider).birthdate;
-    DateTime birthday =
-        birthdate.isEmpty ? DateTime.now() : DateTime.parse(birthdate);
-
-    bool? birthdateError = ref.watch(patientProvider).birthdateError;
-    bool? genderError = ref.watch(patientProvider).genderError;
     return ScaffoldPage(
       padding: EdgeInsets.zero,
       content: ContainerBox(
@@ -52,49 +28,52 @@ class _AddPatientInformationState extends ConsumerState<AddPatientInformation> {
                 popUpContentMessage: addPatientCancelContent,
               ),
               Expanded(
-                child: Center(
-                  child: Card(
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      constraints: const BoxConstraints(maxWidth: 316),
-                      child: Form(
-                        key: key,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            FullNameInput(fullName: fullName),
-                            mediumHeight,
-                            const GenderWidget(),
-                            if (genderError == true)
-                              SizedBox(
-                                  width: double.infinity, child: invalidGender),
-                            mediumHeight,
-                            BirthdateWidget(birthdate: birthday),
-                            if (birthdateError == true)
-                              SizedBox(
-                                  width: double.infinity,
-                                  child: invalidBirthdate),
-                            mediumHeight,
-                            ContactNumberInput(contactNumber: contactNumber),
-                            mediumHeight,
-                            SchoolNameInput(schoolName: schoolName),
-                            mediumHeight,
-                            SchoolIdInput(schoolID: schoolID),
-                            largeHeight,
-                            AddPatientButton(
-                              globalKey: key,
-                              birthdateError: birthdateError,
-                              genderError: genderError,
-                              fullName: fullName,
-                              gender: gender,
-                              birthdate: birthdate,
-                              contactNumber: contactNumber,
-                              schoolName: schoolName,
-                              schoolID: schoolID,
-                            )
-                          ],
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Card(
+                          backgroundColor: Colors.blue,
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            constraints: const BoxConstraints(maxWidth: 316),
+                            child: BreadcrumbBar(
+                              items: items,
+                              onItemPressed: (value) {},
+                            ),
+                          ),
                         ),
-                      ),
+                        mediumHeight,
+                        Card(
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            constraints: const BoxConstraints(maxWidth: 316),
+                            child: Form(
+                              key: key,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const FullNameInput(),
+                                  mediumHeight,
+                                  const GenderWidget(),
+                                  if(genderError) const GenderError(),
+                                  mediumHeight,
+                                  const BirthdateWidget(),
+                                  if(birthdayError) const BirthdayError(),
+                                  mediumHeight,
+                                  const ContactNumberInput(),
+                                  mediumHeight,
+                                  const SchoolNameInput(),
+                                  mediumHeight,
+                                  const SchoolIdInput(),
+                                  largeHeight,
+                                  AddPatientButton(globalKey: key)
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
