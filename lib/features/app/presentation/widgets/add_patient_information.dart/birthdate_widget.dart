@@ -1,22 +1,15 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:health_worker/core/constants/constants.dart';
-import 'package:health_worker/features/app/presentation/providers/patient_information_provider.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/app/exports.dart';
 
-class BirthdateWidget extends ConsumerStatefulWidget {
-  final DateTime birthdate;
-  const BirthdateWidget({super.key, required this.birthdate});
+class BirthdateWidget extends ConsumerWidget {
+  const BirthdateWidget({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _BirthdateWidgetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _BirthdateWidgetState extends ConsumerState<BirthdateWidget> {
-  @override
-  Widget build(BuildContext context) {
-    DateTime birthday = widget.birthdate;
     return DatePicker(
       fieldOrder: const [
         DatePickerField.month,
@@ -25,13 +18,10 @@ class _BirthdateWidgetState extends ConsumerState<BirthdateWidget> {
       ],
       header: birthdayLabel,
       onChanged: (value) {
-        setState(() {
-          birthday = value;
-        });
-
-        ref.watch(patientProvider.notifier).setBirthdate(birthday.toString(), false);
+        ref.watch(birthdateProvider.notifier).setBirthdate(value);
+        ref.watch(birthdateErrorProvider.notifier).setBirthdateError(false);
       },
-      selected: birthday,
+      selected: ref.watch(birthdateProvider) ?? DateTime.now(),
     );
   }
 }

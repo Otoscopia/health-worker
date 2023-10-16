@@ -1,38 +1,27 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:health_worker/core/constants/constants.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/app/exports.dart';
 
-import 'package:health_worker/features/app/presentation/providers/patient_information_provider.dart';
-
-class GenderWidget extends ConsumerStatefulWidget {
+class GenderWidget extends ConsumerWidget {
   const GenderWidget({super.key});
-
+  
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _GenderWidgetState();
-}
-
-class _GenderWidgetState extends ConsumerState<GenderWidget> {
-  int? selected;
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InfoLabel(
       label: genderTitle,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(
-          2,
+          genders.length,
           (index) {
-            var label = [maleLabel, femaleLabel];
             return RadioButton(
-              checked: selected == index,
-              content: Text(label[index]),
+              checked: ref.watch(genderProvider) == index,
+              content: Text(genders[index]),
               onChanged: (checked) {
                 if (checked) {
-                  setState(() {
-                    selected = index;
-                  });
-
-                  ref.watch(patientProvider.notifier).setGender(label[index], false);
+                  ref.watch(genderProvider.notifier).setGender(index);
+                  ref.watch(genderErrorProvider.notifier).setGenderError(false);
                 }
               },
             );

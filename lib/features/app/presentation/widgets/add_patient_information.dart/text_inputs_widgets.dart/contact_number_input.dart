@@ -1,40 +1,57 @@
 import "package:fluent_ui/fluent_ui.dart";
 import "package:flutter/services.dart";
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-import "package:health_worker/core/constants/constants.dart";
+import "package:health_worker/core/exports.dart";
+import "package:health_worker/features/app/exports.dart";
 
-class ContactNumberInput extends StatelessWidget {
-  const ContactNumberInput({
-    super.key,
-    required this.contactNumber,
-  });
-
-  final TextEditingController contactNumber;
+class ContactNumberInput extends ConsumerWidget {
+  const ContactNumberInput({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InfoLabel(
       label: contactNumberLabel,
       child: TextFormBox(
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly, ContactNumberFormatter()],
         placeholder: contactNumberPlaceholder,
-        controller: contactNumber,
-        maxLength: 11,
+        maxLength: 13,
         maxLines: 1,
         maxLengthEnforcement: MaxLengthEnforcement.enforced,
         unfocusedColor: Colors.transparent,
-
-        validator: (value) {
-          if (value == null || value.isEmpty || value.length != 11) {
+        onChanged: (value) =>
+            ref.watch(contactNumberProvider.notifier).setContactNumber(value), validator: (value) {
+          if (value == null || value.isEmpty) {
             return contactNumberErrorOne;
-          } else if (!value.startsWith("09")) {
+          } else if (value.length > 2 && !value.startsWith("09")) {
             return contactNumberErrorTwo;
-
+          } else if (value.length != 13) {
+            return contactNumberErrorOne;
           }
           return null;
         },
       ),
+    );
+  }
+}
+
+class ContactNumberFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    final newString = newValue.text;
+    final buffer = StringBuffer();
+
+    for (var i = 0; i < newString.length; i++) {
+      if (i == 4 || i == 7) {
+        buffer.write('-');
+      }
+      buffer.write(newString[i]);
+    }
+
+    return TextEditingValue(
+      text: buffer.toString(),
+      selection: TextSelection.collapsed(offset: buffer.length),
     );
   }
 }
