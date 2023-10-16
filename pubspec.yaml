@@ -9,6 +9,7 @@ environment:
   sdk: ">=3.1.1 <4.0.0"
 
 dependencies:
+  appwrite: ^11.0.0
   bitsdojo_window: any
   camera: ^0.10.5+5
   camera_windows: ^0.2.1+8
