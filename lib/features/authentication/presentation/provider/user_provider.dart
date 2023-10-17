@@ -1,21 +1,31 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/dependency_injection.dart';
 import 'package:health_worker/features/authentication/data/models/user_model.dart';
-import 'package:uuid/uuid.dart';
 
 class UserNotifier extends StateNotifier<UserModel> {
-  UserNotifier(): super(UserModel(uid: "", name: "", email: "", phone: ""));
+  UserNotifier(): super(UserModel(uid: "", name: "", email: "", label: ""));
   
-  setUser(String name, String email, String phone) async {
-    Uuid uuid = const Uuid();
-    var uid = uuid.v4().toString();
-
-    UserModel user = UserModel(uid: uid, name: name, email: email, phone: phone);
+  setUser(String uid, String name, String email, List<dynamic> label) async {
+    UserModel user = UserModel(uid: uid, name: name, email: email, label: label.toString());
     state = user;
 
-    await isar.writeTxn(() async {
+    teamList = await team.list();
+
+    List<int> bytes = utf8.encode(teamList.teams.first.$id);
+    Digest digest = sha256.convert(bytes);
+
+    await storage.write(key: uid, value: digest.toString());
+
+     isar.writeTxn(() async {
       await isar.userModels.put(user);
     });
+  }
+
+  fetchUserFromDb(UserModel user) {
+    state = user;
   }
 }
 
