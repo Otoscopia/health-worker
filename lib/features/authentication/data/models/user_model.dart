@@ -13,5 +13,5 @@ class UserModel extends UserEntity {
       {required super.uid,
       required super.name,
       required super.email,
-      required super.phone});
+      required super.label});
 }
