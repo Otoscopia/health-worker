@@ -12,6 +12,7 @@ const String passwordEmpty = "Please input your password";
 const String passwordError = "Password must be greater than 8";
 
 const String formsError = "All the forms are required. Please input all before pressing Sign up";
+const String connectionError = "Please check your connection";
 
 Map<String, String> errorMessageObject = {
   "general_access_forbidden" : "general_access_forbidden",
