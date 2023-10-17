@@ -1,4 +1,5 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'config/exports.dart';
@@ -16,18 +17,31 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return FluentApp(
       title: applicationTitle,
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: const Routes(),
+      home: OfflineBuilder(
+        connectivityBuilder: (BuildContext context,
+            ConnectivityResult connectivity, Widget child) {
+          final bool connected = connectivity != ConnectivityResult.none;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ref.read(applicationStateProvider.notifier).setConnected(connected);
+          });
+          return Stack(
+            fit: StackFit.expand,
+            children: [child, OfflineBar(connected: connected)],
+          );
+        },
+        child: const Routes(),
+      ),
     );
   }
 }
