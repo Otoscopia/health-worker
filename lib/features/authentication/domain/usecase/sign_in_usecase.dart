@@ -6,21 +6,21 @@ import 'package:health_worker/features/authentication/exports.dart';
 
 class SignInUseCase {
   signIn(BuildContext context, WidgetRef ref) {
-    String username = ref.read(usernameProvider);
+    String email = ref.read(emailProvider);
     String password = ref.read(passwordProvider);
 
-    if (username.isEmpty && password.isEmpty) {
+    if (email.isEmpty && password.isEmpty) {
       popUp(context, formsError);
-    } else if (username.isEmpty) {
-      popUp(context, usernameEmpty);
-    } else if (!username.contains(".")) {
-      popUp(context, usernameError);
+    } else if (email.isEmpty) {
+      popUp(context, emailEmpty);
+    } else if (!email.contains("@")) {
+      popUp(context, emailError);
     } else if (password.isEmpty) {
       popUp(context, passwordEmpty);
     } else if (password.length < 8) {
       popUp(context, passwordError);
     } else {
-      ref.watch(authenticationProvider.notifier).signIn(username, password);
+      ref.watch(authenticationProvider.notifier).signIn(email, password);
     }
   }
 

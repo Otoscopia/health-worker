@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UsernameNotifier extends StateNotifier<String> {
-  UsernameNotifier() : super("");
+class EmailNotifier extends StateNotifier<String> {
+  EmailNotifier() : super("");
 
-  setUsername(String value) {
+  setEmail(String value) {
     state = value;
   }
 }
 
-final usernameProvider = StateNotifierProvider<UsernameNotifier, String>((ref) {
-  return UsernameNotifier();
+final emailProvider = StateNotifierProvider<EmailNotifier, String>((ref) {
+  return EmailNotifier();
 });

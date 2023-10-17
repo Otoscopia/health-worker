@@ -1,15 +1,17 @@
 const String welcomeLabel = "Welcome Back School Nurse!";
 const String passwordLabel = "Password";
-const String usernameLabel = "Username";
+const String emailLabel = "Email Address";
 const String signInButton = "Sign In";
 
-const String emptyInputsError = "Please input your username and password";
+const String emptyInputsError = "Please input your email and password";
 
-const String usernameEmpty = "Please input your username";
-const String usernameError = "Please validate your username";
+const String emailEmpty = "Please input your email";
+const String emailError = "Please validate your email";
 
 const String passwordEmpty = "Please input your password";
 const String passwordError = "Password must be greater than 8";
+
+const String formsError = "All the forms are required. Please input all before pressing Sign up";
 
 Map<String, String> errorMessageObject = {
   "general_access_forbidden" : "general_access_forbidden",

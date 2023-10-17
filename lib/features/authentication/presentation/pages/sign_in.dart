@@ -29,7 +29,7 @@ class SignIn extends ConsumerWidget {
                     const LogoContainer(),
                     const Text(welcomeLabel).bold().fontSize(18),
                     largeHeight,
-                    const UsernameTextBox(),
+                    const EmailTextBox(),
                     largeHeight,
                     const PasswordTextBox(),
                     largeHeight,

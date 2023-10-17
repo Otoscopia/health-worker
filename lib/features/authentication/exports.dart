@@ -2,7 +2,7 @@
 export 'presentation/widgets/logo_container.dart';
 export 'presentation/widgets/password_text_box.dart';
 export 'presentation/widgets/sign_in_button.dart';
-export 'presentation/widgets/username_text_box.dart';
+export 'presentation/widgets/email_text_box.dart';
 
 // presentation providers exports
 export 'presentation/provider/authentication_provider.dart';
