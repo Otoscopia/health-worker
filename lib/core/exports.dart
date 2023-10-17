@@ -9,6 +9,9 @@ export 'constants/screening_information_constants.dart';
 // provider
 export 'provider/application_provider.dart';
 
+// models
+export 'models/env.dart';
+
 // widgets
 export 'widgets/info_bar_pop_up.dart';
 export 'widgets/container_box.dart';
