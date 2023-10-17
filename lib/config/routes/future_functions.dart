@@ -1,22 +1,33 @@
-import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:isar/isar.dart';
+
 import 'package:health_worker/dependency_injection.dart';
-import 'package:health_worker/features/authentication/data/models/user_model.dart';
+import 'package:health_worker/features/authentication/exports.dart';
 
-loadUser(WidgetRef ref, bool isAuthenticated, bool connected) async {
-  int user = await isar.userModels.count();
+Future<bool> loadUser(WidgetRef ref, bool isAuthenticated) async {
+  final userCollection = isar.userModels;
+  int index = await userCollection.count();
 
-  if (user == 1) {
-    if (connected) {
-      debugPrint("online");
-      // sync data to the cloud
-      return true;
-    } else {
-      debugPrint("offline");
-      // sync data from isar
-      return true;
+  try {
+    session = await account.getSession(sessionId: currentSession);
+    if (index < 1) {
+      ref.watch(userProvider.notifier).setUser(examiner.$id, examiner.name, examiner.email, examiner.labels);
     }
-  } else {
+    return true;
+  } catch (error) {
     return false;
   }
+}
+
+Future<bool> loadUserOffline(WidgetRef ref) async {
+  final userCollection = isar.userModels;
+  int index = await userCollection.count();
+
+  if (index > 0) {
+    final fetchUser = await userCollection.where().anyId().findFirst();
+    ref.watch(userProvider.notifier).fetchUserFromDb(fetchUser!);
+    return true;
+  }
+  return false;
 }
