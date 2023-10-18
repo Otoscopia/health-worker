@@ -5,6 +5,7 @@ export 'constants/constants.dart';
 export 'constants/spacing.dart';
 export 'constants/camera_constants.dart';
 export 'constants/screening_information_constants.dart';
+export 'constants/review_information.dart';
 
 // provider
 export 'provider/application_provider.dart';

@@ -26,3 +26,16 @@ const items = <BreadcrumbItem<int>>[
   BreadcrumbItem(label: Text(addPatientLabel), value: 0),
   BreadcrumbItem(label: Text('Patient Information'), value: 1),
 ];
+
+const String schoolNamePlaceholder = "Iligan City Division Office";
+const String schoolNameError = "Please input a valid school name";
+
+const String schoolIDPlaceholder = "School ID";
+const String schoolIDError = "Please input a valid school id";
+
+const String fullNamePlaceholder = "Full Name";
+const String fullNameError = "Please input a valid name";
+
+const String contactNumberPlaceholder = "09XXXXXXXXX";
+const String contactNumberErrorOne = "Please input a valid contact number";
+const String contactNumberErrorTwo = "Contact number must start with 09";

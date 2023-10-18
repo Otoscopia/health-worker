@@ -56,31 +56,3 @@ const String proceedLabel = "Proceed";
 const String continueLabel = "Continue";
 
 const Border borderNone = Border.fromBorderSide(BorderSide.none);
-
-const String schoolNamePlaceholder = "Iligan City Division Office";
-const String schoolNameError = "Please input a valid school name";
-
-const String schoolIDPlaceholder = "School ID";
-const String schoolIDError = "Please input a valid school id";
-
-const String fullNamePlaceholder = "Full Name";
-const String fullNameError = "Please input a valid name";
-
-const String contactNumberPlaceholder = "09XXXXXXXXX";
-const String contactNumberErrorOne = "Please input a valid contact number";
-const String contactNumberErrorTwo = "Contact number must start with 09";
-
-String dateOfExamination = "Date of Examination";
-String examinerLabel = "Examiner";
-
-String historyOfIllness = "History of Illness";
-String healthWorkerComment = "Health worker comment";
-String frameOfInterest = "Frame of Interest";
-
-const String weight = "Weight";
-const String height = "Height";
-const String temperature = "Temperature";
-const String bloodPressure = "Blood Pressure";
-
-Icon temperatureIcon = const Icon(Ionicons.thermometer);
-Icon bloodPressureIcon = const Icon(Ionicons.git_network);
