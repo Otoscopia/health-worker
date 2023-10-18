@@ -28,20 +28,7 @@ class MyApp extends ConsumerWidget {
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      home: OfflineBuilder(
-        connectivityBuilder: (BuildContext context,
-            ConnectivityResult connectivity, Widget child) {
-          final bool connected = connectivity != ConnectivityResult.none;
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            ref.read(applicationStateProvider.notifier).setConnected(connected);
-          });
-          return Stack(
-            fit: StackFit.expand,
-            children: [child, OfflineBar(connected: connected)],
-          );
-        },
-        child: const Routes(),
-      ),
+      home: const Routes(),
     );
   }
 }
