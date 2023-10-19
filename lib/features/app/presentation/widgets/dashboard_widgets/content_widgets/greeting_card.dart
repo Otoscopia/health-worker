@@ -12,7 +12,7 @@ class GreetingCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String name = ref.watch(userProvider).uid;
+    String name = ref.watch(userProvider).name;
     return Card(
       backgroundColor: transparent,
       borderColor: transparent,
