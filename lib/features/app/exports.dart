@@ -77,9 +77,15 @@ export 'presentation/widgets/dashboard_widgets/top_widgets/user_button_widget.da
 
 // presentation widgets review information imports
 export 'presentation/widgets/review_information/rich_text.dart';
+export 'presentation/widgets/review_information/patient_information.dart';
+export 'presentation/widgets/review_information/vital_card.dart';
+export 'presentation/widgets/review_information/vital_widget.dart';
+export 'presentation/widgets/review_information/health_record_title_widget.dart';
 
 // screening information imports
 export 'presentation/widgets/screening_information/cheif_complain.dart';
+export 'presentation/widgets/screening_information/cheif_complain_widget.dart';
+export 'presentation/widgets/screening_information/cheif_complain_error.dart';
 export 'presentation/widgets/screening_information/examiner_and_date.dart';
 export 'presentation/widgets/screening_information/frame_of_interest.dart';
 export 'presentation/widgets/screening_information/height_and_weight.dart';
@@ -88,7 +94,12 @@ export 'presentation/widgets/screening_information/medication_widget.dart';
 export 'presentation/widgets/screening_information/other_complain.dart';
 export 'presentation/widgets/screening_information/patient_have_allergies.dart';
 export 'presentation/widgets/screening_information/patient_similar_condition.dart';
+export 'presentation/widgets/screening_information/similar_condition_error.dart';
+export 'presentation/widgets/screening_information/similar_condition_widget.dart';
 export 'presentation/widgets/screening_information/patient_taking_medication.dart';
+export 'presentation/widgets/screening_information/patient_medication_widget.dart';
+export 'presentation/widgets/screening_information/patient_allergies_widget.dart';
 export 'presentation/widgets/screening_information/patient_undergo_surgery.dart';
+export 'presentation/widgets/screening_information/patient_undergo_surgery_widget.dart';
 export 'presentation/widgets/screening_information/temperature_and_blood.dart';
 
