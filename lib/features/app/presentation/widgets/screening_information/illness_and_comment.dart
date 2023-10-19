@@ -1,15 +1,14 @@
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:health_worker/core/constants/constants.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/app/exports.dart';
 
-class IllnessAndComment extends StatelessWidget {
-  final TextEditingController illness;
-  final TextEditingController comment;
-
-  const IllnessAndComment({super.key, required this.illness, required this.comment});
+class IllnessAndComment extends ConsumerWidget {
+  const IllnessAndComment({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         Expanded(
@@ -17,14 +16,11 @@ class IllnessAndComment extends StatelessWidget {
             label: historyOfIllness,
             child: TextFormBox(
               placeholder: historyOfIllness,
-              validator: (value) {
-                if (value == null || value.length < 10) {
-                  return "Please Enter a valid $historyOfIllness";
-                }
-                return null;
-              },
+              inputFormatters: [filterText],
+              validator: (value) => validatorFunction(value, illnessError),
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: illness,
+              onChanged: (value) =>
+                  ref.watch(historyOfIllnessProvider.notifier).setState(value),
               maxLines: 3,
               minLines: 1,
             ),
@@ -36,14 +32,10 @@ class IllnessAndComment extends StatelessWidget {
             label: healthWorkerComment,
             child: TextFormBox(
               placeholder: healthWorkerComment,
-              validator: (value) {
-                if (value == null || value.length < 10) {
-                  return "Please Enter a valid $healthWorkerComment";
-                }
-                return null;
-              },
+              inputFormatters: [filterText],
+              validator: (value) => validatorFunction(value, healthWorkerCommentError),
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: comment,
+              onChanged: (value) => ref.watch(healthWorkerCommentProvider.notifier).setState(value),
               maxLines: 3,
               minLines: 1,
             ),
@@ -52,4 +44,11 @@ class IllnessAndComment extends StatelessWidget {
       ],
     );
   }
+}
+
+validatorFunction(String? value, String error) {
+  if (value == null || value.length < 5) {
+    return error;
+  }
+  return null;
 }

@@ -1,25 +1,25 @@
+import "package:intl/intl.dart";
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:health_worker/core/constants/constants.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ExaminerAndDate extends StatelessWidget {
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/authentication/exports.dart';
+
+class ExaminerAndDate extends ConsumerWidget {
   const ExaminerAndDate({
     super.key,
-    required this.today,
-    required this.user
   });
 
-  final String today;
-  final String user;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String examiner = ref.read(userProvider).name;
     return Row(
       children: [
         Expanded(
           child: InfoLabel(
             label: dateOfExamination,
             child: TextFormBox(
-              placeholder: today,
+              placeholder: DateFormat("MMM dd, y").format(DateTime.now()),
               readOnly: true,
             ),
           ),
@@ -27,9 +27,9 @@ class ExaminerAndDate extends StatelessWidget {
         largeWidth,
         Expanded(
           child: InfoLabel(
-            label: examiner,
+            label: examinerLabel,
             child: TextFormBox(
-              placeholder: user,
+              placeholder: examiner,
               readOnly: true,
             ),
           ),
