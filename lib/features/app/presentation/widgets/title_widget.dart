@@ -7,16 +7,15 @@ class TitleWidget extends StatelessWidget {
   final String title;
   final bool popUpContent;
   final String? popUpContentTitle, popUpContentMessage;
-  final dynamic onPress;
 
-  const TitleWidget(
-      {super.key,
-      required this.icon,
-      required this.title,
-      required this.popUpContent,
-      this.popUpContentTitle,
-      this.popUpContentMessage,
-      this.onPress});
+  const TitleWidget({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.popUpContent,
+    this.popUpContentTitle,
+    this.popUpContentMessage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +28,10 @@ class TitleWidget extends StatelessWidget {
             icon: icon,
             onPressed: () {
               if (popUpContent) {
-                showContentDialog(context, popUpContentTitle!, popUpContentMessage!);
+                showContentDialog(
+                    context, popUpContentTitle!, popUpContentMessage!);
               } else {
-                onPress;
+                Navigator.pop(context);
               }
             },
           ),
