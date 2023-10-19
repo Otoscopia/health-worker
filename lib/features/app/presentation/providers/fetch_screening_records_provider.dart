@@ -22,7 +22,7 @@ class ScreeningListNotifier extends StateNotifier<List<ScreeningModel>> {
         await screeningCollection.where().findAll();
     List<ScreeningModel> screeningRecordsList = screeningRecords.map((records) {
       return ScreeningModel(
-          uid: EncryptionClass().decryptData(records.uid, encrypter),
+          uid: records.uid,
           historyOfIllness: EncryptionClass().decryptData(records.historyOfIllness, encrypter),
           healthWorkerComment: EncryptionClass().decryptData(records.healthWorkerComment, encrypter),
           frameOfInterest: EncryptionClass().decryptData(records.frameOfInterest, encrypter),
