@@ -11,16 +11,13 @@ addPatient(BuildContext context, WidgetRef ref, GlobalKey<FormState> globalKey) 
   String schoolName = ref.read(schoolNameProvider);
   String schoolId = ref.read(schoolIdProvider);
 
-  if (gender == 3 && isBirthdateToday(birthdate) && globalKey.currentState!.validate()) {
-    ref.read(genderErrorProvider.notifier).setGenderError(true);
-    ref.read(birthdateErrorProvider.notifier).setBirthdateError(true);
-  } else if (isBirthdateToday(birthdate)) {
-    ref.read(birthdateErrorProvider.notifier).setBirthdateError(true);
-  } else if (gender == 3) {
-    ref.read(genderErrorProvider.notifier).setGenderError(true);
-  } else if (globalKey.currentState!.validate() && gender != 3 && !isBirthdateToday(birthdate)) {
+  if (globalKey.currentState!.validate() && gender != 3 && !isBirthdateToday(birthdate)) {
     ref.read(patientProvider.notifier).addNewPatient(fullname, gender, birthdate, contactNumber, schoolName, schoolId);
     Navigator.push(context, FluentPageRoute(builder: (context) => const LeftCamera()));
+  } else {
+    if (globalKey.currentState!.validate()) {}
+    if (gender == 3) ref.read(genderErrorProvider.notifier).setGenderError(true);
+    if (isBirthdateToday(birthdate)) ref.read(birthdateErrorProvider.notifier).setBirthdateError(true);
   }
 }
 
