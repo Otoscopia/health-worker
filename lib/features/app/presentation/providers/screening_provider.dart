@@ -1,54 +1,90 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:health_worker/features/app/domain/entity/screening_entity.dart';
+
+import 'package:health_worker/features/app/exports.dart';
 
 class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
   ScreeningNotifier()
       : super(ScreeningEntity(
+            uid: "",
             historyOfIllness: '',
             healthWorkerComment: '',
             frameOfInterest: '',
-            complains: '',
-            temperature: 0,
-            bloodPressure: 0,
-            height: 0,
-            weight: 0,
-            hasSimilarCondition: false,
-            hasAllergies: false,
-            patientUndergoSurgery: false,
-            patientTakingMedication: false));
+            temperature: "",
+            bloodPressure: "",
+            height: "",
+            weight: "",
+            hasSimilarCondition: false.toString(),
+            hasAllergies: false.toString(),
+            patientUndergoSurgery: false.toString(),
+            patientTakingMedication: false.toString(),
+            cheifComplain: ["", "", "", "", "", ""].toString(),
+            filePath: '',
+            chiefComplainMessage: '',
+            patientTakingMedicationMessage: ''));
 
   setProvider(
-    String? historyOfIllness,
-    String? healthWorkerComment,
-    String? frameOfInterest,
-    String? complains,
-    String? chiefComplainMessage,
-    String? patientTakingMedicationMessage,
-    double? temperature,
-    double? bloodPressure,
-    double? height,
-    double? weight,
-    bool? hasAllergies, 
-    bool? hasSimilarCondition,
-    bool? patientUndergoSurgery,
-    bool? patientTakingMedication,
-  ) {
+      String uid,
+      String historyOfIllness,
+      String healthWorkerComment,
+      String frameOfInterest,
+      String temperature,
+      String bloodPressure,
+      String height,
+      String weight,
+      int similarCondition,
+      List<String> cheifComplains,
+      String otherComplains,
+      int allergies,
+      int surgicalProcedure,
+      int medication,
+      String medicationComment,
+      String directory,
+      WidgetRef ref) async {
+    var temperatureValue = temperature;
+    var heightValue = height;
+    var weightValue = weight;
+    var hasSimilarConditionValue = similarCondition == 1 ? true : false;
+    var hasAllergiesValue = allergies == 1 ? true : false;
+    var patientUndergoSurgeryValue = surgicalProcedure == 1 ? true : false;
+    var patientTakingMedicationValue = medication == 0 ? true : false;
+
     state = ScreeningEntity(
-      historyOfIllness: historyOfIllness ?? state.historyOfIllness,
-      healthWorkerComment: healthWorkerComment ?? state.healthWorkerComment,
-      frameOfInterest: frameOfInterest ?? state.frameOfInterest,
-      complains: complains ?? state.complains,
-      chiefComplainMessage: chiefComplainMessage ?? state.chiefComplainMessage,
-      patientTakingMedicationMessage: patientTakingMedicationMessage ?? state.patientTakingMedicationMessage,
-      temperature: temperature ?? state.temperature,
-      bloodPressure: bloodPressure ?? state.bloodPressure,
-      height: height ?? state.height,
-      weight: weight ?? state.weight,
-      hasSimilarCondition: hasSimilarCondition ?? state.hasSimilarCondition,
-      hasAllergies: hasAllergies ?? state.hasAllergies,
-      patientUndergoSurgery: patientUndergoSurgery ?? state.patientUndergoSurgery,
-      patientTakingMedication: patientTakingMedication ?? state.patientTakingMedication,
-    );
+        uid: uid,
+        historyOfIllness: historyOfIllness,
+        healthWorkerComment: healthWorkerComment,
+        frameOfInterest: frameOfInterest,
+        temperature: temperatureValue,
+        bloodPressure: bloodPressure,
+        height: heightValue,
+        weight: weightValue,
+        hasSimilarCondition: hasSimilarConditionValue.toString(),
+        cheifComplain: cheifComplains.toString(),
+        hasAllergies: hasAllergiesValue.toString(),
+        patientUndergoSurgery: patientUndergoSurgeryValue.toString(),
+        patientTakingMedication: patientTakingMedicationValue.toString(),
+        filePath: directory,
+        chiefComplainMessage: otherComplains,
+        patientTakingMedicationMessage: medicationComment);
+  }
+
+  setStateClean() {
+    state = ScreeningEntity(
+        uid: '',
+        historyOfIllness: '',
+        healthWorkerComment: '',
+        frameOfInterest: '',
+        temperature: "",
+        bloodPressure: "",
+        height: "",
+        weight: "",
+        hasSimilarCondition: false.toString(),
+        hasAllergies: false.toString(),
+        patientUndergoSurgery: false.toString(),
+        patientTakingMedication: false.toString(),
+        cheifComplain: ["", "", "", "", "", ""].toString(),
+        filePath: '',
+        chiefComplainMessage: '',
+        patientTakingMedicationMessage: '');
   }
 }
 
