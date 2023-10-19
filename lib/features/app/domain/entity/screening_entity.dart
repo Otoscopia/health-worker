@@ -1,18 +1,22 @@
 class ScreeningEntity {
+  String uid;
   String historyOfIllness;
   String healthWorkerComment;
   String frameOfInterest;
   String filePath;
   String bloodPressure;
-  double temperature, height, weight;
-  bool hasSimilarCondition;
-  bool hasAllergies;
-  bool patientUndergoSurgery;
-  bool patientTakingMedication;
+  String temperature;
+  String height;
+  String weight;
+  String hasSimilarCondition;
+  String hasAllergies;
+  String patientUndergoSurgery;
+  String patientTakingMedication;
   String? chiefComplainMessage, patientTakingMedicationMessage;
-  List<String> cheifComplain;
+  String cheifComplain;
 
   ScreeningEntity({
+    required this.uid,
     required this.historyOfIllness,
     required this.healthWorkerComment,
     required this.frameOfInterest,
