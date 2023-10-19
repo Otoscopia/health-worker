@@ -39,6 +39,10 @@ class AuthenticationNotifier extends StateNotifier<AuthenticationEntity> {
     }
   }
 
+  setAuthenicated(bool authenticated) {
+    state = AuthenticationEntity(loading: false, error: false, authenticated: authenticated);
+  }
+
   signOut() async {
     final provider = ref.read(userProvider);
     account.deleteSession(sessionId: currentSession);
