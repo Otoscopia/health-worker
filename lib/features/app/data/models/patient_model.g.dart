@@ -37,28 +37,33 @@ const PatientModelSchema = CollectionSchema(
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
-    r'fullName': PropertySchema(
+    r'createdBy': PropertySchema(
       id: 4,
+      name: r'createdBy',
+      type: IsarType.string,
+    ),
+    r'fullName': PropertySchema(
+      id: 5,
       name: r'fullName',
       type: IsarType.string,
     ),
     r'gender': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'gender',
       type: IsarType.string,
     ),
     r'schoolID': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'schoolID',
       type: IsarType.string,
     ),
     r'schoolName': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'schoolName',
       type: IsarType.string,
     ),
     r'uid': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'uid',
       type: IsarType.string,
     )
@@ -69,14 +74,7 @@ const PatientModelSchema = CollectionSchema(
   deserializeProp: _patientModelDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {
-    r'createdBy': LinkSchema(
-      id: -2570396494056724492,
-      name: r'createdBy',
-      target: r'user',
-      single: true,
-    )
-  },
+  links: {},
   embeddedSchemas: {},
   getId: _patientModelGetId,
   getLinks: _patientModelGetLinks,
@@ -93,6 +91,7 @@ int _patientModelEstimateSize(
   bytesCount += 3 + object.avatar.length * 3;
   bytesCount += 3 + object.birthdate.length * 3;
   bytesCount += 3 + object.contactNumber.length * 3;
+  bytesCount += 3 + object.createdBy.length * 3;
   bytesCount += 3 + object.fullName.length * 3;
   bytesCount += 3 + object.gender.length * 3;
   bytesCount += 3 + object.schoolID.length * 3;
@@ -111,11 +110,12 @@ void _patientModelSerialize(
   writer.writeString(offsets[1], object.birthdate);
   writer.writeString(offsets[2], object.contactNumber);
   writer.writeDateTime(offsets[3], object.createdAt);
-  writer.writeString(offsets[4], object.fullName);
-  writer.writeString(offsets[5], object.gender);
-  writer.writeString(offsets[6], object.schoolID);
-  writer.writeString(offsets[7], object.schoolName);
-  writer.writeString(offsets[8], object.uid);
+  writer.writeString(offsets[4], object.createdBy);
+  writer.writeString(offsets[5], object.fullName);
+  writer.writeString(offsets[6], object.gender);
+  writer.writeString(offsets[7], object.schoolID);
+  writer.writeString(offsets[8], object.schoolName);
+  writer.writeString(offsets[9], object.uid);
 }
 
 PatientModel _patientModelDeserialize(
@@ -128,13 +128,14 @@ PatientModel _patientModelDeserialize(
     avatar: reader.readString(offsets[0]),
     birthdate: reader.readString(offsets[1]),
     contactNumber: reader.readString(offsets[2]),
-    createdAt: reader.readDateTime(offsets[3]),
-    fullName: reader.readString(offsets[4]),
-    gender: reader.readString(offsets[5]),
-    schoolID: reader.readString(offsets[6]),
-    schoolName: reader.readString(offsets[7]),
-    uid: reader.readString(offsets[8]),
+    createdBy: reader.readString(offsets[4]),
+    fullName: reader.readString(offsets[5]),
+    gender: reader.readString(offsets[6]),
+    schoolID: reader.readString(offsets[7]),
+    schoolName: reader.readString(offsets[8]),
+    uid: reader.readString(offsets[9]),
   );
+  object.createdAt = reader.readDateTime(offsets[3]);
   object.id = id;
   return object;
 }
@@ -164,6 +165,8 @@ P _patientModelDeserializeProp<P>(
       return (reader.readString(offset)) as P;
     case 8:
       return (reader.readString(offset)) as P;
+    case 9:
+      return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -174,14 +177,12 @@ Id _patientModelGetId(PatientModel object) {
 }
 
 List<IsarLinkBase<dynamic>> _patientModelGetLinks(PatientModel object) {
-  return [object.createdBy];
+  return [];
 }
 
 void _patientModelAttach(
     IsarCollection<dynamic> col, Id id, PatientModel object) {
   object.id = id;
-  object.createdBy
-      .attach(col, col.isar.collection<UserModel>(), r'createdBy', id);
 }
 
 extension PatientModelQueryWhereSort
@@ -724,6 +725,142 @@ extension PatientModelQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'createdBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'createdBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'createdBy',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'createdBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'createdBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'createdBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'createdBy',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdBy',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
+      createdByIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'createdBy',
+        value: '',
       ));
     });
   }
@@ -1461,21 +1598,7 @@ extension PatientModelQueryObject
     on QueryBuilder<PatientModel, PatientModel, QFilterCondition> {}
 
 extension PatientModelQueryLinks
-    on QueryBuilder<PatientModel, PatientModel, QFilterCondition> {
-  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition> createdBy(
-      FilterQuery<UserModel> q) {
-    return QueryBuilder.apply(this, (query) {
-      return query.link(q, r'createdBy');
-    });
-  }
-
-  QueryBuilder<PatientModel, PatientModel, QAfterFilterCondition>
-      createdByIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.linkLength(r'createdBy', 0, true, 0, true);
-    });
-  }
-}
+    on QueryBuilder<PatientModel, PatientModel, QFilterCondition> {}
 
 extension PatientModelQuerySortBy
     on QueryBuilder<PatientModel, PatientModel, QSortBy> {
@@ -1525,6 +1648,18 @@ extension PatientModelQuerySortBy
   QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByCreatedBy() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdBy', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> sortByCreatedByDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdBy', Sort.desc);
     });
   }
 
@@ -1641,6 +1776,18 @@ extension PatientModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByCreatedBy() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdBy', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByCreatedByDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdBy', Sort.desc);
+    });
+  }
+
   QueryBuilder<PatientModel, PatientModel, QAfterSortBy> thenByFullName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'fullName', Sort.asc);
@@ -1745,6 +1892,13 @@ extension PatientModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<PatientModel, PatientModel, QDistinct> distinctByCreatedBy(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'createdBy', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<PatientModel, PatientModel, QDistinct> distinctByFullName(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1810,6 +1964,12 @@ extension PatientModelQueryProperty
   QueryBuilder<PatientModel, DateTime, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
+    });
+  }
+
+  QueryBuilder<PatientModel, String, QQueryOperations> createdByProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'createdBy');
     });
   }
 
