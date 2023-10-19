@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/config/exports.dart';
 import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/app/data/models/patient_model.dart';
+import 'package:health_worker/features/app/presentation/pages/patient_record.dart';
 
 class SearchBox extends ConsumerWidget {
   final String label;
@@ -23,10 +25,13 @@ class SearchBox extends ConsumerWidget {
       clearButtonEnabled: true,
       enableKeyboardControls: true,
       unfocusedColor: transparent,
-      decoration: const BoxDecoration( color: transparent, border: borderNone),
+      decoration: const BoxDecoration(color: transparent, border: borderNone),
       onSelected: (value) {
+        String? values = value.value;
         // TODO: [OT-11] Navigate to Patient Information Screen
-        Navigator.push(context, FluentPageRoute(builder: (context) => Container()));
+        if (values != null && values.isNotEmpty) {
+          Navigator.push(context, FluentPageRoute(builder: (context) => PatientRecord(patient: PatientModel.fromString(values))));
+        }
       },
     );
   }
