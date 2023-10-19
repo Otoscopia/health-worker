@@ -6,16 +6,13 @@ import "package:camera_platform_interface/camera_platform_interface.dart";
 import "package:fluent_ui/fluent_ui.dart";
 import "package:flutter/services.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import 'package:health_worker/features/app/domain/functions/encryption.dart';
-import "package:health_worker/features/app/presentation/pages/screening_information.dart";
 import "package:ionicons/ionicons.dart";
-import "package:path_provider/path_provider.dart";
 import "package:styled_widget/styled_widget.dart";
-import 'package:encrypt/encrypt.dart' as encrypt;
 
-import "package:health_worker/core/widgets/info_bar_pop_up.dart";
+import "package:health_worker/config/themes/colors.dart";
+import "package:health_worker/core/exports.dart";
 import "package:health_worker/dependency_injection.dart";
-import "package:health_worker/features/app/presentation/providers/patient_information_provider.dart";
+import "package:health_worker/features/app/exports.dart";
 
 class RightCamera extends ConsumerStatefulWidget {
   const RightCamera({Key? key}) : super(key: key);
@@ -218,11 +215,6 @@ class _CameraState extends ConsumerState<RightCamera> {
     }
   }
 
-  /// Builds the camera preview using the _previewSize defined.
-  Widget _buildPreview() {
-    return CameraPlatform.instance.buildPreview(_cameraId);
-  }
-
   /// Takes a photo and stores it in the Photos folder in C:/Users/OneDrive/Photos
   Future<void> _takePicture() async {
     CameraPlatform.instance.takePicture(_cameraId).then((value) async {
@@ -233,26 +225,13 @@ class _CameraState extends ConsumerState<RightCamera> {
   }
 
   moveFile(File sourceFile, String fileName) async {
-    String folder = ref.watch(patientProvider).uid;
-    final Directory tempDir = await getApplicationDocumentsDirectory();
-    final String path = "${tempDir.path}\\Otoscopia\\$folder";
-    final Directory newPath = await Directory(path).create(recursive: true);
-    final String finalPath = "${newPath.path}\\right-$fileName";
+    final patientUid = ref.watch(patientProvider).uid;
+    final String filePath = "$applicationPath\\$patientUid";
+    final Directory fileDirectory = await Directory(filePath).create(recursive: true);
+    final String filePosition = "right-$fileName";
+    final String finalFilePath = "${fileDirectory.path}\\$filePosition";
 
-    // get user uid from the database
-    var user = await database.userDao.fetchUser();
-
-    // read the key from the secure storage
-    var storageValue = await storage.read(key: user.first.uid!);
-
-    // only use the first 32 characters
-    var key = storageValue!.substring(0, 32);
-
-    final encrypter = encrypt.Encrypter(encrypt.AES(encrypt.Key.fromUtf8(key)));
-
-    final file = await sourceFile.rename(finalPath);
-
-    await encryptFileFunction(file, encrypter, 'right-$fileName');
+    await sourceFile.rename(finalFilePath);
   }
 
   /// Records a timed video and stores it in the Videos folder in C:/Users/OneDrive/Videos
@@ -320,161 +299,180 @@ class _CameraState extends ConsumerState<RightCamera> {
   Widget build(BuildContext context) {
     return ScaffoldPage(
       padding: EdgeInsets.zero,
-      content: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Card(
-          child: Stack(
-            children: [
-              Column(
+      content: ContainerBox(
+        child: Stack(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(top: 23, left: 75),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: const Text("Right Ear").bold().fontSize(24),
+                )),
+            Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: StreamBuilder(
+                      stream: recordStartTimer(!_recording),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Text(snapshot.data.toString()).bold();
+                        } else {
+                          return const Text("00:00");
+                        }
+                      }),
+                )),
+            Center(
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(width: double.infinity),
-                  const Text("Right Ear").fontSize(24).bold(),
-                  const SizedBox(height: 8),
-                  if (_cameras.isEmpty)
-                    SizedBox(
-                      width: 100,
-                      child: FilledButton(
-                        onPressed: _fetchCameras,
-                        child: const Text("Recheck available cameras"),
+                  if (_initialised && _cameraId > 0 && _previewSize != null)
+                    Container(
+                      constraints: BoxConstraints(
+                          minHeight: 500,
+                          maxHeight: MediaQuery.of(context).size.height - 191),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: AspectRatio(
+                          aspectRatio:
+                              _previewSize!.width / _previewSize!.height,
+                          child:
+                              CameraPlatform.instance.buildPreview(_cameraId),
+                        ),
                       ),
                     ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      FilledButton(
-                        onPressed: _initialised
-                            ? _disposeCurrentCamera
-                            : _initiliaseCamera,
-                        child: Text(
-                            _initialised ? "Dipose Camera" : "Create Camera"),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      FilledButton(
-                        onPressed: _initialised ? _takePicture : null,
-                        child: const Text("Take a picture"),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      FilledButton(
+                  largeWidth,
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 64),
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: secondary,
+                          borderRadius: BorderRadius.circular(999)),
+                      child: IconButton(
+                          icon: const Icon(Ionicons.camera_outline, size: 28),
+                          onPressed: _initialised ? _takePicture : null),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(999)),
+                      child: IconButton(
+                        icon: const Icon(Ionicons.videocam, size: 28),
                         onPressed:
                             (_initialised && !_recording && !_recordingTimed)
                                 ? () => _recordTimed(15)
                                 : null,
-                        child: const Text("Record 15 seconds"),
-                      ),
-                      if (_cameras.length > 1) ...[
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        FilledButton(
-                          onPressed: _switchCamera,
-                          child: const Text("Switch Camera"),
-                        ),
-                      ]
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  if (_initialised && _cameraId > 0 && _previewSize != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          constraints: const BoxConstraints(maxHeight: 500),
-                          child: AspectRatio(
-                            aspectRatio:
-                                _previewSize!.width / _previewSize!.height,
-                            child: _buildPreview(),
-                          ),
-                        ),
                       ),
                     ),
-                ],
-              ),
-              Positioned(
-                top: 16,
-                left: 16,
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: IconButton(
-                    style: ButtonStyle(iconSize: ButtonState.all(32)),
-                    icon: const Icon(Ionicons.close_outline),
-                    onPressed: () {
-                      _disposeCurrentCamera();
-                      Navigator.pop(context);
-                    },
-                  ),
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(999)),
+                      child: IconButton(
+                          icon: const Icon(Ionicons.camera_reverse_outline,
+                              size: 28),
+                          onPressed: _switchCamera),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(999)),
+                      child: IconButton(
+                        icon: const Icon(Ionicons.checkmark_done, size: 28),
+                        onPressed: () async {
+                          try {
+                            continueButton(context);
+                          } catch (error) {
+                            popUpInfoBar(context, InfoBarSeverity.warning,
+                                errorLabel, noFilesFound, 5);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Positioned(
-                bottom: 16,
-                right: 16,
-                child: MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: IconButton(
-                    style: ButtonStyle(iconSize: ButtonState.all(32)),
-                    icon: const Icon(Ionicons.checkmark_outline),
-                    onPressed: () async {
-                      String folder = ref.watch(patientProvider).uid;
-                      getApplicationDocumentsDirectory().then((tempDir) {
-                        final Directory dir =
-                            Directory("${tempDir.path}\\Otoscopia\\$folder");
-
-                        if (dir.listSync().isEmpty) {
-                          popUpInfoBar(
-                              context,
-                              InfoBarSeverity.warning,
-                              "Ohh ohh!",
-                              "You cannot continue unless you take a picture or a video",
-                              5);
-                        } else {
-                          List<FileSystemEntity> files = dir.listSync();
-
-                          bool fileExist = false;
-
-                          for (FileSystemEntity file in files) {
-                            if (FileSystemEntity.isFileSync(file.path) &&
-                                file.path.contains('right-')) {
-                              fileExist = true;
-                              break;
-                            }
-                          }
-
-                          if (fileExist) {
-                            _disposeCurrentCamera();
-
-                            Navigator.push(
-                              context,
-                              FluentPageRoute(
-                                builder: (context) => const ScreeningInformation(),
-                              ),
-                            );
-                          } else {
-                            popUpInfoBar(
-                              context,
-                              InfoBarSeverity.warning,
-                              "Ohh ohh!",
-                              "You cannot continue unless you take a picture or a video",
-                              5);
-                          }
-                        }
-                      });
-                    },
-                  ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(bottom: 32),
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: FilledButton(
+                      onPressed: _initialised
+                          ? _disposeCurrentCamera
+                          : _initiliaseCamera,
+                      child: Text(
+                          _initialised ? "Dipose Camera" : "Create Camera")),
+                )),
+            Positioned(
+              top: 16,
+              left: 16,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: IconButton(
+                  style: ButtonStyle(iconSize: ButtonState.all(32)),
+                  icon: const Icon(Ionicons.close_outline),
+                  onPressed: () {
+                    _disposeCurrentCamera();
+                    Navigator.pop(context);
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  void continueButton(BuildContext context) {
+    String patientUid = ref.watch(patientProvider).uid;
+    final directory = Directory("$applicationPath\\$patientUid");
+
+    if (directory.listSync().isEmpty) {
+      popUpInfoBar(
+          context, InfoBarSeverity.warning, errorLabel, noFilesFound, 5);
+    } else {
+      List<FileSystemEntity> files = directory.listSync();
+
+      bool fileExist = false;
+
+      for (FileSystemEntity file in files) {
+        if (FileSystemEntity.isFileSync(file.path) &&
+            file.path.contains('right-')) {
+          fileExist = true;
+          break;
+        }
+      }
+
+      if (fileExist) {
+        _disposeCurrentCamera();
+
+        Navigator.push(
+          context,
+          FluentPageRoute(
+            builder: (context) => ScreeningInformation(directory: directory),
+          ),
+        );
+      } else {
+        popUpInfoBar(
+            context, InfoBarSeverity.warning, errorLabel, noFilesFound, 5);
+      }
+    }
   }
 }
