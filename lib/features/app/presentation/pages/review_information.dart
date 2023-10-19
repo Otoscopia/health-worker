@@ -2,308 +2,220 @@ import 'dart:io';
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:getwidget/components/avatar/gf_avatar.dart';
+import 'package:health_worker/features/app/domain/usestate/post_medical_record.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:styled_widget/styled_widget.dart';
 
-import 'package:health_worker/config/themes/colors.dart';
-import 'package:health_worker/core/constants/constants.dart';
-import 'package:health_worker/core/widgets/container_box.dart';
-import 'package:health_worker/features/app/presentation/providers/patient_information_provider.dart';
-import 'package:health_worker/features/app/presentation/providers/screening_provider.dart';
-import 'package:health_worker/features/app/presentation/widgets/review_information/rich_text.dart';
-import 'package:health_worker/features/authentication/presentation/providers/application_provider.dart.dart';
+import 'package:health_worker/config/exports.dart';
+import 'package:health_worker/core/exports.dart';
+import 'package:health_worker/features/app/exports.dart';
+import 'package:health_worker/features/authentication/exports.dart';
 
 class ReviewInformation extends ConsumerWidget {
   const ReviewInformation({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String examiner = ref.watch(applicationProvider).name!;
-    String patientName = ref.watch(patientProvider).fullName;
-    String patientBirthdate = ref.watch(patientProvider).birthdate;
-    String formattedBirthdate =
-        DateFormat('MMMM d, y').format(DateTime.parse(patientBirthdate));
-    int patientAge =
-        DateTime.now().year - DateTime.parse(patientBirthdate).year;
-    String patientGender = ref.watch(patientProvider).gender;
-    String patientSchool = ref.watch(patientProvider).schoolName;
-    String patientContactNumber = ref.watch(patientProvider).contactNumber;
-    String screenedOn = DateFormat('MMM d, y').format(DateTime.now());
-    String cheifComplains = ref.watch(screeningProvider).complains;
-    double weight = ref.watch(screeningProvider).weight;
-    double height = ref.watch(screeningProvider).height;
-    double temperature = ref.watch(screeningProvider).temperature;
-    double bloodPressure = ref.watch(screeningProvider).bloodPressure;
-
-    String? generalComplains =
-        ref.watch(screeningProvider).chiefComplainMessage;
-    String frameOfInterest = ref.watch(screeningProvider).frameOfInterest;
+    final examiner = ref.read(userProvider).name;
+    final performedAt = DateTime.now();
+    final cheifComplain = ref.read(screeningProvider).cheifComplain;
+    List<String> arrayComplain = cheifComplain.substring(1, cheifComplain.length - 1).split(", ");
+    // final List<String> arrayComplain = jsonDecode(cheifComplain).cast<String>();
+    final nonEmptyComplains = arrayComplain.where((complain) => complain.isNotEmpty);
+    final joinedComplains =
+        nonEmptyComplains.toList().asMap().entries.map((entry) {
+      final index = entry.key;
+      final complain = entry.value;
+      if (index == nonEmptyComplains.length - 1) {
+        return complain;
+      } else if (index == nonEmptyComplains.length - 2) {
+        return '$complain and';
+      } else {
+        return '$complain,';
+      }
+    }).join(' ');
+    final historyOfIllnessComment =
+        ref.read(screeningProvider).historyOfIllness;
+    final healthWorkerCommentReview =
+        ref.read(screeningProvider).healthWorkerComment;
+    final generalComplain = ref.read(screeningProvider).chiefComplainMessage;
+    final frameOfInteres = ref.read(screeningProvider).frameOfInterest;
+    final hasAllergies = ref.read(screeningProvider).hasAllergies;
+    final similarCondition = ref.read(screeningProvider).hasSimilarCondition;
+    final takingMedication =
+        ref.read(screeningProvider).patientTakingMedication;
+    final takingMedicationMessage =
+        ref.read(screeningProvider).patientTakingMedicationMessage;
+    final undergoSurgery = ref.read(screeningProvider).patientUndergoSurgery;
+    String filePath = ref.watch(screeningProvider).filePath;
+    final Directory dir = Directory(filePath);
+    var leftImageFiles = dir
+        .listSync()
+        .where((element) =>
+            element.path.contains('left-') && element.path.endsWith("jpeg"))
+        .toList();
+    var rightImageFiles = dir
+        .listSync()
+        .where((element) =>
+            element.path.contains('right-') && element.path.endsWith("jpeg"))
+        .toList();
+    // var leftVideoFiles = dir
+    //     .listSync()
+    //     .where((element) =>
+    //         element.path.contains('left-') && element.path.endsWith('mp4'))
+    //     .toList();
+    // var rightVideoFiles = dir
+    //     .listSync()
+    //     .where((element) =>
+    //         element.path.contains('right-') && element.path.endsWith('mp4'))
+    //     .toList();
 
     return ScaffoldPage(
       padding: EdgeInsets.zero,
       content: ContainerBox(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Card(
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    Row(
+          child: ListView(
+            children: [
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: IconButton(
+                          style: ButtonStyle(iconSize: ButtonState.all(32)),
+                          icon: const Icon(Ionicons.close_outline),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      largeWidth,
+                      revewTitle
+                    ],
+                  ),
+                  mediumHeight,
+                  const Divider(),
+                  largeHeight,
+                  const PatientInformationWidget(),
+                  largeHeight,
+                  Card(
+                    borderColor: transparent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: IconButton(
-                            style: ButtonStyle(iconSize: ButtonState.all(32)),
-                            icon: const Icon(Ionicons.close_outline),
-                            onPressed: () {
-                              Navigator.pop(context);
+                        const HealthRecordTitle(),
+                        mediumHeight,
+                        CustomRichText(title: performedBy, value: examiner),
+                        CustomRichText(
+                            title: performedAtLabel,
+                            value:
+                                DateFormat("MMM. dd, y").format(performedAt)),
+                        largeHeight,
+                        CustomRichText(
+                            title: historyOfIllness,
+                            value: historyOfIllnessComment),
+                        CustomRichText(
+                            title: complainsLabel, value: joinedComplains),
+                        if (generalComplain != null &&
+                            generalComplain.isNotEmpty)
+                          CustomRichText(
+                              title: generalComplains, value: generalComplain),
+                        largeHeight,
+                        CustomRichText(
+                            title: patientAllergyTitle,
+                            value: bool.parse(hasAllergies) ? "Yes" : "No"),
+                        CustomRichText(
+                            title: patientSimilarConditionTitle,
+                            value: bool.parse(similarCondition) ? "Yes" : "No"),
+                        CustomRichText(
+                            title: patientSurgicalTitle,
+                            value: bool.parse(undergoSurgery) ? "Yes" : "No"),
+                        CustomRichText(
+                            title: patientMedication,
+                            value: bool.parse(takingMedication) ? "Yes" : "No"),
+                        if (takingMedicationMessage != null &&
+                            takingMedicationMessage.isNotEmpty)
+                          CustomRichText(
+                              title: "Medication Status",
+                              value: takingMedicationMessage),
+                        largeHeight,
+                        CustomRichText(
+                            title: healthWorkerComment,
+                            value: healthWorkerCommentReview),
+                        CustomRichText(
+                            title: frameOfInterest, value: frameOfInteres),
+                        largeHeight,
+                        const Text("Left Ears Images").fontSize(16).bold(),
+                        SizedBox(
+                            height: 210,
+                            child: ResponsiveGridList(
+                                minItemsPerRow: 3,
+                                maxItemsPerRow: 6,
+                                minItemWidth: 250,
+                                children: leftImageFiles
+                                    .map((e) => Image.file(File(e.path)))
+                                    .toList())),
+                        largeHeight,
+                        const Text("Left Ears Videos (BUG)")
+                            .fontSize(16)
+                            .bold(),
+
+                        // SizedBox(
+                        //     height: 400,
+                        //     child: ResponsiveGridList(
+                        //         maxItemsPerRow: 3,
+                        //         minItemWidth: 250,
+                        //         children: leftVideoFiles
+                        //             .map((e) => VideoWidget(url: File(e.path)))
+                        //             .toList())),
+                        largeHeight,
+                        const Divider(),
+                        largeHeight,
+                        const Text("Right Ears").fontSize(16).bold(),
+                        largeHeight,
+                        SizedBox(
+                            height: 210,
+                            child: ResponsiveGridList(
+                                minItemsPerRow: 3,
+                                maxItemsPerRow: 6,
+                                minItemWidth: 250,
+                                children: rightImageFiles
+                                    .map((e) => Image.file(File(e.path)))
+                                    .toList())),
+                        const Text("Right Ears Videos (BUG)")
+                            .fontSize(16)
+                            .bold(),
+                        // SizedBox(
+                        //     height: 400,
+                        //     child: ResponsiveGridList(
+                        //         maxItemsPerRow: 3,
+                        //         minItemWidth: 250,
+                        //         children: rightVideoFiles
+                        //             .map((e) => VideoWidget(url: File(e.path)))
+                        //             .toList())),
+                        // mediumHeight,
+                        largeHeight,
+                        Center(
+                          child: FilledButton(
+                            child: const Text("Submit"),
+                            onPressed: () async {
+                              uploadMedicalRecord(ref).then((value) => Navigator.popUntil(context, (route) => route.isFirst));
                             },
                           ),
-                        ),
-                        const SizedBox(width: 16),
-                        const Text("Review Record").bold().fontSize(16)
+                        )
                       ],
                     ),
-                    mediumHeight,
-                    const Divider(),
-                    largeHeight,
-                    Card(
-                      borderColor: transparent,
-                      child: Row(
-                        children: [
-                          const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                GFAvatar(size: 64),
-                                SizedBox(height: 16),
-                                Text("Initial Diagnosis")
-                              ]),
-                          Expanded(
-                            child: ListTile(
-                              title: Text(patientName).bold(),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CustomRichText(
-                                      title: "Birthday",
-                                      value: formattedBirthdate),
-                                  CustomRichText(
-                                      title: "Age",
-                                      value: patientAge.toString()),
-                                  CustomRichText(
-                                      title: "Gender", value: patientGender),
-                                  CustomRichText(
-                                      title: "School", value: patientSchool),
-                                  CustomRichText(
-                                      title: "Contact Number",
-                                      value: patientContactNumber),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Card(
-                      backgroundColor: darkBackgroundAccent,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text.rich(
-                            TextSpan(
-                              text: "Health Record ",
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 16),
-                              children: [
-                                const TextSpan(
-                                  text: "(Initial Diagnosis Status: ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                                TextSpan(
-                                  text: "Pending",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red,
-                                      fontSize: 14),
-                                ),
-                                const TextSpan(
-                                  text: ")",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ),
-                          CustomRichText(
-                              title: "Performed By", value: examiner),
-                          CustomRichText(title: "Date", value: screenedOn),
-                          largeHeight,
-                          CustomRichText(
-                              title: "Cheif Complains", value: cheifComplains),
-                          if (generalComplains != null &&
-                              generalComplains.isNotEmpty)
-                            CustomRichText(
-                                title: "General Complain",
-                                value: generalComplains),
-                          CustomRichText(
-                              title: "Frame of Interest",
-                              value: frameOfInterest),
-                          const SizedBox(height: 16),
-                          const Text("Vitals").fontSize(16).bold(),
-                          const SizedBox(height: 8),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)),
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Icon(Ionicons.barbell),
-                                    const SizedBox(width: 8),
-                                    Column(
-                                      children: [
-                                        const Text("Weight"),
-                                        Text("$weight kg").bold(),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)),
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Icon(Ionicons.body),
-                                    const SizedBox(width: 8),
-                                    Column(
-                                      children: [
-                                        const Text("Height"),
-                                        Text("$height cm").bold(),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)),
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Icon(Ionicons.thermometer),
-                                    const SizedBox(width: 8),
-                                    Column(
-                                      children: [
-                                        const Text("Temperature"),
-                                        Text("$temperature°C").bold(),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)),
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Icon(Ionicons.eyedrop_outline),
-                                    const SizedBox(width: 8),
-                                    Column(
-                                      children: [
-                                        const Text("Blood Pressure"),
-                                        Text("$bloodPressure mmHg").bold(),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              const Text(
-                                  "Does the patient have any allergies?"),
-                              const SizedBox(width: 16),
-                              Checkbox(
-                                checked: false,
-                                onChanged: (value) {},
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              const Text(
-                                  "Does the patient undergo any surgical procedure in the past?"),
-                              const SizedBox(width: 16),
-                              Checkbox(
-                                checked: true,
-                                onChanged: (value) {},
-                              )
-                            ],
-                          ),
-                          const SizedBox(height: 8),
-                          Row(
-                            children: [
-                              const Text(
-                                  "Does the patient currently taking any medication?"),
-                              const SizedBox(width: 16),
-                              Checkbox(
-                                checked: true,
-                                onChanged: (value) {},
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Center(
-                            child: FilledButton(
-                              child: const Text("Submit"),
-                              onPressed: () {
-                                Navigator.popUntil(
-                                    context, (route) => route.isFirst);
-                              },
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-}
-
-Future<List<FileSystemEntity>> fetchLeftAssets(String uid) async {
-  final tempDir = await getApplicationDocumentsDirectory();
-  final Directory dir = Directory("${tempDir.path}\\Otoscopia\\$uid");
-  var imageFiles = dir.listSync();
-
-  return imageFiles;
 }
