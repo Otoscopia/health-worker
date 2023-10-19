@@ -43,9 +43,9 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
     var temperatureValue = temperature;
     var heightValue = height;
     var weightValue = weight;
-    var hasSimilarConditionValue = similarCondition == 1 ? true : false;
-    var hasAllergiesValue = allergies == 1 ? true : false;
-    var patientUndergoSurgeryValue = surgicalProcedure == 1 ? true : false;
+    var hasSimilarConditionValue = similarCondition == 0 ? true : false;
+    var hasAllergiesValue = allergies == 0 ? true : false;
+    var patientUndergoSurgeryValue = surgicalProcedure == 0 ? true : false;
     var patientTakingMedicationValue = medication == 0 ? true : false;
 
     state = ScreeningEntity(
