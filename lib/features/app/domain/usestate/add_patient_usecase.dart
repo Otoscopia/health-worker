@@ -4,22 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/features/app/exports.dart';
 
 addPatient(BuildContext context, WidgetRef ref, GlobalKey<FormState> globalKey) {
-  String fullname = ref.watch(fullnameProvider);
-  int gender = ref.watch(genderProvider);
-  DateTime birthdate = ref.watch(birthdateProvider);
-  String contactNumber = ref.watch(contactNumberProvider);
-  String schoolName = ref.watch(schoolIdProvider);
-  String schoolId = ref.watch(schoolIdProvider);
+  String fullname = ref.read(fullnameProvider);
+  int gender = ref.read(genderProvider);
+  DateTime birthdate = ref.read(birthdateProvider);
+  String contactNumber = ref.read(contactNumberProvider);
+  String schoolName = ref.read(schoolNameProvider);
+  String schoolId = ref.read(schoolIdProvider);
 
   if (gender == 3 && isBirthdateToday(birthdate) && globalKey.currentState!.validate()) {
-    ref.watch(genderErrorProvider.notifier).setGenderError(true);
-    ref.watch(birthdateErrorProvider.notifier).setBirthdateError(true);
+    ref.read(genderErrorProvider.notifier).setGenderError(true);
+    ref.read(birthdateErrorProvider.notifier).setBirthdateError(true);
   } else if (isBirthdateToday(birthdate)) {
-    ref.watch(birthdateErrorProvider.notifier).setBirthdateError(true);
+    ref.read(birthdateErrorProvider.notifier).setBirthdateError(true);
   } else if (gender == 3) {
-    ref.watch(genderErrorProvider.notifier).setGenderError(true);
+    ref.read(genderErrorProvider.notifier).setGenderError(true);
   } else if (globalKey.currentState!.validate() && gender != 3 && !isBirthdateToday(birthdate)) {
-    ref.watch(patientProvider.notifier).addNewPatient(fullname, gender, birthdate, contactNumber, schoolName, schoolId);
+    ref.read(patientProvider.notifier).addNewPatient(fullname, gender, birthdate, contactNumber, schoolName, schoolId);
     Navigator.push(context, FluentPageRoute(builder: (context) => const LeftCamera()));
   }
 }
