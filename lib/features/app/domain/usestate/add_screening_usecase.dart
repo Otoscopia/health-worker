@@ -6,8 +6,7 @@ import 'package:health_worker/dependency_injection.dart';
 
 import 'package:health_worker/features/app/exports.dart';
 
-addScreeningInformation(BuildContext context, WidgetRef ref,
-    Directory directory, GlobalKey<FormState> key) async {
+addScreeningInformation(BuildContext context, WidgetRef ref, Directory directory, GlobalKey<FormState> key) async {
   String historyOfIllness = ref.read(historyOfIllnessProvider);
   String healthWorkerComment = ref.read(healthWorkerCommentProvider);
   String frameOfInterest = ref.read(frameOfInterestCommentProvider);
@@ -17,26 +16,18 @@ addScreeningInformation(BuildContext context, WidgetRef ref,
   String weight = ref.read(weightProvider);
   int similarCondition = ref.read(similarConditionProvider);
   List<bool> cheifComplains = ref.read(cheifComplainProvider);
-  List<String> chiefComplainStrings = List.generate(
-      cheifComplains.length, (index) => checker(cheifComplains, index));
+  List<String> chiefComplainStrings = List.generate(cheifComplains.length, (index) => checker(cheifComplains, index));
   String otherComplains = ref.read(otherComplainProvider);
   int allergies = ref.read(haveAllergiesProvider);
   int surgicalProcedure = ref.read(undergoSurgeryProvider);
   int medication = ref.read(takingMedicationProvider);
   String medicationComment = ref.read(medicationProvider);
 
-  if (key.currentState!.validate() &&
-          similarCondition != 3 &&
-          cheifComplains.contains(true) ||
-      (cheifComplains.contains(true) && otherComplains.isEmpty) &&
-          allergies != 3 &&
-          surgicalProcedure != 3 &&
-          medication != 3 &&
-          (medication == 1 && medicationComment.isNotEmpty)) {
-    Navigator.push(context,
-        FluentPageRoute(builder: ((context) => const ReviewInformation())));
+  if (key.currentState!.validate() && similarCondition != 3 && cheifComplains.contains(true) || (cheifComplains.contains(true) && otherComplains.isEmpty) && allergies != 3 && surgicalProcedure != 3 && medication != 3 && (medication == 1 && medicationComment.isNotEmpty)) {
+
+    Navigator.push(context, FluentPageRoute(builder: ((context) => const ReviewInformation())));
     await ref.read(screeningProvider.notifier).setProvider(
-      uuid.v4(),
+        uuid.v4(),
         historyOfIllness,
         healthWorkerComment,
         frameOfInterest,
@@ -51,7 +42,6 @@ addScreeningInformation(BuildContext context, WidgetRef ref,
         surgicalProcedure,
         medication,
         medicationComment,
-        directory.path,
         ref);
   } else {
     if (key.currentState!.validate()) {}
