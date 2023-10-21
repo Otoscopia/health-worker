@@ -46,9 +46,6 @@ const String bloodPressureErrorOne = "Please enter a valid blood pressure";
 const String bloodPressureErrorTwo = "Please enter a valid blood pressure, must be below 120";
 const String bloodPressureErrorThree = "Please enter a valid blood pressure, must be below 120";
 
-Icon temperatureIcon = const Icon(Ionicons.thermometer);
-Icon bloodPressureIcon = const Icon(Ionicons.git_network);
-
 FilteringTextInputFormatter filterText = FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z ,().]'));
 
 const String cheifComplainLabel = "Cheif Complains";
