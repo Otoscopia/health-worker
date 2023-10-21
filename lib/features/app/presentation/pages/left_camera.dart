@@ -227,10 +227,8 @@ class _CameraState extends ConsumerState<LeftCamera> {
   moveFile(File sourceFile, String fileName) async {
     final patientUid = ref.watch(patientProvider).uid;
     final String filePath = "$applicationPath\\$patientUid";
-    final Directory fileDirectory =
-        await Directory(filePath).create(recursive: true);
     final String filePosition = "left-$fileName";
-    final String finalFilePath = "${fileDirectory.path}\\$filePosition";
+    final String finalFilePath = "$filePath\\$filePosition";
 
     await sourceFile.rename(finalFilePath);
   }
