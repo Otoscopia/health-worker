@@ -76,7 +76,7 @@ export 'presentation/widgets/dashboard_widgets/top_widgets/setting_widget.dart';
 export 'presentation/widgets/dashboard_widgets/top_widgets/user_button_widget.dart';
 
 // presentation widgets review information imports
-export 'presentation/widgets/review_information/rich_text.dart';
+export 'presentation/widgets/rich_text.dart';
 export 'presentation/widgets/review_information/patient_information.dart';
 export 'presentation/widgets/review_information/vital_card.dart';
 export 'presentation/widgets/review_information/vital_widget.dart';
