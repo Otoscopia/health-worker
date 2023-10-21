@@ -56,3 +56,9 @@ const String proceedLabel = "Proceed";
 const String continueLabel = "Continue";
 
 const Border borderNone = Border.fromBorderSide(BorderSide.none);
+
+Icon uploadedIcon = const Icon(Ionicons.cloud_upload);
+Icon weightIcon = const Icon(Ionicons.barbell);
+Icon heightIcon = const Icon(Ionicons.body);
+Icon temperatureIcon = const Icon(Ionicons.thermometer);
+Icon bloodPressureIcon = const Icon(Ionicons.git_network);
