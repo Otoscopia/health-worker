@@ -3,7 +3,6 @@ class ScreeningEntity {
   String historyOfIllness;
   String healthWorkerComment;
   String frameOfInterest;
-  String filePath;
   String bloodPressure;
   String temperature;
   String height;
@@ -31,6 +30,5 @@ class ScreeningEntity {
     required this.patientTakingMedication,
     required this.chiefComplainMessage,
     required this.patientTakingMedicationMessage,
-    required this.filePath,
   });
 }
