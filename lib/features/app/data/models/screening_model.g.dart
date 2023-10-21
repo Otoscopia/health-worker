@@ -37,9 +37,9 @@ const ScreeningModelSchema = CollectionSchema(
       name: r'createdBy',
       type: IsarType.string,
     ),
-    r'filePath': PropertySchema(
+    r'doctorsNote': PropertySchema(
       id: 4,
-      name: r'filePath',
+      name: r'doctorsNote',
       type: IsarType.string,
     ),
     r'frameOfInterest': PropertySchema(
@@ -92,28 +92,38 @@ const ScreeningModelSchema = CollectionSchema(
       name: r'patientUndergoSurgery',
       type: IsarType.string,
     ),
-    r'status': PropertySchema(
+    r'screenedAt': PropertySchema(
       id: 15,
+      name: r'screenedAt',
+      type: IsarType.dateTime,
+    ),
+    r'status': PropertySchema(
+      id: 16,
       name: r'status',
       type: IsarType.string,
     ),
     r'temperature': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'temperature',
       type: IsarType.string,
     ),
     r'uid': PropertySchema(
-      id: 17,
+      id: 18,
       name: r'uid',
       type: IsarType.string,
     ),
-    r'uploadedAt': PropertySchema(
-      id: 18,
-      name: r'uploadedAt',
+    r'verifiedAt': PropertySchema(
+      id: 19,
+      name: r'verifiedAt',
       type: IsarType.dateTime,
     ),
+    r'verifiedBy': PropertySchema(
+      id: 20,
+      name: r'verifiedBy',
+      type: IsarType.string,
+    ),
     r'weight': PropertySchema(
-      id: 19,
+      id: 21,
       name: r'weight',
       type: IsarType.string,
     )
@@ -147,7 +157,12 @@ int _screeningModelEstimateSize(
     }
   }
   bytesCount += 3 + object.createdBy.length * 3;
-  bytesCount += 3 + object.filePath.length * 3;
+  {
+    final value = object.doctorsNote;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.frameOfInterest.length * 3;
   bytesCount += 3 + object.hasAllergies.length * 3;
   bytesCount += 3 + object.hasSimilarCondition.length * 3;
@@ -166,6 +181,12 @@ int _screeningModelEstimateSize(
   bytesCount += 3 + object.status.length * 3;
   bytesCount += 3 + object.temperature.length * 3;
   bytesCount += 3 + object.uid.length * 3;
+  {
+    final value = object.verifiedBy;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.weight.length * 3;
   return bytesCount;
 }
@@ -180,7 +201,7 @@ void _screeningModelSerialize(
   writer.writeString(offsets[1], object.cheifComplain);
   writer.writeString(offsets[2], object.chiefComplainMessage);
   writer.writeString(offsets[3], object.createdBy);
-  writer.writeString(offsets[4], object.filePath);
+  writer.writeString(offsets[4], object.doctorsNote);
   writer.writeString(offsets[5], object.frameOfInterest);
   writer.writeString(offsets[6], object.hasAllergies);
   writer.writeString(offsets[7], object.hasSimilarCondition);
@@ -191,11 +212,13 @@ void _screeningModelSerialize(
   writer.writeString(offsets[12], object.patientTakingMedication);
   writer.writeString(offsets[13], object.patientTakingMedicationMessage);
   writer.writeString(offsets[14], object.patientUndergoSurgery);
-  writer.writeString(offsets[15], object.status);
-  writer.writeString(offsets[16], object.temperature);
-  writer.writeString(offsets[17], object.uid);
-  writer.writeDateTime(offsets[18], object.uploadedAt);
-  writer.writeString(offsets[19], object.weight);
+  writer.writeDateTime(offsets[15], object.screenedAt);
+  writer.writeString(offsets[16], object.status);
+  writer.writeString(offsets[17], object.temperature);
+  writer.writeString(offsets[18], object.uid);
+  writer.writeDateTime(offsets[19], object.verifiedAt);
+  writer.writeString(offsets[20], object.verifiedBy);
+  writer.writeString(offsets[21], object.weight);
 }
 
 ScreeningModel _screeningModelDeserialize(
@@ -209,7 +232,7 @@ ScreeningModel _screeningModelDeserialize(
     cheifComplain: reader.readString(offsets[1]),
     chiefComplainMessage: reader.readStringOrNull(offsets[2]),
     createdBy: reader.readString(offsets[3]),
-    filePath: reader.readString(offsets[4]),
+    doctorsNote: reader.readStringOrNull(offsets[4]),
     frameOfInterest: reader.readString(offsets[5]),
     hasAllergies: reader.readString(offsets[6]),
     hasSimilarCondition: reader.readString(offsets[7]),
@@ -220,13 +243,15 @@ ScreeningModel _screeningModelDeserialize(
     patientTakingMedication: reader.readString(offsets[12]),
     patientTakingMedicationMessage: reader.readStringOrNull(offsets[13]),
     patientUndergoSurgery: reader.readString(offsets[14]),
-    status: reader.readString(offsets[15]),
-    temperature: reader.readString(offsets[16]),
-    uid: reader.readString(offsets[17]),
-    weight: reader.readString(offsets[19]),
+    screenedAt: reader.readDateTime(offsets[15]),
+    status: reader.readString(offsets[16]),
+    temperature: reader.readString(offsets[17]),
+    uid: reader.readString(offsets[18]),
+    verifiedAt: reader.readDateTimeOrNull(offsets[19]),
+    verifiedBy: reader.readStringOrNull(offsets[20]),
+    weight: reader.readString(offsets[21]),
   );
   object.id = id;
-  object.uploadedAt = reader.readDateTime(offsets[18]);
   return object;
 }
 
@@ -246,7 +271,7 @@ P _screeningModelDeserializeProp<P>(
     case 3:
       return (reader.readString(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
@@ -268,14 +293,18 @@ P _screeningModelDeserializeProp<P>(
     case 14:
       return (reader.readString(offset)) as P;
     case 15:
-      return (reader.readString(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 16:
       return (reader.readString(offset)) as P;
     case 17:
       return (reader.readString(offset)) as P;
     case 18:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 19:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 20:
+      return (reader.readStringOrNull(offset)) as P;
+    case 21:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -941,13 +970,31 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathEqualTo(
-    String value, {
+      doctorsNoteIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'doctorsNote',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      doctorsNoteIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'doctorsNote',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      doctorsNoteEqualTo(
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'filePath',
+        property: r'doctorsNote',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -955,15 +1002,15 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathGreaterThan(
-    String value, {
+      doctorsNoteGreaterThan(
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'filePath',
+        property: r'doctorsNote',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -971,15 +1018,15 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathLessThan(
-    String value, {
+      doctorsNoteLessThan(
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'filePath',
+        property: r'doctorsNote',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -987,16 +1034,16 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathBetween(
-    String lower,
-    String upper, {
+      doctorsNoteBetween(
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'filePath',
+        property: r'doctorsNote',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1007,13 +1054,13 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathStartsWith(
+      doctorsNoteStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'filePath',
+        property: r'doctorsNote',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1021,13 +1068,13 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathEndsWith(
+      doctorsNoteEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'filePath',
+        property: r'doctorsNote',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1035,10 +1082,10 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathContains(String value, {bool caseSensitive = true}) {
+      doctorsNoteContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'filePath',
+        property: r'doctorsNote',
         value: value,
         caseSensitive: caseSensitive,
       ));
@@ -1046,10 +1093,10 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathMatches(String pattern, {bool caseSensitive = true}) {
+      doctorsNoteMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'filePath',
+        property: r'doctorsNote',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
@@ -1057,20 +1104,20 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathIsEmpty() {
+      doctorsNoteIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'filePath',
+        property: r'doctorsNote',
         value: '',
       ));
     });
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      filePathIsNotEmpty() {
+      doctorsNoteIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'filePath',
+        property: r'doctorsNote',
         value: '',
       ));
     });
@@ -2515,6 +2562,62 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      screenedAtEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'screenedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      screenedAtGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'screenedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      screenedAtLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'screenedAt',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      screenedAtBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'screenedAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
       statusEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -2923,57 +3026,229 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      uploadedAtEqualTo(DateTime value) {
+      verifiedAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'verifiedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'verifiedAt',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'uploadedAt',
+        property: r'verifiedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      uploadedAtGreaterThan(
-    DateTime value, {
+      verifiedAtGreaterThan(
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'uploadedAt',
+        property: r'verifiedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      uploadedAtLessThan(
-    DateTime value, {
+      verifiedAtLessThan(
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'uploadedAt',
+        property: r'verifiedAt',
         value: value,
       ));
     });
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      uploadedAtBetween(
-    DateTime lower,
-    DateTime upper, {
+      verifiedAtBetween(
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'uploadedAt',
+        property: r'verifiedAt',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'verifiedBy',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'verifiedBy',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'verifiedBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'verifiedBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'verifiedBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'verifiedBy',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'verifiedBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'verifiedBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'verifiedBy',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'verifiedBy',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'verifiedBy',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      verifiedByIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'verifiedBy',
+        value: '',
       ));
     });
   }
@@ -3178,16 +3453,17 @@ extension ScreeningModelQuerySortBy
     });
   }
 
-  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy> sortByFilePath() {
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      sortByDoctorsNote() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'filePath', Sort.asc);
+      return query.addSortBy(r'doctorsNote', Sort.asc);
     });
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
-      sortByFilePathDesc() {
+      sortByDoctorsNoteDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'filePath', Sort.desc);
+      return query.addSortBy(r'doctorsNote', Sort.desc);
     });
   }
 
@@ -3328,6 +3604,20 @@ extension ScreeningModelQuerySortBy
     });
   }
 
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      sortByScreenedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'screenedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      sortByScreenedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'screenedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy> sortByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
@@ -3368,16 +3658,30 @@ extension ScreeningModelQuerySortBy
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
-      sortByUploadedAt() {
+      sortByVerifiedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'uploadedAt', Sort.asc);
+      return query.addSortBy(r'verifiedAt', Sort.asc);
     });
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
-      sortByUploadedAtDesc() {
+      sortByVerifiedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'uploadedAt', Sort.desc);
+      return query.addSortBy(r'verifiedAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      sortByVerifiedBy() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'verifiedBy', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      sortByVerifiedByDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'verifiedBy', Sort.desc);
     });
   }
 
@@ -3452,16 +3756,17 @@ extension ScreeningModelQuerySortThenBy
     });
   }
 
-  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy> thenByFilePath() {
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      thenByDoctorsNote() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'filePath', Sort.asc);
+      return query.addSortBy(r'doctorsNote', Sort.asc);
     });
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
-      thenByFilePathDesc() {
+      thenByDoctorsNoteDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'filePath', Sort.desc);
+      return query.addSortBy(r'doctorsNote', Sort.desc);
     });
   }
 
@@ -3614,6 +3919,20 @@ extension ScreeningModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      thenByScreenedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'screenedAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      thenByScreenedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'screenedAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy> thenByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
@@ -3654,16 +3973,30 @@ extension ScreeningModelQuerySortThenBy
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
-      thenByUploadedAt() {
+      thenByVerifiedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'uploadedAt', Sort.asc);
+      return query.addSortBy(r'verifiedAt', Sort.asc);
     });
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
-      thenByUploadedAtDesc() {
+      thenByVerifiedAtDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'uploadedAt', Sort.desc);
+      return query.addSortBy(r'verifiedAt', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      thenByVerifiedBy() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'verifiedBy', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      thenByVerifiedByDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'verifiedBy', Sort.desc);
     });
   }
 
@@ -3714,10 +4047,10 @@ extension ScreeningModelQueryWhereDistinct
     });
   }
 
-  QueryBuilder<ScreeningModel, ScreeningModel, QDistinct> distinctByFilePath(
+  QueryBuilder<ScreeningModel, ScreeningModel, QDistinct> distinctByDoctorsNote(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'filePath', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'doctorsNote', caseSensitive: caseSensitive);
     });
   }
 
@@ -3798,6 +4131,13 @@ extension ScreeningModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ScreeningModel, ScreeningModel, QDistinct>
+      distinctByScreenedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'screenedAt');
+    });
+  }
+
   QueryBuilder<ScreeningModel, ScreeningModel, QDistinct> distinctByStatus(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -3820,9 +4160,16 @@ extension ScreeningModelQueryWhereDistinct
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QDistinct>
-      distinctByUploadedAt() {
+      distinctByVerifiedAt() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'uploadedAt');
+      return query.addDistinctBy(r'verifiedAt');
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QDistinct> distinctByVerifiedBy(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'verifiedBy', caseSensitive: caseSensitive);
     });
   }
 
@@ -3869,9 +4216,10 @@ extension ScreeningModelQueryProperty
     });
   }
 
-  QueryBuilder<ScreeningModel, String, QQueryOperations> filePathProperty() {
+  QueryBuilder<ScreeningModel, String?, QQueryOperations>
+      doctorsNoteProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'filePath');
+      return query.addPropertyName(r'doctorsNote');
     });
   }
 
@@ -3943,6 +4291,13 @@ extension ScreeningModelQueryProperty
     });
   }
 
+  QueryBuilder<ScreeningModel, DateTime, QQueryOperations>
+      screenedAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'screenedAt');
+    });
+  }
+
   QueryBuilder<ScreeningModel, String, QQueryOperations> statusProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'status');
@@ -3961,10 +4316,16 @@ extension ScreeningModelQueryProperty
     });
   }
 
-  QueryBuilder<ScreeningModel, DateTime, QQueryOperations>
-      uploadedAtProperty() {
+  QueryBuilder<ScreeningModel, DateTime?, QQueryOperations>
+      verifiedAtProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'uploadedAt');
+      return query.addPropertyName(r'verifiedAt');
+    });
+  }
+
+  QueryBuilder<ScreeningModel, String?, QQueryOperations> verifiedByProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'verifiedBy');
     });
   }
 
