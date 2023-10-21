@@ -18,7 +18,6 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
             patientUndergoSurgery: false.toString(),
             patientTakingMedication: false.toString(),
             cheifComplain: ["", "", "", "", "", ""].toString(),
-            filePath: '',
             chiefComplainMessage: '',
             patientTakingMedicationMessage: ''));
 
@@ -38,7 +37,6 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
       int surgicalProcedure,
       int medication,
       String medicationComment,
-      String directory,
       WidgetRef ref) async {
     var temperatureValue = temperature;
     var heightValue = height;
@@ -62,7 +60,6 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
         hasAllergies: hasAllergiesValue.toString(),
         patientUndergoSurgery: patientUndergoSurgeryValue.toString(),
         patientTakingMedication: patientTakingMedicationValue.toString(),
-        filePath: directory,
         chiefComplainMessage: otherComplains,
         patientTakingMedicationMessage: medicationComment);
   }
@@ -82,7 +79,6 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
         patientUndergoSurgery: false.toString(),
         patientTakingMedication: false.toString(),
         cheifComplain: ["", "", "", "", "", ""].toString(),
-        filePath: '',
         chiefComplainMessage: '',
         patientTakingMedicationMessage: '');
   }
