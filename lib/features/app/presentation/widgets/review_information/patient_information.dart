@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:getwidget/components/avatar/gf_avatar.dart';
+import 'package:health_worker/dependency_injection.dart';
 import 'package:intl/intl.dart';
 import 'package:styled_widget/styled_widget.dart';
 
@@ -14,8 +17,8 @@ class PatientInformationWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final patientUID = ref.read(patientProvider).uid;
-    final image = "https://robohash.org/$patientUID?set=set4";
     final patient = ref.read(patientProvider).fullName;
+    late String filepath;
     final gender = ref.read(patientProvider).gender;
     final birthday = DateTime.parse(ref.read(patientProvider).birthdate);
     final now = DateTime.now();
@@ -28,13 +31,28 @@ class PatientInformationWidget extends ConsumerWidget {
     final contactNumber = ref.read(patientProvider).contactNumber;
     final schoolName = ref.read(patientProvider).schoolName;
 
+    try {
+      filepath = "${appDir.parent.path}\\$patientUID\\$patientUID.jpeg";
+      File(filepath)
+          .exists()
+          .then((value) => null)
+          .catchError((onError) => throw Error());
+    } catch (error) {
+      // TODO: [OT-22] FIX: ADD PROFILE OFFLINE
+      filepath = "";
+    }
+
     return Card(
       borderColor: transparent,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Column(mainAxisSize: MainAxisSize.min, children: [
-            GFAvatar(size: 64, backgroundImage: NetworkImage(image)),
+            GFAvatar(
+              backgroundColor: secondary,
+              size: 64,
+              backgroundImage: FileImage(File(filepath)),
+            ),
             const SizedBox(height: 16),
             const Text(initialDiagnosis).bold().textColor(Colors.teal)
           ]),
