@@ -21,8 +21,13 @@ class AuthenticationNotifier extends StateNotifier<AuthenticationEntity> {
         if (session.current) {
           examiner = await account.get();
 
-          state = AuthenticationEntity(loading: false, error: false, authenticated: true);
-          provider.setUser(examiner.$id, examiner.name, examiner.email, examiner.labels);
+          if (examiner.labels.contains("nurse")) {
+            state = AuthenticationEntity(loading: false, error: false, authenticated: true);
+            provider.setUser(examiner.$id, examiner.name, examiner.email, examiner.labels);
+          } else {
+            signOut();
+            state = AuthenticationEntity(loading: false, error: true, authenticated: false, errorMesage: "Only nurse are allowed to use this application");
+          }
         }
       } else {
         state = AuthenticationEntity(loading: false, error: false, authenticated: true);
@@ -44,10 +49,9 @@ class AuthenticationNotifier extends StateNotifier<AuthenticationEntity> {
   }
 
   signOut() async {
-    final provider = ref.read(userProvider);
     account.deleteSession(sessionId: currentSession);
     await isar.writeTxn(() async {
-      await isar.userModels.filter().uidEqualTo(provider.uid).deleteAll();
+      await isar.userModels.where().deleteAll();
     });
     state = AuthenticationEntity(
         loading: false, error: false, authenticated: false);
