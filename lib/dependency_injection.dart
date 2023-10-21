@@ -20,6 +20,8 @@ late Teams team;
 late TeamList teamList;
 late Session session;
 late User examiner;
+late Databases database;
+late Storage cloud;
 late FlutterSecureStorage storage;
 late Directory appDir;
 late String applicationPath;
@@ -47,6 +49,10 @@ class DependencyInjection {
     account = Account(client);
 
     team = Teams(client);
+
+    database = Databases(client);
+
+    cloud = Storage(client);
 
     storage = const FlutterSecureStorage();
 
