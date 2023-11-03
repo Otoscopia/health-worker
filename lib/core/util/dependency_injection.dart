@@ -1,13 +1,19 @@
-import 'package:appwrite/appwrite.dart';
+import 'dart:io';
 
-import 'package:health_worker/core/models/env_model.dart';
-import 'package:health_worker/features/authentication/authentication.dart';
+import 'package:appwrite/appwrite.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:health_worker/core/core.dart';
+import 'package:health_worker/features/features.dart';
 
 late final Client client;
-late final Account account;
 late final Realtime realtime;
-late final Databases databases;
 late final AuthenticationRepository authenticationRepository;
+late final ApplicationRepository applicationRepository;
+late final Isar isar;
+late final String applicationDirectory;
+late final String documentDirectory;
 
 class DependencyInjection {
   DependencyInjection._();
@@ -22,6 +28,25 @@ class DependencyInjection {
 
     // Initialize AuthenticationRepository using the createAuthenticationRepository function
     authenticationRepository = createAuthenticationRepository();
+
+    // Initialize ApplicationRepository using the createApplicationRepository function
+    applicationRepository = createApplicationRepository();
+
+    Directory applicationSupportDirectory = await getApplicationSupportDirectory();
+    applicationDirectory = applicationSupportDirectory.path;
+
+    Directory applicationDocumentsDirectory = await getApplicationDocumentsDirectory();
+    documentDirectory = applicationDocumentsDirectory.path;
+
+    // Initialize Isar
+    isar = await Isar.open([
+      AssignmentModelSchema,
+      PatientModelSchema,
+      RemarksModelSchema,
+      SchoolModelSchema,
+      ScreeningModelSchema,
+      UserModelSchema
+    ], directory: applicationDirectory, name: "db");
   }
 
   // Appwrite Dependency Injection
@@ -32,20 +57,21 @@ class DependencyInjection {
     // Initialize client endpoint and project id
     client.setEndpoint(Env.projectEndPoint).setProject(Env.projectID);
 
-    // Initialize account
-    account = Account(client);
 
     // Initialize realtime
     realtime = Realtime(client);
-
-    // Initialize database
-    databases = Databases(client);
   }
 
   // Authentication Repository dependency injection
   AuthenticationRepository createAuthenticationRepository() {
-    final dataSource = AuthenticationDataSource();
-    final repository = AuthenticationRepositoryImpl(dataSource: dataSource);
+    final AuthenticationDataSource dataSource = AuthenticationDataSource();
+    final AuthenticationRepositoryImpl repository = AuthenticationRepositoryImpl(dataSource: dataSource);
+    return repository;
+  }
+
+  ApplicationRepository createApplicationRepository() {
+    final ApplicationDataSource dataSource = ApplicationDataSource();
+    final ApplicationRepositoryImpl repository = ApplicationRepositoryImpl(dataSource:  dataSource);
     return repository;
   }
 }
