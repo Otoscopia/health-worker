@@ -1,11 +1,13 @@
 import 'package:appwrite/appwrite.dart';
 
 import 'package:health_worker/core/models/env_model.dart';
+import 'package:health_worker/features/authentication/authentication.dart';
 
 late final Client client;
 late final Account account;
 late final Realtime realtime;
 late final Databases databases;
+late final AuthenticationRepository authenticationRepository;
 
 class DependencyInjection {
   DependencyInjection._();
@@ -18,20 +20,28 @@ class DependencyInjection {
     appwrite();
   }
 
+  // Appwrite Dependency Injection
   void appwrite() {
-    // initialize client
+    // Initialize client
     client = Client();
 
-    // set client endpoint and project id
+    // Initialize client endpoint and project id
     client.setEndpoint(Env.projectEndPoint).setProject(Env.projectID);
 
-    // initialize account
+    // Initialize account
     account = Account(client);
 
-    // initialize realtime
+    // Initialize realtime
     realtime = Realtime(client);
 
-    // initialize database
+    // Initialize database
     databases = Databases(client);
+  }
+
+  // Authentication Repository dependency injection
+  AuthenticationRepository createAuthenticationRepository() {
+    final dataSource = AuthenticationDataSource();
+    final repository = AuthenticationRepositoryImpl(dataSource: dataSource);
+    return repository;
   }
 }
