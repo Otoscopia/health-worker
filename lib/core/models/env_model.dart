@@ -17,7 +17,7 @@ abstract class Env {
   static String avatarBucket = _Env.avatarBucket;
 
   @EnviedField(varName: "DEV_DATABASE", obfuscate: true)
-  static String devDatabase = _Env.devDatabase;
+  static String database = _Env.database;
 
   @EnviedField(varName: "REMARKS_COLLECTION", obfuscate: true)
   static String remarks = _Env.remarks;
