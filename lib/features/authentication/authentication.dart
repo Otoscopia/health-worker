@@ -1,8 +1,8 @@
-// Data directory
+// Data Layer
 export 'data/data.dart';
 
-// Domain directory
+// Domain Layer
 export 'domain/domain.dart';
 
-// Presentation directory
+// Presentation Layer
 export 'presentation/presentation.dart';
