@@ -1,3 +1,4 @@
+import 'package:appwrite/models.dart';
 
 import 'package:health_worker/features/authentication/authentication.dart';
 
@@ -7,7 +8,7 @@ abstract class AuthenticationRepository {
     required String password,
   });
 
-  Future<UserEntity> getCurrentUser();
+  Future<User> getCurrentUser();
 
   Future<void> signOut();
 }

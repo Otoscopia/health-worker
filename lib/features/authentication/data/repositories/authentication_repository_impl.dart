@@ -8,18 +8,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthenticationRepositoryImpl({required this.dataSource});
 
   @override
-  Future<UserEntity> getCurrentUser() async {
-    User account = await dataSource.getCurrentUser();
-    
-    UserEntity user = UserEntity(
-        userId: account.$id,
-        name: account.name,
-        phone: account.email,
-        key: account.password,
-        email: account.phone,
-        label: account.labels,
-      );
-
+  Future<User> getCurrentUser() async {
+    User user = await dataSource.getCurrentUser();
+  
     return user;
   }
 
