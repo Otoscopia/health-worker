@@ -17,7 +17,11 @@ class DependencyInjection {
   factory DependencyInjection() => _instance;
 
   Future<void> initialize() async {
+    // Initialize Appwrite using the appwrite function
     appwrite();
+
+    // Initialize AuthenticationRepository using the createAuthenticationRepository function
+    authenticationRepository = createAuthenticationRepository();
   }
 
   // Appwrite Dependency Injection
