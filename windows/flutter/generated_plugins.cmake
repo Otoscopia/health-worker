@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
+  isar_flutter_libs
   printing
   system_theme
   url_launcher_windows
