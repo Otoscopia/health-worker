@@ -1,3 +1,4 @@
+import 'package:appwrite/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/core/core.dart';
@@ -14,13 +15,13 @@ class AuthenticationStateNotifier extends StateNotifier<AuthenticationEntity?> {
     ref.read(authStateProvider.notifier).setLoading(true);
 
     final signInUseCase = SignInUseCase(authenticationRepository: authenticationRepository);
-    final fetchCurrentUserUseCase = GetCurrentUserUseCase(authenticationRepository: authenticationRepository);
+        final fetchCurrentUserUseCase = GetCurrentUserUseCase(authenticationRepository: authenticationRepository);
 
     try {
       final authenticationEntity = await signInUseCase.execute(email: email, password: password);
-      final UserEntity user = await fetchCurrentUserUseCase.execute();
+      final User user = await fetchCurrentUserUseCase.execute();
       
-      if (user.label.contains("nurse")) {
+      if (user.labels.contains("nurse")) {
         ref.read(authStateProvider.notifier).setLoading(false);
         state = authenticationEntity;
         return;
@@ -40,12 +41,12 @@ class AuthenticationStateNotifier extends StateNotifier<AuthenticationEntity?> {
     await signOutUseCase.execute();
     state = null;
   }
-
-  Future<UserEntity?> getCurrentUser() async {
+  
+  Future<User?> getCurrentUser() async {
     final fetchCurrentUserUseCase = GetCurrentUserUseCase(authenticationRepository: authenticationRepository);
     try {
-      final UserEntity user = await fetchCurrentUserUseCase.execute();
-      state = AuthenticationEntity(email: user.email, password: user.key);
+      final User user = await fetchCurrentUserUseCase.execute();
+      state = AuthenticationEntity(email: user.email, password: "");
       return user;
     } catch (_) {
       return null;
