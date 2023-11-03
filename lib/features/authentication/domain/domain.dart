@@ -1,7 +1,6 @@
 // Entities Directory
 export './entities/authentication_entity.dart';
 export 'entities/auth_state_entity.dart';
-export './entities/user_entity.dart';
 
 // Repositories Directory
 export './repositories/authentication_repository.dart';
