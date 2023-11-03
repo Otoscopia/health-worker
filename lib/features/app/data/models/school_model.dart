@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import 'package:health_worker/core/core.dart';
+import 'package:health_worker/features/features.dart';
 
 part 'school_model.g.dart';
 
