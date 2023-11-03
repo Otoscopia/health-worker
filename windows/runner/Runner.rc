@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "Otoscopia" "\0"
-            VALUE "FileDescription", "Effortlessly Access and Manage Your Medical Records" "\0"
+            VALUE "CompanyName", "otoscopia" "\0"
+            VALUE "FileDescription", "health_worker" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "health_worker" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 Otoscopia. All rights reserved." "\0"
-            VALUE "OriginalFilename", "health-worker.exe" "\0"
-            VALUE "ProductName", "Otoscopia Health Worker" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 otoscopia. All rights reserved." "\0"
+            VALUE "OriginalFilename", "health_worker.exe" "\0"
+            VALUE "ProductName", "health_worker" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

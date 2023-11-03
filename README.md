@@ -1,4 +1,4 @@
-# otoscopia_health_worker
+# health_worker
 
 A new Flutter project.
 
