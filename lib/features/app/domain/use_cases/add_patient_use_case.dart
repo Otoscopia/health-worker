@@ -1,11 +1,21 @@
 import 'package:health_worker/features/features.dart';
 
-class AddPatientUseCase {
+class SetPatientRemoteUseCase {
   final ApplicationRepository repository;
 
-  AddPatientUseCase({required this.repository});
+  SetPatientRemoteUseCase({required this.repository});
 
   Future<void> call({required PatientEntity patient}) async {
-    await repository.setPatient(patient: patient);
+    await repository.setPatientRemote(patient: patient);
+  }
+}
+
+class SetPatientLocalUseCase {
+  final ApplicationRepository repository;
+
+  SetPatientLocalUseCase({required this.repository});
+
+  Future<void> call({required PatientEntity patient}) async {
+    await repository.setPatientLocal(patient: patient);
   }
 }

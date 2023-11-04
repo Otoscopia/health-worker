@@ -1,11 +1,21 @@
 import 'package:health_worker/features/features.dart';
 
-class GetRemarksUseCase {
+class GetRemarksUseCaseRemote {
   final ApplicationRepository repository;
 
-  GetRemarksUseCase({required this.repository});
+  GetRemarksUseCaseRemote({required this.repository});
 
-  Future<List<RemarksEntity>> execute() async {
-    return await repository.getRemarks();
+  Future<RemarksEntity> execute({required String id}) async {
+    return await repository.getRemarksRemote(id: id);
+  }
+}
+
+class GetRemarksUseCaseLocal {
+  final ApplicationRepository repository;
+
+  GetRemarksUseCaseLocal({required this.repository});
+
+  Future<RemarksEntity?> execute({required String id}) async {
+    return await repository.getRemarksLocal(id: id);
   }
 }

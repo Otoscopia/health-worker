@@ -1,12 +1,23 @@
 import 'package:health_worker/features/features.dart';
 
-class GetPatientsUseCase {
+class GetPatientsRemoteUseCase {
   final ApplicationRepository repository;
 
-  GetPatientsUseCase({required this.repository});
+  GetPatientsRemoteUseCase({required this.repository});
 
   Future<List<PatientEntity>> execute() async {
-    List<PatientEntity> patients = await repository.getPatients();
+    List<PatientEntity> patients = await repository.getPatientsRemote();
+    return patients;
+  }
+}
+
+class GetPatientsLocalUseCase {
+  final ApplicationRepository repository;
+
+  GetPatientsLocalUseCase({required this.repository});
+
+  Future<List<PatientEntity>> execute() async {
+    List<PatientEntity> patients = await repository.getPatientsLocal();
     return patients;
   }
 }

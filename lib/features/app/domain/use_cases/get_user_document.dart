@@ -1,11 +1,21 @@
 import 'package:health_worker/features/features.dart';
 
-class GetUserDocumentUseCase {
+class GetUserDocumentRemoteUseCase {
   final ApplicationRepository repository;
 
-  GetUserDocumentUseCase({required this.repository});
+  GetUserDocumentRemoteUseCase({required this.repository});
 
   Future<UserEntity> execute() async {
-    return await repository.getUserDocument();
+    return await repository.getUserDocumentRemote();
+  }
+}
+
+class GetUserDocumenLocaltUseCase {
+  final ApplicationRepository repository;
+
+  GetUserDocumenLocaltUseCase({required this.repository});
+
+  Future<UserEntity?> execute() async {
+    return await repository.getUserLocal();
   }
 }
