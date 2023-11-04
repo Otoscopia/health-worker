@@ -4,11 +4,11 @@ import 'package:appwrite/models.dart';
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
-class ApplicationDataSource {
+class RemoteGetDataSource {
   final Databases _databases;
   final Storage _storage;
 
-  ApplicationDataSource()
+  RemoteGetDataSource()
       : _databases = database,
         _storage = cloud;
 
