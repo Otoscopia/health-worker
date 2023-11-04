@@ -11,7 +11,7 @@ class RemoteSetDataSource {
       : _databases = database,
         _storage = cloud;
 
-  Future<void> setPatients({required PatientEntity patient}) async {
+  Future<void> setPatient({required PatientEntity patient}) async {
     try {
       await _databases.createDocument(
           databaseId: Env.database,
