@@ -5,7 +5,7 @@ import 'package:health_worker/features/features.dart';
 part 'user_model.g.dart';
 
 @collection
-@Name("users")
+@Name("user")
 class UserModel extends UserEntity {
   Id isar = Isar.autoIncrement;
 
