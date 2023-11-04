@@ -1,82 +1,36 @@
-import 'dart:math';
-import 'dart:typed_data';
+import 'dart:convert';
 
-import 'package:pointycastle/export.dart';
+import 'package:encrypt/encrypt.dart';
 
 class EncryptionService {
-  // Create a CBCBlockCipher with an AESEngine and initialize it with encryption mode.
-  final CBCBlockCipher _cipher = CBCBlockCipher(AESEngine());
+  final Key key;
+  final Encrypter _encrypter;
 
-  EncryptionService();
+  EncryptionService({required this.key}) : _encrypter = Encrypter(AES(key, mode: AESMode.cbc));
 
-  Uint8List encrypt({required Uint8List key, required Uint8List iv, required Uint8List data}) {
-    // Check the key size, IV size, and data size to ensure they are as expected.
-    assert([256].contains(key.length * 8));
-    assert(128 == iv.length * 8);
-    assert(128 == data.length * 8);
+  String encryptData(String data) {
+    final iv = IV.fromLength(16);
 
-    // Create a KeyParameter from the key.
-    final KeyParameter keyParams = KeyParameter(key);
+    final encrypted = _encrypter.encrypt(data, iv: iv);
 
-    // Create ParametersWithIV, which combines the key and IV (Initialization Vector).
-    final ParametersWithIV params = ParametersWithIV(keyParams, iv);
+    final combined = iv.bytes + encrypted.bytes;
 
-    // Initialize the cipher with the parameters and set it to encryption mode.
-    _cipher.init(true, params);
-
-    // Create a Uint8List to hold the encrypted data.
-    final Uint8List cipherText = Uint8List(data.length);
-
-    // Process the entire array of data.
-    var offset = 0;
-    while (offset < data.length) {
-      // Process each block of data using CBC encryption and store the result in cipherText.
-      offset += _cipher.processBlock(data, offset, cipherText, offset);
-    }
-
-    // Assert that the entire data array has been processed.
-    assert(offset == data.length);
-
-    // Return the encrypted cipher text.
-    return cipherText;
+    return base64.encode(combined);
   }
 
-  Uint8List decrypt({required Uint8List key, required Uint8List iv, required Uint8List data}) {
-    // Check the key size, IV size, and data size to ensure they are as expected.
-    assert([128, 196, 256].contains(key.length * 8));
-    assert(128 == iv.length * 8);
-    assert(128 == data.length * 8);
+  String decryptData(String data) {
+    final combinedDec = base64.decode(data);
 
-    // Create a KeyParameter from the key.
-    final KeyParameter keyParams = KeyParameter(key);
+    final ivBytes = combinedDec.sublist(0, 16);
 
-    // Create ParametersWithIV, which combines the key and IV (Initialization Vector).
-    final ParametersWithIV params = ParametersWithIV(keyParams, iv);
+    final cipherBytes = combinedDec.sublist(16);
 
-    // Initialize the cipher with the parameters and set it to encryption mode.
-    _cipher.init(false, params);
+    final ivDec = IV(ivBytes);
 
-    // Create a Uint8List to hold the decrypted data.
-    final cipherData = Uint8List(data.length);
+    final cipherText = Encrypted(cipherBytes);
 
-    // Process the entire array of data.
-    var offset = 0;
-    while (offset < data.length) {
-      // Process each block of data using CBC decryption and store the result in cipherData.
-      offset += _cipher.processBlock(data, offset, cipherData, offset);
-    }
+    final decrypted = _encrypter.decrypt(cipherText, iv: ivDec);
 
-    // Assert that the entire data array has been processed.
-    assert(offset == data.length);
-
-    // Return the decrypted cipher data.
-    return cipherData;
-  }
-
-  // Generate a random 128-bit (16-byte) Initialization Vector.
-  Uint8List generateRandomIV(int length) {
-    final Random random = Random.secure();
-    final Uint8List iv = Uint8List.fromList(List<int>.generate(length, (index) => random.nextInt(256)));
-    return iv;
+    return decrypted;
   }
 }
