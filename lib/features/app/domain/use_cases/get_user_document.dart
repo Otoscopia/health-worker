@@ -5,7 +5,7 @@ class GetUserDocumentUseCase {
 
   GetUserDocumentUseCase({required this.repository});
 
-  Future<UserEntity> call() async {
+  Future<UserEntity> execute() async {
     return await repository.getUserDocument();
   }
 }

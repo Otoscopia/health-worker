@@ -5,7 +5,7 @@ class GetRemarksUseCase {
 
   GetRemarksUseCase({required this.repository});
 
-  Future<List<RemarksEntity>> call() async {
+  Future<List<RemarksEntity>> execute() async {
     return await repository.getRemarks();
   }
 }

@@ -5,7 +5,7 @@ class GetScreeningsUseCase {
 
   GetScreeningsUseCase({required this.repository});
 
-  Future<List<ScreeningEntity>> call() async {
+  Future<List<ScreeningEntity>> execute() async {
     return await repository.getScreenings();
   }
 }
