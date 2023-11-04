@@ -7,6 +7,8 @@ abstract class ApplicationRepository {
 
   Future<List<PatientEntity>> getPatients();
 
+  Future<void> setPatient({required PatientEntity patient});
+
   Future<List<RemarksEntity>> getRemarks();
 
   Future<List<SchoolEntity>> getSchools();
@@ -14,4 +16,8 @@ abstract class ApplicationRepository {
   Future<List<ScreeningEntity>> getScreenings();
 
   Future<UserEntity> getUserDocument();
+
+  String encryptData({required String data});
+
+  String decryptData({required String data});
 }
