@@ -29,7 +29,7 @@ class FormContainer extends ConsumerWidget {
               ResponsiveRowColumnItem(child: EmailInput()),
               ResponsiveRowColumnItem(child: PasswordInput()),
               ResponsiveRowColumnItem(child: SignInButton()),
-              ResponsiveRowColumnItem(child: PrimaryCaption(text: forgotPassword)),
+              ResponsiveRowColumnItem(child: PrimaryCaption(forgotPassword)),
             ],
           ),
         ),
