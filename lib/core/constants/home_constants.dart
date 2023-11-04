@@ -6,3 +6,4 @@ const String tableColumnDoctor = "Doctor";
 const String tableColumnSchool = "School";
 
 const String noRecord = "No Record found";
+const String homeTooltip = 'Add New Patient';

@@ -4,6 +4,7 @@ import 'package:health_worker/config/themes/colors.dart';
 
 class FloatingActionButton extends StatelessWidget {
   final ButtonState<Color?>? color;
+  final String tooltip;
   final Icon? icon;
   final Widget route;
   final double? top, right, bottom, left;
@@ -12,6 +13,7 @@ class FloatingActionButton extends StatelessWidget {
   const FloatingActionButton({
     super.key,
     this.icon,
+    required this.tooltip,
     required this.route,
     this.color,
     this.argument,
@@ -30,23 +32,26 @@ class FloatingActionButton extends StatelessWidget {
       left: left,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: IconButton(
-          style: ButtonStyle(
-              iconSize: ButtonState.all(32),
-              backgroundColor: color ??
-                  ButtonState.resolveWith(
-                    (states) {
-                      if (states.isHovering) {
-                        return secondary;
-                      }
-                      return primary;
-                    },
-                  )),
-          icon: icon ?? const Icon(FluentIcons.add),
-          onPressed: () {
-            Navigator.push(
-                context, FluentPageRoute(builder: (context) => route));
-          },
+        child: Tooltip(
+          message: tooltip,
+          child: IconButton(
+            style: ButtonStyle(
+                iconSize: ButtonState.all(32),
+                backgroundColor: color ??
+                    ButtonState.resolveWith(
+                      (states) {
+                        if (states.isHovering) {
+                          return secondary;
+                        }
+                        return primary;
+                      },
+                    )),
+            icon: icon ?? const Icon(FluentIcons.add),
+            onPressed: () {
+              Navigator.push(
+                  context, FluentPageRoute(builder: (context) => route));
+            },
+          ),
         ),
       ),
     );
