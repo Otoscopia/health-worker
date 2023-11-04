@@ -4,6 +4,8 @@ export 'entities/patient_entity.dart';
 export 'entities/remarks_entity.dart';
 export 'entities/school_entity.dart';
 export 'entities/screening_entity.dart';
+export 'entities/tab_entity.dart';
+export 'entities/table_entity.dart';
 export 'entities/user_entity.dart';
 
 // Repositories Directory
