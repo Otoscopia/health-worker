@@ -10,16 +10,16 @@ final FluentThemeData lightTheme = FluentThemeData(
   accentColor: accentColor,
   scaffoldBackgroundColor: lightBackgroundAccent,
   cardColor: lightBackgroundAccent,
-  typography: Typography.raw(
-    display: DarkTextStyles().display,
-    titleLarge: DarkTextStyles().titleLarge,
-    title: DarkTextStyles().title,
-    subtitle: DarkTextStyles().subtitle,
-    bodyLarge: DarkTextStyles().bodyLarge,
-    bodyStrong: DarkTextStyles().bodyStrong,
-    body: DarkTextStyles().body,
-    caption: DarkTextStyles().caption,
-  ),
+  // typography: Typography.raw(
+  //   display: DarkTextStyles().display,
+  //   titleLarge: DarkTextStyles().titleLarge,
+  //   title: DarkTextStyles().title,
+  //   subtitle: DarkTextStyles().subtitle,
+  //   bodyLarge: DarkTextStyles().bodyLarge,
+  //   bodyStrong: DarkTextStyles().bodyStrong,
+  //   body: DarkTextStyles().body,
+  //   caption: DarkTextStyles().caption,
+  // ),
 );
 
 final FluentThemeData darkTheme = FluentThemeData(
@@ -28,14 +28,14 @@ final FluentThemeData darkTheme = FluentThemeData(
   scaffoldBackgroundColor: darkBackground,
   cardColor: darkBackgroundAccent,
   fontFamily: "Quicksand",
-  typography: Typography.raw(
-    display: LightTextStyles().display,
-    titleLarge: LightTextStyles().titleLarge,
-    title: LightTextStyles().title,
-    subtitle: LightTextStyles().subtitle,
-    bodyLarge: LightTextStyles().bodyLarge,
-    bodyStrong: LightTextStyles().bodyStrong,
-    body: LightTextStyles().body,
-    caption: LightTextStyles().caption,
-  ),
+  // typography: Typography.raw(
+  //   display: LightTextStyles().display,
+  //   titleLarge: LightTextStyles().titleLarge,
+  //   title: LightTextStyles().title,
+  //   subtitle: LightTextStyles().subtitle,
+  //   bodyLarge: LightTextStyles().bodyLarge,
+  //   bodyStrong: LightTextStyles().bodyStrong,
+  //   body: LightTextStyles().body,
+  //   caption: LightTextStyles().caption,
+  // ),
 );
