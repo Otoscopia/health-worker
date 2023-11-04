@@ -18,7 +18,7 @@ class FullNameInput extends ConsumerWidget {
       child: TextFormBox(
         autovalidateMode: AutovalidateMode.onUserInteraction,
         placeholder: fullNamePlaceholder,
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z .]'))],
+        inputFormatters: [nameFilter],
         maxLength: 50,
         maxLines: 1,
         maxLengthEnforcement: MaxLengthEnforcement.enforced,
