@@ -22,7 +22,7 @@ class SignInButton extends ConsumerWidget {
     }
 
     if (error) {
-      popUpInfoBar(context, null, signInErrorLabel, errorMessage, null);
+      popUpInfoBar(context, null, errorLabel, errorMessage, null);
     }
 
     Widget button = SizedBox(
