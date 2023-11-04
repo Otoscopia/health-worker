@@ -4,25 +4,16 @@ export 'constants/dashboard_constants.dart';
 export 'constants/sign_in_constants.dart';
 export 'constants/spacing_constants.dart';
 
-// Entity Directory
-export 'entities/assignment_entity.dart';
-export 'entities/patient_entity.dart';
-export 'entities/remarks_entity.dart';
-export 'entities/school_entity.dart';
-export 'entities/screening_entity.dart';
-export 'entities/user_entity.dart';
-
 // Model Directory
-export 'models/assignment_model.dart';
 export 'models/env_model.dart';
-export 'models/patient_model.dart';
-export 'models/remarks_model.dart';
-export 'models/school_model.dart';
-export 'models/screening_model.dart';
-export 'models/user_model.dart';
 
 // Util Directory
 export 'util/dependency_injection.dart';
+
+// Screens Directory
+export 'screens/error.dart';
+export 'screens/loading.dart';
+export 'screens/navigation.dart';
 
 // Widgets Directory
 export 'widgets/application_container.dart';
