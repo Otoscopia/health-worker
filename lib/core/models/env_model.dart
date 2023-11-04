@@ -36,4 +36,7 @@ abstract class Env {
 
   @EnviedField(varName: "SCREENING_COLLECTION", obfuscate: true)
   static String screening = _Env.screening;
+
+  @EnviedField(varName: "KEY", obfuscate: true)
+  static String key = _Env.key;
 }
