@@ -16,7 +16,7 @@ class Home extends ConsumerWidget {
           FloatingActionButton(
             icon: Icon(FluentIcons.add),
             tooltip: homeTooltip,
-            route: AddPatientInformation(),
+            route: AddPatient(),
           )
         ],
       ),
