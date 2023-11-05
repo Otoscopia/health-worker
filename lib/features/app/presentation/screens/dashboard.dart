@@ -15,11 +15,17 @@ class Dashboard extends ConsumerWidget {
           ref.watch(futureAssignmentProvider.future),
           ref.watch(futureDoctorsProvider.future),
           ref.watch(futureSchoolsProvider.future),
+          ref.watch(futureUserProvider.future),
         ]),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return ErrorScreen(error: snapshot.error);
           } else if (snapshot.hasData) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ref
+                  .read(dashboardFutureProvider.notifier)
+                  .setFuture(snapshot.data!);
+            });
             return const DashboardNavigation();
           }
 
