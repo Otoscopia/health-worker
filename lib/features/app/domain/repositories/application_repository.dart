@@ -78,7 +78,7 @@ abstract class ApplicationRepository {
 
   Future<List<SchoolEntity>> getSchoolsLocal();
 
-  Future<List<ScreeningEntity>?> getScreeningsLocal();
+  Future<List<ScreeningEntity>> getScreeningsLocal();
 
   Future<ScreeningEntity?> getScreeningLocal({required String id});
 
