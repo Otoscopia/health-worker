@@ -9,14 +9,14 @@ class Home extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Card(
+    return Card(
       child: Stack(
         children: [
-          HomeTable(),
+          const HomeTable(),
           FloatingActionButton(
-            icon: Icon(FluentIcons.add),
+            icon: const Icon(FluentIcons.add),
             tooltip: homeTooltip,
-            route: AddPatient(),
+            onPressed: () => Navigator.push(context, FluentPageRoute(builder: (context) => const AddPatient())),
           )
         ],
       ),
