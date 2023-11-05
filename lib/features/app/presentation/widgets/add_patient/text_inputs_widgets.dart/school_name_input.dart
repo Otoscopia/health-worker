@@ -1,5 +1,3 @@
-import "package:flutter/services.dart";
-
 import "package:fluent_ui/fluent_ui.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 
@@ -11,23 +9,24 @@ class SchoolNameInput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    List<SchoolEntity> schools = ref.read(dashboardFutureProvider)[2] as List<SchoolEntity>;
+    
+    var items = schools
+        .map<AutoSuggestBoxItem<SchoolEntity>>(
+          (school) => AutoSuggestBoxItem<SchoolEntity>(
+            value: school,
+            label: school.name,
+          ),
+        )
+        .toList();
+
     return InfoLabel(
       label: schoolNameLabel,
-      child: TextFormBox(
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        placeholder: schoolNamePlaceholder,
-        maxLength: 64,
-        maxLines: 1,
-        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-        unfocusedColor: Colors.transparent,
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z -]'))],
-        onChanged: (value) => ref.watch(schoolNameProvider.notifier).setSchoolName(value),
-        validator: (value) {
-          if (value == null || value.isEmpty || value.length <= 5) {
-            return schoolNameError;
-          }
-          return null;
-        },
+      child: AutoSuggestBox(
+        items: items,
+        onSelected: (value) => ref
+            .read(schoolNameProvider.notifier)
+            .setSchoolName(value.value!.id),
       ),
     );
   }
