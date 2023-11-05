@@ -6,17 +6,15 @@ class FloatingActionButton extends StatelessWidget {
   final ButtonState<Color?>? color;
   final String tooltip;
   final Icon? icon;
-  final Widget route;
   final double? top, right, bottom, left;
-  final Object? argument;
+  final void Function()? onPressed;
 
   const FloatingActionButton({
     super.key,
     this.icon,
     required this.tooltip,
-    required this.route,
     this.color,
-    this.argument,
+    this.onPressed,
     this.top,
     this.right,
     this.bottom,
@@ -47,10 +45,7 @@ class FloatingActionButton extends StatelessWidget {
                       },
                     )),
             icon: icon ?? const Icon(FluentIcons.add),
-            onPressed: () {
-              Navigator.push(
-                  context, FluentPageRoute(builder: (context) => route));
-            },
+            onPressed: onPressed
           ),
         ),
       ),
