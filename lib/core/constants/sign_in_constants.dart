@@ -10,5 +10,4 @@ const String forgotPassword = 'Forgot password?';
 
 const String signInText = 'Sign In';
 
-const String signInErrorLabel = 'Ohh ohh!';
 const String nurseOnly = "Only school nurse are allowed to use this app.";
