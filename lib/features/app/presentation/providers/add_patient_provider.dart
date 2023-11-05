@@ -1,15 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/core/core.dart';
-import 'package:health_worker/features/app/domain/use_cases/add_patient_use_case.dart';
 import 'package:health_worker/features/features.dart';
 
 class PatientNotifier extends StateNotifier<PatientEntity> {
   PatientNotifier() : super(emptyPatient);
 
   addPatient(PatientEntity patient) {
-    final addPatientUseCase = AddPatientUseCase(repository: applicationRepository);
-    addPatientUseCase(patient: patient);
+    final addPatientLocalUseCase = SetPatientLocalUseCase(repository: applicationRepository);
+    addPatientLocalUseCase(patient: patient);
+    
+    final addPatientRemoteUseCase = SetPatientRemoteUseCase(repository: applicationRepository);
+    addPatientRemoteUseCase(patient: patient);
+
     state = patient;
   }
 }
