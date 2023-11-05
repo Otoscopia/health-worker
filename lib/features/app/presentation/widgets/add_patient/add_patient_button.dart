@@ -44,9 +44,8 @@ class AddPatientButton extends ConsumerWidget {
               id: id,
               name: encryptUseCase.execute(data: name),
               gender: encryptUseCase.execute(data: genders[gender]),
-              birthdate:
-                  encryptUseCase.execute(data: birthdate.toIso8601String()),
-              school: encryptUseCase.execute(data: school),
+              birthdate: encryptUseCase.execute(data: birthdate.toIso8601String()),
+              school: school,
               schoolID: encryptUseCase.execute(data: schoolID),
               guardiansName: encryptUseCase.execute(data: guardiansName),
               guardiansPhone: encryptUseCase.execute(data: guardiansPhone),
