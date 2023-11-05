@@ -16,6 +16,10 @@ class ApplicationContainer extends ConsumerWidget {
         connectivityBuilder: (context, value, child) {
           final bool connected = value != ConnectivityResult.none;
 
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ref.read(networkProvider.notifier).setNetwork(connected);
+          });
+
           return Stack(
             fit: StackFit.expand,
             children: [child, OfflineBar(connected: connected)],
