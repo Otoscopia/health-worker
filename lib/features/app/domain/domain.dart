@@ -12,6 +12,8 @@ export 'entities/user_entity.dart';
 export 'repositories/application_repository.dart';
 
 // Use Cases Directory
+export 'use_cases/add_patient_use_case.dart';
+export 'use_cases/add_screening_use_case.dart';
 export 'use_cases/get_assignments_use_case.dart';
 export 'use_cases/get_doctors_use_case.dart';
 export 'use_cases/get_patients_use_case.dart';
