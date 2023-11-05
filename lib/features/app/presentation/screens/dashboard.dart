@@ -16,6 +16,7 @@ class Dashboard extends ConsumerWidget {
           ref.watch(futureDoctorsProvider.future),
           ref.watch(futureSchoolsProvider.future),
           ref.watch(futureUserProvider.future),
+          ref.watch(futurePatientsProvider.future),
         ]),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
