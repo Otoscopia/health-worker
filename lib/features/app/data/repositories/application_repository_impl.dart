@@ -130,12 +130,12 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
             name: patient.data['name'],
             gender: patient.data['gender'],
             birthdate: patient.data['birthdate'],
-            school: patient.data['school'],
+            school: patient.data['school']["\$id"],
             schoolID: patient.data['schoolID'],
             guardiansName: patient.data['guardiansName'],
             guardiansPhone: patient.data['guardiansPhone'],
-            creator: patient.data['creator'],
-            doctor: patient.data['doctor']))
+            creator: patient.data['creator']["\$id"],
+            doctor: patient.data['doctor']['\$id']))
         .toList();
 
     return entities;
