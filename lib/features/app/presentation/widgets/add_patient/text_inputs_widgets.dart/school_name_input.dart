@@ -9,7 +9,7 @@ class SchoolNameInput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<SchoolEntity> schools = ref.read(dashboardFutureProvider)[2] as List<SchoolEntity>;
+    List<SchoolEntity> schools = ref.read(schoolsProvider);
     
     var items = schools
         .map<AutoSuggestBoxItem<SchoolEntity>>(
