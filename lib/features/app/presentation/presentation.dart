@@ -3,11 +3,11 @@ export 'screens/add_patient.dart';
 export 'screens/dashboard.dart';
 export 'screens/doctors.dart';
 export 'screens/home.dart';
-// export 'screens/left_camera.dart';
+export 'screens/left_camera.dart';
 export 'screens/patient_record.dart';
 export 'screens/patients.dart';
 export 'screens/review_information.dart';
-// export 'screens/right_camera.dart';
+export 'screens/right_camera.dart';
 export 'screens/schools.dart';
 export 'screens/screening.dart';
 export 'screens/settings.dart';
@@ -33,6 +33,11 @@ export 'widgets/add_patient/text_inputs_widgets.dart/guarians_phone_number.dart'
 export 'widgets/add_patient/text_inputs_widgets.dart/school_id_input.dart';
 export 'widgets/add_patient/text_inputs_widgets.dart/school_name_input.dart';
 
+export 'widgets/review_information/health_record_title_widget.dart';
+export 'widgets/review_information/patient_information.dart';
+export 'widgets/review_information/vital_card.dart';
+export 'widgets/review_information/vital_widget.dart';
+
 export 'widgets/screening/cheif_complain.dart';
 export 'widgets/screening/cheif_complain_error.dart';
 export 'widgets/screening/cheif_complain_widget.dart';
@@ -50,11 +55,13 @@ export 'widgets/screening/patient_undergo_surgery.dart';
 export 'widgets/screening/patient_undergo_surgery_widget.dart';
 export 'widgets/screening/similar_condition_error.dart';
 export 'widgets/screening/similar_condition_widget.dart';
-export 'widgets/screening/temperature_and_blood.dart';
+export 'widgets/screening/temperature.dart';
 
 export 'widgets/title_widget.dart';
+export 'widgets/progress_buttons.dart';
 
 export 'providers/add_patient_provider.dart';
+export 'providers/add_screening_provider.dart';
 export 'providers/dashboard_tab_provider.dart';
 export 'providers/dashboard_page_provider.dart';
 export 'providers/future_assignment_provider.dart';
@@ -62,6 +69,7 @@ export 'providers/future_doctor_provider.dart';
 export 'providers/future_patient_provider.dart';
 export 'providers/future_schools_provider.dart';
 export 'providers/future_user_provider.dart';
+export 'providers/future_screening_provider.dart';
 
 export 'providers/add_patient_providers/birthdate_provider.dart';
 export 'providers/add_patient_providers/contact_number_provider.dart';
