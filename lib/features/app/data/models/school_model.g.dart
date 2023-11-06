@@ -17,23 +17,28 @@ const SchoolModelSchema = CollectionSchema(
   name: r'schools',
   id: -7340493719661038917,
   properties: {
-    r'address': PropertySchema(
+    r'abbr': PropertySchema(
       id: 0,
+      name: r'abbr',
+      type: IsarType.string,
+    ),
+    r'address': PropertySchema(
+      id: 1,
       name: r'address',
       type: IsarType.string,
     ),
     r'code': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'code',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'id',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'name',
       type: IsarType.string,
     )
@@ -58,6 +63,7 @@ int _schoolModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.abbr.length * 3;
   bytesCount += 3 + object.address.length * 3;
   bytesCount += 3 + object.code.length * 3;
   bytesCount += 3 + object.id.length * 3;
@@ -71,10 +77,11 @@ void _schoolModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.address);
-  writer.writeString(offsets[1], object.code);
-  writer.writeString(offsets[2], object.id);
-  writer.writeString(offsets[3], object.name);
+  writer.writeString(offsets[0], object.abbr);
+  writer.writeString(offsets[1], object.address);
+  writer.writeString(offsets[2], object.code);
+  writer.writeString(offsets[3], object.id);
+  writer.writeString(offsets[4], object.name);
 }
 
 SchoolModel _schoolModelDeserialize(
@@ -84,10 +91,11 @@ SchoolModel _schoolModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = SchoolModel(
-    address: reader.readString(offsets[0]),
-    code: reader.readString(offsets[1]),
-    id: reader.readString(offsets[2]),
-    name: reader.readString(offsets[3]),
+    abbr: reader.readString(offsets[0]),
+    address: reader.readString(offsets[1]),
+    code: reader.readString(offsets[2]),
+    id: reader.readString(offsets[3]),
+    name: reader.readString(offsets[4]),
   );
   object.isar = id;
   return object;
@@ -107,6 +115,8 @@ P _schoolModelDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
+      return (reader.readString(offset)) as P;
+    case 4:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -209,6 +219,137 @@ extension SchoolModelQueryWhere
 
 extension SchoolModelQueryFilter
     on QueryBuilder<SchoolModel, SchoolModel, QFilterCondition> {
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'abbr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'abbr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'abbr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'abbr',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'abbr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'abbr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'abbr',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'abbr',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> abbrIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'abbr',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition>
+      abbrIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'abbr',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<SchoolModel, SchoolModel, QAfterFilterCondition> addressEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -797,6 +938,18 @@ extension SchoolModelQueryLinks
 
 extension SchoolModelQuerySortBy
     on QueryBuilder<SchoolModel, SchoolModel, QSortBy> {
+  QueryBuilder<SchoolModel, SchoolModel, QAfterSortBy> sortByAbbr() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'abbr', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterSortBy> sortByAbbrDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'abbr', Sort.desc);
+    });
+  }
+
   QueryBuilder<SchoolModel, SchoolModel, QAfterSortBy> sortByAddress() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'address', Sort.asc);
@@ -848,6 +1001,18 @@ extension SchoolModelQuerySortBy
 
 extension SchoolModelQuerySortThenBy
     on QueryBuilder<SchoolModel, SchoolModel, QSortThenBy> {
+  QueryBuilder<SchoolModel, SchoolModel, QAfterSortBy> thenByAbbr() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'abbr', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SchoolModel, SchoolModel, QAfterSortBy> thenByAbbrDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'abbr', Sort.desc);
+    });
+  }
+
   QueryBuilder<SchoolModel, SchoolModel, QAfterSortBy> thenByAddress() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'address', Sort.asc);
@@ -911,6 +1076,13 @@ extension SchoolModelQuerySortThenBy
 
 extension SchoolModelQueryWhereDistinct
     on QueryBuilder<SchoolModel, SchoolModel, QDistinct> {
+  QueryBuilder<SchoolModel, SchoolModel, QDistinct> distinctByAbbr(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'abbr', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<SchoolModel, SchoolModel, QDistinct> distinctByAddress(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -945,6 +1117,12 @@ extension SchoolModelQueryProperty
   QueryBuilder<SchoolModel, int, QQueryOperations> isarProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isar');
+    });
+  }
+
+  QueryBuilder<SchoolModel, String, QQueryOperations> abbrProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'abbr');
     });
   }
 

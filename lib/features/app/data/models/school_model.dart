@@ -12,6 +12,7 @@ class SchoolModel extends SchoolEntity {
   SchoolModel(
       {required super.id,
       required super.name,
+      required super.abbr,
       required super.code,
       required super.address});
 }

@@ -176,6 +176,7 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
         .map((school) => SchoolEntity(
               id: school.$id,
               name: school.data['name'],
+              abbr: school.data['abbr'],
               address: school.data['address'],
               code: school.data['code'],
             ))
@@ -385,6 +386,7 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
         .map((school) => SchoolModel(
               id: school.id,
               name: school.name,
+              abbr: school.abbr,
               address: school.address,
               code: school.code,
             ))

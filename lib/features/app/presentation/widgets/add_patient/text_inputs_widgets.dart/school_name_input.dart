@@ -15,7 +15,7 @@ class SchoolNameInput extends ConsumerWidget {
         .map<AutoSuggestBoxItem<SchoolEntity>>(
           (school) => AutoSuggestBoxItem<SchoolEntity>(
             value: school,
-            label: school.name,
+            label: school.abbr,
           ),
         )
         .toList();
