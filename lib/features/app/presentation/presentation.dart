@@ -56,7 +56,6 @@ export 'widgets/title_widget.dart';
 
 export 'providers/add_patient_provider.dart';
 export 'providers/dashboard_tab_provider.dart';
-export 'providers/dashboard_future_providers.dart';
 export 'providers/dashboard_page_provider.dart';
 export 'providers/future_assignment_provider.dart';
 export 'providers/future_doctor_provider.dart';
