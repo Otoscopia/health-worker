@@ -204,23 +204,25 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
     final Document screening = await remoteGet.getScreening(id: id);
 
     final ScreeningEntity entity = ScreeningEntity(
-        id: screening.$id,
-        patient: screening.data['patient'],
-        assignment: screening.data['assignment'],
-        historyOfIllness: screening.data['historyOfIllness'],
-        healthWorkerRemarks: screening.data['healthWorkerRemarks'],
-        temperature: screening.data['temperature'],
-        height: screening.data['height'],
-        weight: screening.data['weight'],
-        hasSimilarCondition: screening.data['hasSimilarCondition'],
-        chiefComplaint: screening.data['chiefComplaint'],
-        chiefComplaintMessage: screening.data['chiefComplaintMessage'],
-        hasAllergies: screening.data['hasAllergies'],
-        typeOfAllergies: screening.data['typeOfAllergies'],
-        undergoSurgery: screening.data['undergoSurgery'],
-        takingMedication: screening.data['takingMedication'],
-        takingMedicationMessage: screening.data['takingMedicationMessage'],
-        status: screening.data['status']);
+      id: screening.$id,
+      patient: screening.data['patient'],
+      assignment: screening.data['assignment'],
+      historyOfIllness: screening.data['historyOfIllness'],
+      healthWorkerRemarks: screening.data['healthWorkerRemarks'],
+      temperature: screening.data['temperature'],
+      height: screening.data['height'],
+      weight: screening.data['weight'],
+      hasSimilarCondition: screening.data['hasSimilarCondition'],
+      chiefComplaint: screening.data['chiefComplaint'],
+      chiefComplaintMessage: screening.data['chiefComplaintMessage'],
+      hasAllergies: screening.data['hasAllergies'],
+      typeOfAllergies: screening.data['typeOfAllergies'],
+      undergoSurgery: screening.data['undergoSurgery'],
+      takingMedication: screening.data['takingMedication'],
+      takingMedicationMessage: screening.data['takingMedicationMessage'],
+      status: screening.data['status'],
+      createdAt: screening.data['\$createdAt'],
+    );
 
     return entity;
   }
@@ -238,23 +240,26 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
 
     final List<ScreeningEntity> entities = screenings.documents
         .map((screening) => ScreeningEntity(
-            id: screening.$id,
-            patient: screening.data['patient'],
-            assignment: screening.data['assignment'],
-            historyOfIllness: screening.data['historyOfIllness'],
-            healthWorkerRemarks: screening.data['healthWorkerRemarks'],
-            temperature: screening.data['temperature'],
-            height: screening.data['height'],
-            weight: screening.data['weight'],
-            hasSimilarCondition: screening.data['hasSimilarCondition'],
-            chiefComplaint: screening.data['chiefComplaint'],
-            chiefComplaintMessage: screening.data['chiefComplaintMessage'],
-            hasAllergies: screening.data['hasAllergies'],
-            typeOfAllergies: screening.data['typeOfAllergies'],
-            undergoSurgery: screening.data['undergoSurgery'],
-            takingMedication: screening.data['takingMedication'],
-            takingMedicationMessage: screening.data['takingMedicationMessage'],
-            status: screening.data['status']))
+              id: screening.$id,
+              patient: screening.data['patient']["\$id"],
+              assignment: screening.data['assignment']['\$id'],
+              historyOfIllness: screening.data['historyOfIllness'],
+              healthWorkerRemarks: screening.data['healthWorkerRemarks'],
+              temperature: screening.data['temperature'],
+              height: screening.data['height'],
+              weight: screening.data['weight'],
+              hasSimilarCondition: screening.data['hasSimilarCondition'],
+              chiefComplaint: screening.data['chiefComplaint'],
+              chiefComplaintMessage: screening.data['chiefComplaintMessage'],
+              hasAllergies: screening.data['hasAllergies'],
+              typeOfAllergies: screening.data['typeOfAllergies'],
+              undergoSurgery: screening.data['undergoSurgery'],
+              takingMedication: screening.data['takingMedication'],
+              takingMedicationMessage:
+                  screening.data['takingMedicationMessage'],
+              status: screening.data['status'],
+              createdAt: screening.data['\$createdAt'],
+            ))
         .toList();
 
     return entities;
@@ -415,6 +420,7 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
       takingMedication: screening.takingMedication,
       takingMedicationMessage: screening.takingMedicationMessage,
       status: screening.status,
+      createdAt: screening.createdAt,
     );
 
     await localSet.setScreening(screenings: model);
@@ -430,23 +436,25 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
       {required List<ScreeningEntity> screenings}) async {
     final List<ScreeningModel> models = screenings
         .map((screening) => ScreeningModel(
-            id: screening.id,
-            patient: screening.patient,
-            assignment: screening.assignment,
-            historyOfIllness: screening.historyOfIllness,
-            healthWorkerRemarks: screening.healthWorkerRemarks,
-            temperature: screening.temperature,
-            height: screening.height,
-            weight: screening.weight,
-            hasSimilarCondition: screening.hasSimilarCondition,
-            chiefComplaint: screening.chiefComplaint,
-            chiefComplaintMessage: screening.chiefComplaintMessage,
-            hasAllergies: screening.hasAllergies,
-            typeOfAllergies: screening.typeOfAllergies,
-            undergoSurgery: screening.undergoSurgery,
-            takingMedication: screening.takingMedication,
-            takingMedicationMessage: screening.takingMedicationMessage,
-            status: screening.status))
+              id: screening.id,
+              patient: screening.patient,
+              assignment: screening.assignment,
+              historyOfIllness: screening.historyOfIllness,
+              healthWorkerRemarks: screening.healthWorkerRemarks,
+              temperature: screening.temperature,
+              height: screening.height,
+              weight: screening.weight,
+              hasSimilarCondition: screening.hasSimilarCondition,
+              chiefComplaint: screening.chiefComplaint,
+              chiefComplaintMessage: screening.chiefComplaintMessage,
+              hasAllergies: screening.hasAllergies,
+              typeOfAllergies: screening.typeOfAllergies,
+              undergoSurgery: screening.undergoSurgery,
+              takingMedication: screening.takingMedication,
+              takingMedicationMessage: screening.takingMedicationMessage,
+              status: screening.status,
+              createdAt: screening.createdAt,
+            ))
         .toList();
 
     await localSet.setScreenings(screenings: models);
