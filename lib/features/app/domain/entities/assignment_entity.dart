@@ -3,7 +3,7 @@ class AssignmentEntity {
   final String nurse;
   final String school;
   final String startDate;
-  final String endDate;
+  final String? endDate;
 
   AssignmentEntity({
     required this.id,

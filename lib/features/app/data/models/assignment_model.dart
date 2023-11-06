@@ -14,5 +14,5 @@ class AssignmentModel extends AssignmentEntity {
       required super.nurse,
       required super.school,
       required super.startDate,
-      required super.endDate});
+      super.endDate});
 }
