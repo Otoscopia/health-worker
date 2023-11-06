@@ -30,6 +30,7 @@ dependencies:
   pdf: ^3.10.4
   printing: ^5.11.0
   responsive_framework: ^1.1.1
+  responsive_grid_list: ^1.4.0
   styled_widget: ^0.4.1
   system_theme: ^2.3.1
   uuid: ^4.1.0
