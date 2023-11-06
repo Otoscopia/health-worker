@@ -13,10 +13,12 @@ class FullNameInput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String value = ref.read(fullnameProvider);
     return InfoLabel(
       label: fullNameLabel,
       child: TextFormBox(
         autovalidateMode: AutovalidateMode.onUserInteraction,
+        initialValue: value,
         placeholder: fullNamePlaceholder,
         inputFormatters: [nameFilter],
         maxLength: 50,

@@ -11,9 +11,11 @@ class ContactNumberInput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String value = ref.watch(contactNumberProvider);
     return InfoLabel(
       label: guardiansPhoneLabel,
       child: TextFormBox(
+        initialValue: value,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly, ContactNumberFormatter()],
         placeholder: guardiansPhonePlaceholder,

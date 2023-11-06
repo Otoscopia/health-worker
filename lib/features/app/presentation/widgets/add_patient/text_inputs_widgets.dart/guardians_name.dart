@@ -12,9 +12,11 @@ class GuardiansFullNameInput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String value = ref.watch(guardianFullnameProvider);
     return InfoLabel(
       label: guardiansNameLabel,
       child: TextFormBox(
+        initialValue: value,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         placeholder: guardiansNameLabel,
         inputFormatters: [nameFilter],

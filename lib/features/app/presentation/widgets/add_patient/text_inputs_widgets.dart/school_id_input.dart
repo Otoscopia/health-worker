@@ -11,9 +11,11 @@ class SchoolIdInput extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String value = ref.watch(schoolIdProvider);
     return InfoLabel(
       label: schoolIDLabel,
       child: TextFormBox(
+        initialValue: value,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         placeholder: schoolIDPlaceholder,
         maxLength: 12,

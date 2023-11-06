@@ -12,35 +12,18 @@ class AddPatientButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-      width: 150,
-      child: FilledButton(
-        child: const Text(continueLabel),
-        onPressed: () {
-          int gender = ref.read(genderProvider);
-          DateTime birthdate = ref.read(birthdateProvider);
-
-          bool checkpoint = globalKey.currentState!.validate() &&
-              gender != 3 &&
-              !isBirthdateToday(birthdate);
-
-          if (checkpoint) {
-            PatientEntity patient = patientFunction(ref);
-            ref.read(patientProvider.notifier).addPatient(patient);
-
-            Navigator.push(context, FluentPageRoute(builder: (context) => const ScreeningInformation()));
-          } else {
-            if (globalKey.currentState!.validate()) {}
-            if (gender == 3) {
-              ref.read(genderErrorProvider.notifier).setGenderError(true);
-            }
-            if (isBirthdateToday(birthdate)) {
-              ref.read(birthdateErrorProvider.notifier).setBirthdateError(true);
-            }
-          }
-        },
-      ),
-    );
+    bool loading = ref.watch(patientLoadingProvider);
+    return loading
+        ? const ProgressRing()
+        : SizedBox(
+            width: 150,
+            child: FilledButton(
+              child: const Text(continueLabel),
+              onPressed: () {
+                addPatient(context, ref, globalKey);
+              },
+            ),
+          );
   }
 }
 
@@ -79,4 +62,27 @@ PatientEntity patientFunction(WidgetRef ref) {
     creator: creator.id,
     doctor: doctors.first.id,
   );
+}
+
+void addPatient(BuildContext context, WidgetRef ref, GlobalKey<FormState> validate) async {
+  int gender = ref.read(genderProvider);
+  DateTime birthdate = ref.read(birthdateProvider);
+
+  bool checkpoint = validate.currentState!.validate() && gender != 3 && !isBirthdateToday(birthdate);
+
+  if (checkpoint) {
+    PatientEntity patient = patientFunction(ref);
+    ref.read(patientProvider.notifier).addPatient(patient);
+    ref.read(patientsProvider.notifier).addPatient(patient);
+
+    Navigator.push(context, FluentPageRoute(builder: (context) => const LeftCamera()));
+  } else {
+    if (validate.currentState!.validate()) {}
+    if (gender == 3) {
+      ref.read(genderErrorProvider.notifier).setGenderError(true);
+    }
+    if (isBirthdateToday(birthdate)) {
+      ref.read(birthdateErrorProvider.notifier).setBirthdateError(true);
+    }
+  }
 }
