@@ -16,23 +16,26 @@ class ScreeningEntity {
   final String takingMedication;
   final String takingMedicationMessage;
   final String status;
+  final String? createdAt;
 
-  ScreeningEntity(
-      {required this.id,
-      required this.patient,
-      required this.assignment,
-      required this.historyOfIllness,
-      required this.healthWorkerRemarks,
-      required this.temperature,
-      required this.height,
-      required this.weight,
-      required this.hasSimilarCondition,
-      required this.chiefComplaint,
-      required this.chiefComplaintMessage,
-      required this.hasAllergies,
-      required this.typeOfAllergies,
-      required this.undergoSurgery,
-      required this.takingMedication,
-      required this.takingMedicationMessage,
-      required this.status});
+  ScreeningEntity({
+    required this.id,
+    required this.patient,
+    required this.assignment,
+    required this.historyOfIllness,
+    required this.healthWorkerRemarks,
+    required this.temperature,
+    required this.height,
+    required this.weight,
+    required this.hasSimilarCondition,
+    required this.chiefComplaint,
+    required this.chiefComplaintMessage,
+    required this.hasAllergies,
+    required this.typeOfAllergies,
+    required this.undergoSurgery,
+    required this.takingMedication,
+    required this.takingMedicationMessage,
+    required this.status,
+    this.createdAt,
+  });
 }

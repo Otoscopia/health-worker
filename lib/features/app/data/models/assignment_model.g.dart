@@ -63,7 +63,12 @@ int _assignmentModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.endDate.length * 3;
+  {
+    final value = object.endDate;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.id.length * 3;
   bytesCount += 3 + object.nurse.length * 3;
   bytesCount += 3 + object.school.length * 3;
@@ -91,7 +96,7 @@ AssignmentModel _assignmentModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = AssignmentModel(
-    endDate: reader.readString(offsets[0]),
+    endDate: reader.readStringOrNull(offsets[0]),
     id: reader.readString(offsets[1]),
     nurse: reader.readString(offsets[2]),
     school: reader.readString(offsets[3]),
@@ -109,7 +114,7 @@ P _assignmentModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
@@ -218,8 +223,26 @@ extension AssignmentModelQueryWhere
 extension AssignmentModelQueryFilter
     on QueryBuilder<AssignmentModel, AssignmentModel, QFilterCondition> {
   QueryBuilder<AssignmentModel, AssignmentModel, QAfterFilterCondition>
+      endDateIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'endDate',
+      ));
+    });
+  }
+
+  QueryBuilder<AssignmentModel, AssignmentModel, QAfterFilterCondition>
+      endDateIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'endDate',
+      ));
+    });
+  }
+
+  QueryBuilder<AssignmentModel, AssignmentModel, QAfterFilterCondition>
       endDateEqualTo(
-    String value, {
+    String? value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -233,7 +256,7 @@ extension AssignmentModelQueryFilter
 
   QueryBuilder<AssignmentModel, AssignmentModel, QAfterFilterCondition>
       endDateGreaterThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -249,7 +272,7 @@ extension AssignmentModelQueryFilter
 
   QueryBuilder<AssignmentModel, AssignmentModel, QAfterFilterCondition>
       endDateLessThan(
-    String value, {
+    String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -265,8 +288,8 @@ extension AssignmentModelQueryFilter
 
   QueryBuilder<AssignmentModel, AssignmentModel, QAfterFilterCondition>
       endDateBetween(
-    String lower,
-    String upper, {
+    String? lower,
+    String? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1155,7 +1178,7 @@ extension AssignmentModelQueryProperty
     });
   }
 
-  QueryBuilder<AssignmentModel, String, QQueryOperations> endDateProperty() {
+  QueryBuilder<AssignmentModel, String?, QQueryOperations> endDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'endDate');
     });

@@ -1,4 +1,7 @@
+// import 'package:health_worker/features/features.dart';
+
 class TableEntity {
+  final String patientId;
   final String name;
   final String age;
   final String gender;
@@ -7,6 +10,7 @@ class TableEntity {
   final String school;
 
   TableEntity({
+    required this.patientId,
     required this.name,
     required this.age,
     required this.gender,

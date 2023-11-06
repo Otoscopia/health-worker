@@ -32,73 +32,78 @@ const ScreeningModelSchema = CollectionSchema(
       name: r'chiefComplaintMessage',
       type: IsarType.string,
     ),
-    r'hasAllergies': PropertySchema(
+    r'createdAt': PropertySchema(
       id: 3,
+      name: r'createdAt',
+      type: IsarType.string,
+    ),
+    r'hasAllergies': PropertySchema(
+      id: 4,
       name: r'hasAllergies',
       type: IsarType.string,
     ),
     r'hasSimilarCondition': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'hasSimilarCondition',
       type: IsarType.string,
     ),
     r'healthWorkerRemarks': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'healthWorkerRemarks',
       type: IsarType.string,
     ),
     r'height': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'height',
       type: IsarType.string,
     ),
     r'historyOfIllness': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'historyOfIllness',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'id',
       type: IsarType.string,
     ),
     r'patient': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'patient',
       type: IsarType.string,
     ),
     r'status': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'status',
       type: IsarType.string,
     ),
     r'takingMedication': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'takingMedication',
       type: IsarType.string,
     ),
     r'takingMedicationMessage': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'takingMedicationMessage',
       type: IsarType.string,
     ),
     r'temperature': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'temperature',
       type: IsarType.string,
     ),
     r'typeOfAllergies': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'typeOfAllergies',
       type: IsarType.string,
     ),
     r'undergoSurgery': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'undergoSurgery',
       type: IsarType.string,
     ),
     r'weight': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'weight',
       type: IsarType.string,
     )
@@ -126,6 +131,12 @@ int _screeningModelEstimateSize(
   bytesCount += 3 + object.assignment.length * 3;
   bytesCount += 3 + object.chiefComplaint.length * 3;
   bytesCount += 3 + object.chiefComplaintMessage.length * 3;
+  {
+    final value = object.createdAt;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.hasAllergies.length * 3;
   bytesCount += 3 + object.hasSimilarCondition.length * 3;
   bytesCount += 3 + object.healthWorkerRemarks.length * 3;
@@ -152,20 +163,21 @@ void _screeningModelSerialize(
   writer.writeString(offsets[0], object.assignment);
   writer.writeString(offsets[1], object.chiefComplaint);
   writer.writeString(offsets[2], object.chiefComplaintMessage);
-  writer.writeString(offsets[3], object.hasAllergies);
-  writer.writeString(offsets[4], object.hasSimilarCondition);
-  writer.writeString(offsets[5], object.healthWorkerRemarks);
-  writer.writeString(offsets[6], object.height);
-  writer.writeString(offsets[7], object.historyOfIllness);
-  writer.writeString(offsets[8], object.id);
-  writer.writeString(offsets[9], object.patient);
-  writer.writeString(offsets[10], object.status);
-  writer.writeString(offsets[11], object.takingMedication);
-  writer.writeString(offsets[12], object.takingMedicationMessage);
-  writer.writeString(offsets[13], object.temperature);
-  writer.writeString(offsets[14], object.typeOfAllergies);
-  writer.writeString(offsets[15], object.undergoSurgery);
-  writer.writeString(offsets[16], object.weight);
+  writer.writeString(offsets[3], object.createdAt);
+  writer.writeString(offsets[4], object.hasAllergies);
+  writer.writeString(offsets[5], object.hasSimilarCondition);
+  writer.writeString(offsets[6], object.healthWorkerRemarks);
+  writer.writeString(offsets[7], object.height);
+  writer.writeString(offsets[8], object.historyOfIllness);
+  writer.writeString(offsets[9], object.id);
+  writer.writeString(offsets[10], object.patient);
+  writer.writeString(offsets[11], object.status);
+  writer.writeString(offsets[12], object.takingMedication);
+  writer.writeString(offsets[13], object.takingMedicationMessage);
+  writer.writeString(offsets[14], object.temperature);
+  writer.writeString(offsets[15], object.typeOfAllergies);
+  writer.writeString(offsets[16], object.undergoSurgery);
+  writer.writeString(offsets[17], object.weight);
 }
 
 ScreeningModel _screeningModelDeserialize(
@@ -178,20 +190,21 @@ ScreeningModel _screeningModelDeserialize(
     assignment: reader.readString(offsets[0]),
     chiefComplaint: reader.readString(offsets[1]),
     chiefComplaintMessage: reader.readString(offsets[2]),
-    hasAllergies: reader.readString(offsets[3]),
-    hasSimilarCondition: reader.readString(offsets[4]),
-    healthWorkerRemarks: reader.readString(offsets[5]),
-    height: reader.readString(offsets[6]),
-    historyOfIllness: reader.readString(offsets[7]),
-    id: reader.readString(offsets[8]),
-    patient: reader.readString(offsets[9]),
-    status: reader.readString(offsets[10]),
-    takingMedication: reader.readString(offsets[11]),
-    takingMedicationMessage: reader.readString(offsets[12]),
-    temperature: reader.readString(offsets[13]),
-    typeOfAllergies: reader.readString(offsets[14]),
-    undergoSurgery: reader.readString(offsets[15]),
-    weight: reader.readString(offsets[16]),
+    createdAt: reader.readStringOrNull(offsets[3]),
+    hasAllergies: reader.readString(offsets[4]),
+    hasSimilarCondition: reader.readString(offsets[5]),
+    healthWorkerRemarks: reader.readString(offsets[6]),
+    height: reader.readString(offsets[7]),
+    historyOfIllness: reader.readString(offsets[8]),
+    id: reader.readString(offsets[9]),
+    patient: reader.readString(offsets[10]),
+    status: reader.readString(offsets[11]),
+    takingMedication: reader.readString(offsets[12]),
+    takingMedicationMessage: reader.readString(offsets[13]),
+    temperature: reader.readString(offsets[14]),
+    typeOfAllergies: reader.readString(offsets[15]),
+    undergoSurgery: reader.readString(offsets[16]),
+    weight: reader.readString(offsets[17]),
   );
   object.isar = id;
   return object;
@@ -211,7 +224,7 @@ P _screeningModelDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
@@ -237,6 +250,8 @@ P _screeningModelDeserializeProp<P>(
     case 15:
       return (reader.readString(offset)) as P;
     case 16:
+      return (reader.readString(offset)) as P;
+    case 17:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -742,6 +757,160 @@ extension ScreeningModelQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'chiefComplaintMessage',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'createdAt',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      createdAtIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'createdAt',
         value: '',
       ));
     });
@@ -2759,6 +2928,19 @@ extension ScreeningModelQuerySortBy
     });
   }
 
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy> sortByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      sortByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
       sortByHasAllergies() {
     return QueryBuilder.apply(this, (query) {
@@ -2994,6 +3176,19 @@ extension ScreeningModelQuerySortThenBy
     });
   }
 
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy> thenByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
+      thenByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterSortBy>
       thenByHasAllergies() {
     return QueryBuilder.apply(this, (query) {
@@ -3222,6 +3417,13 @@ extension ScreeningModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ScreeningModel, ScreeningModel, QDistinct> distinctByCreatedAt(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'createdAt', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<ScreeningModel, ScreeningModel, QDistinct>
       distinctByHasAllergies({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -3353,6 +3555,12 @@ extension ScreeningModelQueryProperty
       chiefComplaintMessageProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'chiefComplaintMessage');
+    });
+  }
+
+  QueryBuilder<ScreeningModel, String?, QQueryOperations> createdAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'createdAt');
     });
   }
 
