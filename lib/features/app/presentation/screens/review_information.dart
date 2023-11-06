@@ -143,10 +143,10 @@ class ReviewRecord extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  FilledButton(
-                      child: const Text("Edit Medical Record"),
-                      onPressed: () =>
-                          ref.read(editRecordProvider.notifier).toggle())
+                  // FilledButton(
+                  //     child: const Text("Edit Medical Record"),
+                  //     onPressed: () =>
+                  //         ref.read(editRecordProvider.notifier).toggle())
                 ],
               ),
               largeHeight,
@@ -230,7 +230,7 @@ class ReviewRecord extends ConsumerWidget {
                         school: patientSchool.name);
 
                     ref.read(tableRecordsProvider.notifier).add(record);
-                    // Navigator.popUntil(context, (route) => route.isFirst);
+                    Navigator.popUntil(context, (route) => route.isFirst);
                   },
                   child: const Text("Submit Medical Record"),
                 ),
