@@ -9,7 +9,7 @@ final FluentThemeData lightTheme = FluentThemeData(
   brightness: Brightness.light,
   accentColor: accentColor,
   scaffoldBackgroundColor: lightBackgroundAccent,
-  cardColor: lightBackgroundAccent,
+  cardColor: lightBackground,
   // typography: Typography.raw(
   //   display: DarkTextStyles().display,
   //   titleLarge: DarkTextStyles().titleLarge,

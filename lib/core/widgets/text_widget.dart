@@ -10,7 +10,8 @@ class PrimaryCaption extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Text(text, style: FluentTheme.of(context).typography.body).textColor(primary);
+    return Text(text, style: FluentTheme.of(context).typography.body)
+        .textColor(primary);
   }
 }
 
