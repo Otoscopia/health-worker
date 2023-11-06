@@ -14,6 +14,11 @@ class SchoolsNotifier extends StateNotifier<List<SchoolEntity>> {
   SchoolsNotifier(): super([]);
 
   setSchool(List<SchoolEntity> schools) => state = schools; 
+
+  SchoolEntity findSchool(String id) {
+    final school = state.where((element) => element.id == id).first;
+    return school;
+  }
 }
 
 final schoolsProvider = StateNotifierProvider<SchoolsNotifier, List<SchoolEntity>>((ref) {

@@ -4,21 +4,22 @@ import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
 class PatientNotifier extends StateNotifier<PatientEntity> {
-  PatientNotifier() : super(emptyPatient);
+  final StateNotifierProviderRef<PatientNotifier, PatientEntity> ref;
+  PatientNotifier({required this.ref}) : super(emptyPatient);
 
-  addPatient(PatientEntity patient) {
+  addPatient(PatientEntity patient) async {
     final addPatientLocalUseCase = SetPatientLocalUseCase(repository: applicationRepository);
-    addPatientLocalUseCase(patient: patient);
+    await addPatientLocalUseCase.execute(patient: patient);
     
     final addPatientRemoteUseCase = SetPatientRemoteUseCase(repository: applicationRepository);
-    addPatientRemoteUseCase(patient: patient);
+    await addPatientRemoteUseCase.execute(patient: patient);
 
     state = patient;
   }
 }
 
 final patientProvider = StateNotifierProvider<PatientNotifier, PatientEntity>((ref) {
-  return PatientNotifier();
+  return PatientNotifier(ref: ref);
 });
 
 PatientEntity emptyPatient = PatientEntity(
@@ -33,3 +34,14 @@ PatientEntity emptyPatient = PatientEntity(
   creator: "",
   doctor: "",
 );
+
+
+class PatientLoadingNotifier extends StateNotifier<bool> {
+  PatientLoadingNotifier(): super(false);
+  
+  setLoading() => state = !state;
+}
+
+final patientLoadingProvider = StateNotifierProvider<PatientLoadingNotifier, bool>((ref) {
+  return PatientLoadingNotifier();
+});

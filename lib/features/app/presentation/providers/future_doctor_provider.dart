@@ -16,6 +16,11 @@ class DoctorsNotifier extends StateNotifier<List<UserEntity>> {
   DoctorsNotifier() : super([]);
 
   setDoctors(List<UserEntity> doctors) => state = doctors;
+
+  UserEntity findDoctor(String id) {
+    final doctor = state.where((element) => element.id == id).first;
+    return doctor;
+  }
 }
 
 final doctorsProvider =

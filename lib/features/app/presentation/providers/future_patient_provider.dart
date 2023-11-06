@@ -14,6 +14,10 @@ class PatientsNotifier extends StateNotifier<List<PatientEntity>> {
   PatientsNotifier(): super([]);
 
   setPatient(List<PatientEntity> patients) => state = patients; 
+
+  addPatient(PatientEntity patient) {
+    state = [...state, patient];
+  }
 }
 
 final patientsProvider = StateNotifierProvider<PatientsNotifier, List<PatientEntity>>((ref) {

@@ -7,10 +7,12 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
   ScreeningNotifier() : super(emptyScreening);
 
   setScreening(ScreeningEntity screening) {
-    final AddScreeningLocalUseCase local = AddScreeningLocalUseCase(repository: applicationRepository);
+    final AddScreeningLocalUseCase local =
+        AddScreeningLocalUseCase(repository: applicationRepository);
     local.execute(screening: screening);
-    
-    final AddScreeningRemoteUseCase remote = AddScreeningRemoteUseCase(repository: applicationRepository);
+
+    final AddScreeningRemoteUseCase remote =
+        AddScreeningRemoteUseCase(repository: applicationRepository);
     remote.execute(screening: screening);
 
     state = screening;
@@ -23,20 +25,22 @@ final screeningProvider =
 });
 
 ScreeningEntity emptyScreening = ScreeningEntity(
-    id: "",
-    patient: "",
-    assignment: "",
-    historyOfIllness: "",
-    healthWorkerRemarks: "",
-    temperature: "",
-    height: "",
-    weight: "",
-    hasSimilarCondition: "",
-    chiefComplaint: "",
-    chiefComplaintMessage: "",
-    hasAllergies: "",
-    typeOfAllergies: "",
-    undergoSurgery: "",
-    takingMedication: "",
-    takingMedicationMessage: "",
-    status: "");
+  id: "",
+  patient: "",
+  assignment: "",
+  historyOfIllness: "",
+  healthWorkerRemarks: "",
+  temperature: "",
+  height: "",
+  weight: "",
+  hasSimilarCondition: "",
+  chiefComplaint: "",
+  chiefComplaintMessage: "",
+  hasAllergies: "",
+  typeOfAllergies: "",
+  undergoSurgery: "",
+  takingMedication: "",
+  takingMedicationMessage: "",
+  status: "",
+  createdAt: "",
+);
