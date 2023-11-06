@@ -12,7 +12,7 @@ class Schools extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<SchoolEntity> schools = ref.read(dashboardFutureProvider)[2] as List<SchoolEntity>;
+    final List<SchoolEntity> schools = ref.read(schoolsProvider);
     SchoolsTableSource source = SchoolsTableSource(schools, ref);
 
     return m.Theme(
