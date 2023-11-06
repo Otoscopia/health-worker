@@ -14,7 +14,7 @@ class Home extends ConsumerWidget {
         children: [
           const HomeTable(),
           FloatingActionButton(
-            icon: const Icon(FluentIcons.add),
+            icon: FluentIcons.add,
             tooltip: homeTooltip,
             onPressed: () => Navigator.push(context, FluentPageRoute(builder: (context) => const AddPatient())),
           )

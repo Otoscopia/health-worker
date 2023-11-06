@@ -3,8 +3,6 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:ionicons/ionicons.dart";
 
 import "package:health_worker/core/core.dart";
-import "package:health_worker/features/app/domain/use_cases/encrypt_use_case.dart";
-import "package:health_worker/features/app/presentation/providers/add_screening_provider.dart";
 import "package:health_worker/features/features.dart";
 
 class ScreeningInformation extends ConsumerWidget {
@@ -20,7 +18,7 @@ class ScreeningInformation extends ConsumerWidget {
         child: Card(
           child: Stack(
             children: [
-              SingleChildScrollView(
+              HorizontalScroll(
                 child: Form(
                   key: key,
                   child: Column(
@@ -29,20 +27,22 @@ class ScreeningInformation extends ConsumerWidget {
                         icon: closeButtonIcon,
                         title: diagnosisTitle,
                         popUpContent: false,
-                        onPressed: () => Navigator.pop(context),
                       ),
+                      const Divider(),
                       largeHeight,
+                      const ProgressButtons(status: 4),
+                      largeWidth,
                       const ExaminerAndDate(),
                       largeHeight,
                       const IllnessAndComment(),
                       largeHeight,
-                      const TemperatureAndBlood(),
+                      const Temperature(),
                       largeHeight,
                       const HeightAndWeight(),
                       largeHeight,
-                      const SimilarConditionWidget(),
-                      largeHeight,
                       const CheifComplainWidget(),
+                      largeHeight,
+                      const SimilarConditionWidget(),
                       largeHeight,
                       const PatientAllergiesWidget(),
                       largeHeight,
@@ -57,7 +57,7 @@ class ScreeningInformation extends ConsumerWidget {
                 tooltip: "Submit Screening Information",
                 right: 16,
                 bottom: 16,
-                icon: const Icon(Ionicons.checkmark),
+                icon: Ionicons.checkmark,
                 onPressed: () {
                   addScreeningInformation(context, ref, key);
                 },
@@ -70,18 +70,26 @@ class ScreeningInformation extends ConsumerWidget {
   }
 }
 
-addScreeningInformation(BuildContext context, WidgetRef ref, GlobalKey<FormState> key) async {
+addScreeningInformation(
+    BuildContext context, WidgetRef ref, GlobalKey<FormState> key) async {
   String historyOfIllness = ref.read(historyOfIllnessProvider);
   String healthWorkerComment = ref.read(healthWorkerCommentProvider);
   String temperature = ref.read(temperaturenessProvider);
   String height = ref.read(heightProvider);
   String weight = ref.read(weightProvider);
-  String similarCondition = ref.read(similarConditionProvider) == 1 ? "true" : "false";
+  String similarCondition =
+      ref.read(similarConditionProvider) == 1 ? "true" : "false";
   List<bool> cheifComplains = ref.read(cheifComplainProvider);
-  String chiefComplainStrings = List.generate(cheifComplains.length, (index) => checker(cheifComplains, index)).toString();
-  List<String> arrayComplain = chiefComplainStrings.substring(1, chiefComplainStrings.length - 1).split(", ");
-  Iterable<String> nonEmptyComplains = arrayComplain.where((complain) => complain.isNotEmpty);
-  String joinedComplains = nonEmptyComplains.toList().asMap().entries.map((entry) {
+  String chiefComplainStrings = List.generate(
+          cheifComplains.length, (index) => checker(cheifComplains, index))
+      .toString();
+  List<String> arrayComplain = chiefComplainStrings
+      .substring(1, chiefComplainStrings.length - 1)
+      .split(", ");
+  Iterable<String> nonEmptyComplains =
+      arrayComplain.where((complain) => complain.isNotEmpty);
+  String joinedComplains =
+      nonEmptyComplains.toList().asMap().entries.map((entry) {
     final index = entry.key;
     final complain = entry.value;
     if (index == nonEmptyComplains.length - 1) {
@@ -94,36 +102,53 @@ addScreeningInformation(BuildContext context, WidgetRef ref, GlobalKey<FormState
   }).join(' ');
   String otherComplains = ref.read(otherComplainProvider);
   String allergies = ref.read(haveAllergiesProvider) == 1 ? "true" : "false";
-  String surgicalProcedure = ref.read(undergoSurgeryProvider) == 1 ? "true" : "false";
-  String medication = ref.read(takingMedicationProvider) == 1 ? "true" : "false";
+  String surgicalProcedure =
+      ref.read(undergoSurgeryProvider) == 1 ? "true" : "false";
+  String medication =
+      ref.read(takingMedicationProvider) == 1 ? "true" : "false";
   String medicationComment = ref.read(medicationProvider);
 
-  final EncryptUseCase encrypt = EncryptUseCase(repository: applicationRepository);
+  final List<AssignmentEntity> assignments = ref.read(assignmentProvider);
+  final String user = ref.read(userProvider).id;
+  final String school = ref.read(patientProvider).school;
 
-  ScreeningEntity screening = ScreeningEntity(
+  assignments.removeWhere((element) => element.nurse != user);
+  assignments.removeWhere((element) => element.school != school);
+
+  if (key.currentState!.validate() &&
+          similarCondition.isNotEmpty &&
+          cheifComplains.contains(true) ||
+      (cheifComplains.contains(true) && otherComplains.isEmpty) &&
+          allergies.isNotEmpty &&
+          surgicalProcedure.isNotEmpty &&
+          (medication.isNotEmpty && medicationComment.isNotEmpty)) {
+    ScreeningEntity screening = ScreeningEntity(
       id: uuid.v4(),
       patient: ref.read(patientProvider).id,
-      assignment: "ref.read(assignmentProvider).first.id",
-      historyOfIllness: encrypt.execute(data: historyOfIllness),
-      healthWorkerRemarks: encrypt.execute(data: healthWorkerComment),
-      temperature: encrypt.execute(data: temperature),
-      height: encrypt.execute(data: height),
-      weight: encrypt.execute(data: weight),
-      hasSimilarCondition: encrypt.execute(data: similarCondition),
-      chiefComplaint: encrypt.execute(data: joinedComplains),
-      chiefComplaintMessage: otherComplains.isEmpty ? "" : encrypt.execute(data: otherComplains),
-      hasAllergies: encrypt.execute(data: allergies),
+      assignment: ref.read(assignmentProvider).first.id,
+      historyOfIllness: historyOfIllness,
+      healthWorkerRemarks: healthWorkerComment,
+      temperature: temperature,
+      height: height,
+      weight: weight,
+      hasSimilarCondition: similarCondition,
+      chiefComplaint: joinedComplains,
+      chiefComplaintMessage: otherComplains.isEmpty ? "" : otherComplains,
+      hasAllergies: allergies,
       // TODO: [OT-34] Create type of allergies input box
-      typeOfAllergies: encrypt.execute(data: "TO BE CONTINUED"),
-      undergoSurgery: encrypt.execute(data: surgicalProcedure),
-      takingMedication: encrypt.execute(data: medication),
-      takingMedicationMessage: medicationComment.isEmpty ? "" : encrypt.execute(data: medicationComment),
-      status: encrypt.execute(data: "Pending"));
+      typeOfAllergies: "TO BE CONTINUED",
+      undergoSurgery: surgicalProcedure,
+      takingMedication: medication,
+      takingMedicationMessage:
+          medicationComment.isEmpty ? "" : medicationComment,
+      status: "Pending",
+      createdAt: "",
+    );
 
-  ref.read(screeningProvider.notifier).setScreening(screening);
+    ref.read(screeningProvider.notifier).setScreening(screening);
 
-  if (key.currentState!.validate() && similarCondition.isNotEmpty && cheifComplains.contains(true) || (cheifComplains.contains(true) && otherComplains.isEmpty) && allergies.isNotEmpty && surgicalProcedure.isNotEmpty && (medication.isNotEmpty && medicationComment.isNotEmpty)) {
-    Navigator.push(context, FluentPageRoute(builder: ((context) => const ReviewInformation())));
+    Navigator.push(context,
+        FluentPageRoute(builder: ((context) => const ReviewInformation())));
   } else {
     if (key.currentState!.validate()) {}
     if (similarCondition.isEmpty) {

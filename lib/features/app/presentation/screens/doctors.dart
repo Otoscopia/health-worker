@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/config/config.dart';
 import 'package:health_worker/features/features.dart';
 
-class Doctors extends ConsumerWidget {
-  const Doctors({super.key});
+class Doctor extends ConsumerWidget {
+  const Doctor({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +24,7 @@ class Doctors extends ConsumerWidget {
         color: transparent,
         child: PaginatedDataTable2(
           showCheckboxColumn: false,
-          border: TableBorder.all(color: darkBackgroundAccent),
+          border: TableBorder.all(color: FluentTheme.of(context).cardColor),
           renderEmptyRowsInTheEnd: false,
           headingRowColor:
               m.MaterialStateProperty.resolveWith((states) => transparent),

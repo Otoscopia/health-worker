@@ -8,8 +8,8 @@ import 'package:health_worker/config/config.dart';
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
-class Patients extends ConsumerWidget {
-  const Patients({super.key});
+class Patient extends ConsumerWidget {
+  const Patient({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +25,7 @@ class Patients extends ConsumerWidget {
         color: transparent,
         child: PaginatedDataTable2(
           showCheckboxColumn: false,
-          border: TableBorder.all(color: darkBackgroundAccent),
+          border: TableBorder.all(color: FluentTheme.of(context).cardColor),
           renderEmptyRowsInTheEnd: false,
           headingRowColor:
               m.MaterialStateProperty.resolveWith((states) => transparent),
@@ -57,7 +57,7 @@ class Patients extends ConsumerWidget {
           source: source,
           empty: Center(
             child: Text(
-              'No doctors found',
+              'No Patients found',
               style: FluentTheme.of(context).typography.subtitle,
             ),
           ),
@@ -92,6 +92,9 @@ class PatientTableSource extends m.DataTableSource {
         creator: row.creator,
         doctor: row.doctor);
 
+    final String doctor = ref.read(doctorsProvider).firstWhere((element) => element.id == patient.doctor).name;
+    final String school = ref.read(schoolsProvider).firstWhere((element) => element.id == patient.school).name;
+
     final DateTime date = DateTime.parse(patient.birthdate);
     final int age = DateTime.now().year - date.year;
     return DataRow2(
@@ -100,8 +103,8 @@ class PatientTableSource extends m.DataTableSource {
         m.DataCell(Text(patient.name)),
         m.DataCell(Text(age.toString())),
         m.DataCell(Text(patient.gender)),
-        m.DataCell(Text(patient.doctor)),
-        m.DataCell(Text(row.school)),
+        m.DataCell(Text(doctor)),
+        m.DataCell(Text(school)),
       ],
     );
   }

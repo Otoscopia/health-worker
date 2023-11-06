@@ -7,24 +7,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/config/config.dart';
 import 'package:health_worker/features/features.dart';
 
-class Schools extends ConsumerWidget {
-  const Schools({super.key});
+class School extends ConsumerWidget {
+  const School({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<SchoolEntity> schools = ref.read(schoolsProvider);
+    final List<AssignmentEntity> assignments = ref.read(assignmentProvider);
+    final String user = ref.read(userProvider).id;
+
+    assignments.removeWhere((element) => element.nurse != user);
+
+    schools.removeWhere((element) => assignments.any((assignment) => assignment.school != element.id));
+
     SchoolsTableSource source = SchoolsTableSource(schools, ref);
+
+    Color color = FluentTheme.of(context).cardColor;
 
     return m.Theme(
       data: m.ThemeData(
         brightness: FluentTheme.of(context).brightness,
-        cardColor: FluentTheme.of(context).cardColor,
+        cardColor: color,
       ),
       child: m.Material(
         color: transparent,
         child: PaginatedDataTable2(
           showCheckboxColumn: false,
-          border: TableBorder.all(color: darkBackgroundAccent),
+          border: TableBorder.all(color: color),
           headingRowColor: m.MaterialStateProperty.resolveWith((states) => transparent),
           renderEmptyRowsInTheEnd: false,
           minWidth: 1000,
