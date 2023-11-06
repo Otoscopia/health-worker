@@ -46,8 +46,8 @@ class ApplicationRepositoryImpl implements ApplicationRepository {
     final List<AssignmentEntity> assignmentList = assignments.documents
         .map((Document document) => AssignmentEntity(
             id: document.$id,
-            nurse: document.data['nurse'],
-            school: document.data['school'],
+            nurse: document.data['nurse']["\$id"],
+            school: document.data['school']["\$id"],
             startDate: document.data['startDate'],
             endDate: document.data['endDate']))
         .toList();
