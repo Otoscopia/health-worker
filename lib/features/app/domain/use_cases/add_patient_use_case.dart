@@ -5,7 +5,7 @@ class SetPatientRemoteUseCase {
 
   SetPatientRemoteUseCase({required this.repository});
 
-  Future<void> call({required PatientEntity patient}) async {
+  Future<void> execute({required PatientEntity patient}) async {
     await repository.setPatientRemote(patient: patient);
   }
 }
@@ -15,7 +15,7 @@ class SetPatientLocalUseCase {
 
   SetPatientLocalUseCase({required this.repository});
 
-  Future<void> call({required PatientEntity patient}) async {
+  Future<void> execute({required PatientEntity patient}) async {
     await repository.setPatientLocal(patient: patient);
   }
 }
