@@ -23,3 +23,22 @@ class TextSubtitle extends ConsumerWidget {
     return Text(text, style: FluentTheme.of(context).typography.subtitle);
   }
 }
+
+class CustomRichText extends ConsumerWidget {
+  const CustomRichText({super.key, required this.title, required this.value});
+
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Text.rich(
+      TextSpan(
+        text: "$title: ",
+        children: [
+          TextSpan(text: value).bold(),
+        ],
+      ),
+    );
+  }
+}
