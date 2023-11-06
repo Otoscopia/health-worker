@@ -14,8 +14,7 @@ class Patients extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<PatientEntity> patients =
-        ref.read(dashboardFutureProvider)[4] as List<PatientEntity>;
+    final List<PatientEntity> patients = ref.read(patientsProvider);
     PatientTableSource source = PatientTableSource(patients, ref);
 
     return m.Theme(
