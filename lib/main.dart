@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       theme: lightTheme,
       darkTheme: darkTheme,
       home: const Navigation(),
+      debugShowCheckedModeBanner: false,
       builder: (context, child) => ResponsiveBuilder(child: child!),
     );
   }
