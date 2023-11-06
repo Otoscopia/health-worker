@@ -10,7 +10,7 @@ class UserContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    UserEntity user = ref.watch(dashboardFutureProvider)[3] as UserEntity;
+    UserEntity user = ref.watch(userProvider);
     return ResponsiveRowColumn(
       layout: ResponsiveRowColumnType.ROW,
       rowSpacing: 16,
