@@ -12,7 +12,7 @@ class DashboardTab extends ConsumerWidget {
     return TabView(
       closeButtonVisibility: CloseButtonVisibilityMode.always,
       closeDelayDuration: Duration.zero,
-      currentIndex: 0,
+      currentIndex: ref.read(dashboardTabProvider).current,
       onChanged: (index) => ref.read(dashboardTabProvider.notifier).setTab(index),
       onReorder: (oldIndex, newIndex) => ref.read(dashboardTabProvider.notifier).setTabOrder(oldIndex, newIndex),
       shortcutsEnabled: true,

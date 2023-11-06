@@ -8,7 +8,6 @@ class TitleWidget extends StatelessWidget {
   final String title;
   final bool popUpContent;
   final String? popUpContentTitle, popUpContentMessage;
-  final void Function()? onPressed;
 
   const TitleWidget({
     super.key,
@@ -17,7 +16,6 @@ class TitleWidget extends StatelessWidget {
     required this.popUpContent,
     this.popUpContentTitle,
     this.popUpContentMessage,
-    this.onPressed,
   });
 
   @override
@@ -34,7 +32,7 @@ class TitleWidget extends StatelessWidget {
                 showContentDialog(
                     context, popUpContentTitle!, popUpContentMessage!);
               } else {
-                onPressed;
+                Navigator.pop(context);
               }
             },
           ),
