@@ -10,8 +10,8 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
     final AddScreeningLocalUseCase local = AddScreeningLocalUseCase(repository: applicationRepository);
     local.execute(screening: screening);
     
-    // final AddScreeningRemoteUseCase remote = AddScreeningRemoteUseCase(repository: applicationRepository);
-    // remote.execute(screening: screening);
+    final AddScreeningRemoteUseCase remote = AddScreeningRemoteUseCase(repository: applicationRepository);
+    remote.execute(screening: screening);
 
     state = screening;
   }
