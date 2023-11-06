@@ -1,7 +1,6 @@
 import 'package:flutter/services.dart';
 
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:ionicons/ionicons.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 String diagnosisTitle =  "Diagnosis Information Form";
@@ -46,7 +45,6 @@ const String medicationTypePlaceholder = "Type of Medication and it's duration";
 
 const String vitalLabel = "Vitals";
 
-List<Icon> icons = [const Icon(Ionicons.barbell), const Icon(Ionicons.body), const Icon(Ionicons.thermometer) ,const Icon(Ionicons.eyedrop_outline)];
 List<String> vitals =  ["Weight", "Height", "Temperature"];
 List<Widget> amount = [const Text("$weight kg").bold()];
 

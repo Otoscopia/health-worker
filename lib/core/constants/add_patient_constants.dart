@@ -33,7 +33,7 @@ const items = <BreadcrumbItem<int>>[
   BreadcrumbItem(label: Text('Patient Information'), value: 1),
 ];
 
-const String schoolNamePlaceholder = "Iligan City Division Office";
+const String schoolNamePlaceholder = "Patient School Name: e.g. Division Office";
 const String schoolNameError = "Please input a valid school name";
 
 const String schoolIDPlaceholder = "School ID";

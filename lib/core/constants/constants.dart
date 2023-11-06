@@ -14,3 +14,5 @@ const String cancelLabel = "Cancel";
 const String continueLabel = "Continue";
 
 const Icon closeButtonIcon = Icon(Ionicons.close_outline);
+
+List<Icon> icons = [const Icon(Ionicons.barbell), const Icon(Ionicons.body), const Icon(Ionicons.thermometer)];
