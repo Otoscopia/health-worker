@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/config/config.dart';
 import 'package:health_worker/core/core.dart';
-import 'package:health_worker/features/app/domain/use_cases/decrypt_use_case.dart';
 import 'package:health_worker/features/features.dart';
 
 class Patients extends ConsumerWidget {
@@ -79,17 +78,17 @@ class PatientTableSource extends m.DataTableSource {
   @override
   m.DataRow getRow(int index) {
     final row = _dataRows[index];
-    final DecrpytUseCase decrypt = DecrpytUseCase(repository: applicationRepository);
+    // final DecrpytUseCase decrypt = DecrpytUseCase(repository: applicationRepository);
 
     final PatientEntity patient = PatientEntity(
         id: row.id,
-        name: decrypt.execute(data: row.name),
-        gender: decrypt.execute(data: row.gender),
-        birthdate: decrypt.execute(data: row.birthdate),
-        school: "decrypt.execute(data: row.school)",
-        schoolID: decrypt.execute(data: row.schoolID),
-        guardiansName: decrypt.execute(data: row.guardiansName),
-        guardiansPhone: decrypt.execute(data: row.guardiansPhone),
+        name: row.name,
+        gender: row.gender,
+        birthdate: row.birthdate,
+        school: row.school,
+        schoolID: row.schoolID,
+        guardiansName: row.guardiansName,
+        guardiansPhone: row.guardiansPhone,
         creator: row.creator,
         doctor: row.doctor);
 
@@ -102,7 +101,7 @@ class PatientTableSource extends m.DataTableSource {
         m.DataCell(Text(age.toString())),
         m.DataCell(Text(patient.gender)),
         m.DataCell(Text(patient.doctor)),
-        const m.DataCell(Text("row.school")),
+        m.DataCell(Text(row.school)),
       ],
     );
   }
