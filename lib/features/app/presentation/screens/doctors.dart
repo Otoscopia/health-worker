@@ -12,7 +12,7 @@ class Doctors extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<UserEntity> doctors = ref.watch(dashboardFutureProvider)[1] as List<UserEntity>;
+    final List<UserEntity> doctors = ref.watch(doctorsProvider);
     DoctorTableSource source = DoctorTableSource(doctors, ref);
 
     return m.Theme(
