@@ -1,5 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
@@ -10,34 +11,37 @@ class CheifComplain extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<bool> checked = ref.watch(cheifComplainProvider);
+
+    bool isMobile = ResponsiveBreakpoints.of(context).screenWidth < 680;
+    ResponsiveRowColumnType layout =
+        isMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW;
+    
     return InfoLabel(
       label: cheifComplainLabel,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: ResponsiveRowColumn(
+        layout: layout,
+        rowCrossAxisAlignment: CrossAxisAlignment.start,
+        rowMainAxisSize: MainAxisSize.max,
+        columnCrossAxisAlignment: CrossAxisAlignment.start,
+        columnMainAxisAlignment: MainAxisAlignment.start,
+        columnSpacing: 8,
+        rowSpacing: 8,
         children: List.generate(
           complains.length,
           (index) {
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Text(complains[index]),
-                    const SizedBox(width: 16),
-                    Checkbox(
-                      checked: checked[index],
-                      onChanged: (value) {
-                        ref
-                            .watch(cheifComplainProvider.notifier)
-                            .setState(index, value);
-                        ref
-                            .watch(cheifComplainErrorProvider.notifier)
-                            .setState(false);
-                      },
-                    ),
-                  ],
-                ),
-              ],
+            return ResponsiveRowColumnItem(
+              child: Checkbox(
+                content: Text(complains[index]),
+                checked: checked[index],
+                onChanged: (value) {
+                  ref
+                      .watch(cheifComplainProvider.notifier)
+                      .setState(index, value);
+                  ref
+                      .watch(cheifComplainErrorProvider.notifier)
+                      .setState(false);
+                },
+              ),
             );
           },
         ),

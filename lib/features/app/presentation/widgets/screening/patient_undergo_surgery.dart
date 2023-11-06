@@ -1,6 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
 class PatientUndergoSurgery extends ConsumerWidget {
@@ -8,12 +9,12 @@ class PatientUndergoSurgery extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        const Text("Does the patient undergo any surgical procedure in the past?"),
-        const SizedBox(width: 16),
-        Row(
-          children: List.generate(2, (index) {
+    return InfoLabel(
+      label: patientSurgicalTitle,
+      child: Row(
+        children: List.generate(
+          2,
+          (index) {
             var label = ["Yes", "No"];
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -28,9 +29,9 @@ class PatientUndergoSurgery extends ConsumerWidget {
                 },
               ),
             );
-          }),
-        )
-      ],
+          },
+        ),
+      ),
     );
   }
 }

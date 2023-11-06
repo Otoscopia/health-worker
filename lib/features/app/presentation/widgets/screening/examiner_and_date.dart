@@ -14,25 +14,21 @@ class ExaminerAndDate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String examiner = ref.read(userProvider).name;
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: InfoLabel(
-            label: dateOfExamination,
-            child: TextFormBox(
-              placeholder: DateFormat("MMM dd, y").format(DateTime.now()),
-              readOnly: true,
-            ),
+        InfoLabel(
+          label: dateOfExamination,
+          child: TextFormBox(
+            placeholder: DateFormat("MMM dd, y").format(DateTime.now()),
+            readOnly: true,
           ),
         ),
-        largeWidth,
-        Expanded(
-          child: InfoLabel(
-            label: examinerLabel,
-            child: TextFormBox(
-              placeholder: examiner,
-              readOnly: true,
-            ),
+        largeHeight,
+        InfoLabel(
+          label: examinerLabel,
+          child: TextFormBox(
+            placeholder: examiner,
+            readOnly: true,
           ),
         ),
       ],

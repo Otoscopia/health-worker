@@ -32,7 +32,7 @@ class HeightAndWeight extends ConsumerWidget {
             },
           ),
         ),
-        largeWidth,
+        largeHeight,
         InfoLabel(
           label: weight,
           child: TextFormBox(

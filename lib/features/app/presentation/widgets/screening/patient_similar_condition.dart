@@ -9,13 +9,12 @@ class SimilarCondition extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      // mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text(patientSimilarConditionTitle),
-        const SizedBox(width: 16),
-        Row(
-          children: List.generate(2, (index) {
+    return InfoLabel(
+      label: patientSimilarConditionTitle,
+      child: Row(
+        children: List.generate(
+          2,
+          (index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: RadioButton(
@@ -23,15 +22,19 @@ class SimilarCondition extends ConsumerWidget {
                 content: Text(label[index]),
                 onChanged: (changed) {
                   if (changed) {
-                    ref.watch(similarConditionProvider.notifier).setState(index);
-                    ref.watch(similarConditionErrorProvider.notifier).setState(false);
+                    ref
+                        .watch(similarConditionProvider.notifier)
+                        .setState(index);
+                    ref
+                        .watch(similarConditionErrorProvider.notifier)
+                        .setState(false);
                   }
                 },
               ),
             );
-          }),
-        )
-      ],
+          },
+        ),
+      ),
     );
   }
 }

@@ -9,36 +9,32 @@ class IllnessAndComment extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: InfoLabel(
-            label: historyOfIllness,
-            child: TextFormBox(
-              placeholder: historyOfIllness,
-              inputFormatters: [filterText],
-              validator: (value) => validatorFunction(value, illnessError),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) =>
-                  ref.watch(historyOfIllnessProvider.notifier).setState(value),
-              maxLines: 3,
-              minLines: 1,
-            ),
+        InfoLabel(
+          label: historyOfIllness,
+          child: TextFormBox(
+            placeholder: historyOfIllness,
+            inputFormatters: [filterText],
+            validator: (value) => validatorFunction(value, illnessError),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            onChanged: (value) =>
+                ref.watch(historyOfIllnessProvider.notifier).setState(value),
+            maxLines: 3,
+            minLines: 1,
           ),
         ),
-        largeWidth,
-        Expanded(
-          child: InfoLabel(
-            label: healthWorkerComment,
-            child: TextFormBox(
-              placeholder: healthWorkerComment,
-              inputFormatters: [filterText],
-              validator: (value) => validatorFunction(value, healthWorkerCommentError),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              onChanged: (value) => ref.watch(healthWorkerCommentProvider.notifier).setState(value),
-              maxLines: 3,
-              minLines: 1,
-            ),
+        largeHeight,
+        InfoLabel(
+          label: healthWorkerComment,
+          child: TextFormBox(
+            placeholder: healthWorkerComment,
+            inputFormatters: [filterText],
+            validator: (value) => validatorFunction(value, healthWorkerCommentError),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            onChanged: (value) => ref.watch(healthWorkerCommentProvider.notifier).setState(value),
+            maxLines: 3,
+            minLines: 1,
           ),
         ),
       ],

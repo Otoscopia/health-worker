@@ -4,17 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
-
 class PatientHaveAllergies extends ConsumerWidget {
   const PatientHaveAllergies({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        const Text(patientAllergyTitle),
-        const SizedBox(width: 16),
-        Row(
-          children: List.generate(2, (index) {
+    return InfoLabel(
+      label: patientAllergyTitle,
+      child: Row(
+        children: List.generate(
+          2,
+          (index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: RadioButton(
@@ -23,14 +22,16 @@ class PatientHaveAllergies extends ConsumerWidget {
                 onChanged: (changed) {
                   if (changed) {
                     ref.watch(haveAllergiesProvider.notifier).setState(index);
-                    ref.watch(haveAllergiesErrorProvider.notifier).setState(false);
+                    ref
+                        .watch(haveAllergiesErrorProvider.notifier)
+                        .setState(false);
                   }
                 },
               ),
             );
-          }),
-        )
-      ],
+          },
+        ),
+      ),
     );
   }
 }
