@@ -1,17 +1,15 @@
 import 'package:fluent_ui/fluent_ui.dart';
 
-import 'package:health_worker/config/themes/colors.dart';
-
 class FloatingActionButton extends StatelessWidget {
   final ButtonState<Color?>? color;
   final String tooltip;
-  final Icon? icon;
+  final IconData? icon;
   final double? top, right, bottom, left;
   final void Function()? onPressed;
 
   const FloatingActionButton({
     super.key,
-    this.icon,
+    this.icon = FluentIcons.add,
     required this.tooltip,
     this.color,
     this.onPressed,
@@ -32,21 +30,12 @@ class FloatingActionButton extends StatelessWidget {
         cursor: SystemMouseCursors.click,
         child: Tooltip(
           message: tooltip,
-          child: IconButton(
-            style: ButtonStyle(
-                iconSize: ButtonState.all(32),
-                backgroundColor: color ??
-                    ButtonState.resolveWith(
-                      (states) {
-                        if (states.isHovering) {
-                          return secondary;
-                        }
-                        return primary;
-                      },
-                    )),
-            icon: icon ?? const Icon(FluentIcons.add),
-            onPressed: onPressed
-          ),
+          child: FilledButton(
+              style: ButtonStyle(
+                  iconSize: ButtonState.all(32),
+                  padding: ButtonState.all(const EdgeInsets.all(8))),
+              onPressed: onPressed,
+              child: Icon(icon, color: FluentTheme.of(context).cardColor)),
         ),
       ),
     );
