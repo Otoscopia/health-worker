@@ -142,7 +142,7 @@ addScreeningInformation(
       takingMedicationMessage:
           medicationComment.isEmpty ? "" : medicationComment,
       status: "Pending",
-      createdAt: "",
+      createdAt: "", images: [],
     );
 
     ref.read(screeningProvider.notifier).setScreening(screening);
