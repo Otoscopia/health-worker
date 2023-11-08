@@ -19,5 +19,6 @@ class PatientModel extends PatientEntity {
       required super.guardiansName,
       required super.guardiansPhone,
       required super.creator,
-      required super.doctor});
+      required super.doctor,
+      required super.createdAt});
 }
