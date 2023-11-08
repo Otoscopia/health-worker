@@ -15,7 +15,7 @@ class InformationContainer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
-        UploadCard(title: "Uploaded Date", subtitle: DateFormat("MMM. dd, y hh:mm  ").format(DateTime.parse(record.createdAt!))),
+        UploadCard(title: "Uploaded Date", subtitle: DateFormat("MMM. dd, y hh:mm  ").format(DateTime.parse(record.createdAt))),
         const VitalCard(index: 0, amount: "$weight kg"),
         const VitalCard(index: 1, amount: "$height cm"),
         const VitalCard(index: 2, amount: "$temperature°C"),
