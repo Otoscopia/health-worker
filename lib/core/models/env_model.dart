@@ -16,7 +16,7 @@ abstract class Env {
   @EnviedField(varName: "AVATAR_BUCKET", obfuscate: true)
   static String avatarBucket = _Env.avatarBucket;
 
-  @EnviedField(varName: "DEV_DATABASE", obfuscate: true)
+  @EnviedField(varName: "DATABASE", obfuscate: true)
   static String database = _Env.database;
 
   @EnviedField(varName: "REMARKS_COLLECTION", obfuscate: true)
@@ -36,4 +36,7 @@ abstract class Env {
 
   @EnviedField(varName: "SCREENING_COLLECTION", obfuscate: true)
   static String screening = _Env.screening;
+
+  @EnviedField(varName: "SENTRY_LOGGING", obfuscate: true)
+  static String sentry = _Env.sentry;
 }
