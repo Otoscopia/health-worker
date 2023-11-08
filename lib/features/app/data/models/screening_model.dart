@@ -27,6 +27,7 @@ class ScreeningModel extends ScreeningEntity {
     required super.takingMedication,
     required super.takingMedicationMessage,
     required super.status,
+    required super.images,
     required super.createdAt,
   });
 }

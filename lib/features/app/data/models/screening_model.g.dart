@@ -67,43 +67,48 @@ const ScreeningModelSchema = CollectionSchema(
       name: r'id',
       type: IsarType.string,
     ),
-    r'patient': PropertySchema(
+    r'images': PropertySchema(
       id: 10,
+      name: r'images',
+      type: IsarType.stringList,
+    ),
+    r'patient': PropertySchema(
+      id: 11,
       name: r'patient',
       type: IsarType.string,
     ),
     r'status': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'status',
       type: IsarType.string,
     ),
     r'takingMedication': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'takingMedication',
       type: IsarType.string,
     ),
     r'takingMedicationMessage': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'takingMedicationMessage',
       type: IsarType.string,
     ),
     r'temperature': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'temperature',
       type: IsarType.string,
     ),
     r'typeOfAllergies': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'typeOfAllergies',
       type: IsarType.string,
     ),
     r'undergoSurgery': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'undergoSurgery',
       type: IsarType.string,
     ),
     r'weight': PropertySchema(
-      id: 17,
+      id: 18,
       name: r'weight',
       type: IsarType.string,
     )
@@ -131,18 +136,20 @@ int _screeningModelEstimateSize(
   bytesCount += 3 + object.assignment.length * 3;
   bytesCount += 3 + object.chiefComplaint.length * 3;
   bytesCount += 3 + object.chiefComplaintMessage.length * 3;
-  {
-    final value = object.createdAt;
-    if (value != null) {
-      bytesCount += 3 + value.length * 3;
-    }
-  }
+  bytesCount += 3 + object.createdAt.length * 3;
   bytesCount += 3 + object.hasAllergies.length * 3;
   bytesCount += 3 + object.hasSimilarCondition.length * 3;
   bytesCount += 3 + object.healthWorkerRemarks.length * 3;
   bytesCount += 3 + object.height.length * 3;
   bytesCount += 3 + object.historyOfIllness.length * 3;
   bytesCount += 3 + object.id.length * 3;
+  bytesCount += 3 + object.images.length * 3;
+  {
+    for (var i = 0; i < object.images.length; i++) {
+      final value = object.images[i];
+      bytesCount += value.length * 3;
+    }
+  }
   bytesCount += 3 + object.patient.length * 3;
   bytesCount += 3 + object.status.length * 3;
   bytesCount += 3 + object.takingMedication.length * 3;
@@ -170,14 +177,15 @@ void _screeningModelSerialize(
   writer.writeString(offsets[7], object.height);
   writer.writeString(offsets[8], object.historyOfIllness);
   writer.writeString(offsets[9], object.id);
-  writer.writeString(offsets[10], object.patient);
-  writer.writeString(offsets[11], object.status);
-  writer.writeString(offsets[12], object.takingMedication);
-  writer.writeString(offsets[13], object.takingMedicationMessage);
-  writer.writeString(offsets[14], object.temperature);
-  writer.writeString(offsets[15], object.typeOfAllergies);
-  writer.writeString(offsets[16], object.undergoSurgery);
-  writer.writeString(offsets[17], object.weight);
+  writer.writeStringList(offsets[10], object.images);
+  writer.writeString(offsets[11], object.patient);
+  writer.writeString(offsets[12], object.status);
+  writer.writeString(offsets[13], object.takingMedication);
+  writer.writeString(offsets[14], object.takingMedicationMessage);
+  writer.writeString(offsets[15], object.temperature);
+  writer.writeString(offsets[16], object.typeOfAllergies);
+  writer.writeString(offsets[17], object.undergoSurgery);
+  writer.writeString(offsets[18], object.weight);
 }
 
 ScreeningModel _screeningModelDeserialize(
@@ -190,21 +198,22 @@ ScreeningModel _screeningModelDeserialize(
     assignment: reader.readString(offsets[0]),
     chiefComplaint: reader.readString(offsets[1]),
     chiefComplaintMessage: reader.readString(offsets[2]),
-    createdAt: reader.readStringOrNull(offsets[3]),
+    createdAt: reader.readString(offsets[3]),
     hasAllergies: reader.readString(offsets[4]),
     hasSimilarCondition: reader.readString(offsets[5]),
     healthWorkerRemarks: reader.readString(offsets[6]),
     height: reader.readString(offsets[7]),
     historyOfIllness: reader.readString(offsets[8]),
     id: reader.readString(offsets[9]),
-    patient: reader.readString(offsets[10]),
-    status: reader.readString(offsets[11]),
-    takingMedication: reader.readString(offsets[12]),
-    takingMedicationMessage: reader.readString(offsets[13]),
-    temperature: reader.readString(offsets[14]),
-    typeOfAllergies: reader.readString(offsets[15]),
-    undergoSurgery: reader.readString(offsets[16]),
-    weight: reader.readString(offsets[17]),
+    images: reader.readStringList(offsets[10]) ?? [],
+    patient: reader.readString(offsets[11]),
+    status: reader.readString(offsets[12]),
+    takingMedication: reader.readString(offsets[13]),
+    takingMedicationMessage: reader.readString(offsets[14]),
+    temperature: reader.readString(offsets[15]),
+    typeOfAllergies: reader.readString(offsets[16]),
+    undergoSurgery: reader.readString(offsets[17]),
+    weight: reader.readString(offsets[18]),
   );
   object.isar = id;
   return object;
@@ -224,7 +233,7 @@ P _screeningModelDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
@@ -238,7 +247,7 @@ P _screeningModelDeserializeProp<P>(
     case 9:
       return (reader.readString(offset)) as P;
     case 10:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringList(offset) ?? []) as P;
     case 11:
       return (reader.readString(offset)) as P;
     case 12:
@@ -252,6 +261,8 @@ P _screeningModelDeserializeProp<P>(
     case 16:
       return (reader.readString(offset)) as P;
     case 17:
+      return (reader.readString(offset)) as P;
+    case 18:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -763,26 +774,8 @@ extension ScreeningModelQueryFilter
   }
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      createdAtIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'createdAt',
-      ));
-    });
-  }
-
-  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
-      createdAtIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'createdAt',
-      ));
-    });
-  }
-
-  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
       createdAtEqualTo(
-    String? value, {
+    String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -796,7 +789,7 @@ extension ScreeningModelQueryFilter
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
       createdAtGreaterThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -812,7 +805,7 @@ extension ScreeningModelQueryFilter
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
       createdAtLessThan(
-    String? value, {
+    String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
@@ -828,8 +821,8 @@ extension ScreeningModelQueryFilter
 
   QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
       createdAtBetween(
-    String? lower,
-    String? upper, {
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
     bool caseSensitive = true,
@@ -1728,6 +1721,231 @@ extension ScreeningModelQueryFilter
         property: r'id',
         value: '',
       ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'images',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'images',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'images',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'images',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'images',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'images',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'images',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'images',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'images',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'images',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'images',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'images',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'images',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'images',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'images',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<ScreeningModel, ScreeningModel, QAfterFilterCondition>
+      imagesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'images',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
     });
   }
 
@@ -3469,6 +3687,12 @@ extension ScreeningModelQueryWhereDistinct
     });
   }
 
+  QueryBuilder<ScreeningModel, ScreeningModel, QDistinct> distinctByImages() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'images');
+    });
+  }
+
   QueryBuilder<ScreeningModel, ScreeningModel, QDistinct> distinctByPatient(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -3558,7 +3782,7 @@ extension ScreeningModelQueryProperty
     });
   }
 
-  QueryBuilder<ScreeningModel, String?, QQueryOperations> createdAtProperty() {
+  QueryBuilder<ScreeningModel, String, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
@@ -3601,6 +3825,13 @@ extension ScreeningModelQueryProperty
   QueryBuilder<ScreeningModel, String, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<ScreeningModel, List<String>, QQueryOperations>
+      imagesProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'images');
     });
   }
 
