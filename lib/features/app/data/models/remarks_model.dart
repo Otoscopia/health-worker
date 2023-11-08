@@ -9,9 +9,11 @@ part 'remarks_model.g.dart';
 class RemarksModel extends RemarksEntity {
   Id isar = Isar.autoIncrement;
 
-  RemarksModel(
-      {required super.id,
-      required super.screening,
-      required super.followUpDate,
-      required super.remarks});
+  RemarksModel({
+    required super.id,
+    required super.screening,
+    required super.followUpDate,
+    required super.remarks,
+    required super.createdAt,
+  });
 }

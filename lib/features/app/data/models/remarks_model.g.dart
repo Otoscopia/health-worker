@@ -17,23 +17,28 @@ const RemarksModelSchema = CollectionSchema(
   name: r'remarks',
   id: -6946846383927629910,
   properties: {
-    r'followUpDate': PropertySchema(
+    r'createdAt': PropertySchema(
       id: 0,
+      name: r'createdAt',
+      type: IsarType.string,
+    ),
+    r'followUpDate': PropertySchema(
+      id: 1,
       name: r'followUpDate',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'id',
       type: IsarType.string,
     ),
     r'remarks': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'remarks',
       type: IsarType.string,
     ),
     r'screening': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'screening',
       type: IsarType.string,
     )
@@ -58,6 +63,12 @@ int _remarksModelEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  {
+    final value = object.createdAt;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.followUpDate.length * 3;
   bytesCount += 3 + object.id.length * 3;
   bytesCount += 3 + object.remarks.length * 3;
@@ -71,10 +82,11 @@ void _remarksModelSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.followUpDate);
-  writer.writeString(offsets[1], object.id);
-  writer.writeString(offsets[2], object.remarks);
-  writer.writeString(offsets[3], object.screening);
+  writer.writeString(offsets[0], object.createdAt);
+  writer.writeString(offsets[1], object.followUpDate);
+  writer.writeString(offsets[2], object.id);
+  writer.writeString(offsets[3], object.remarks);
+  writer.writeString(offsets[4], object.screening);
 }
 
 RemarksModel _remarksModelDeserialize(
@@ -84,10 +96,11 @@ RemarksModel _remarksModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = RemarksModel(
-    followUpDate: reader.readString(offsets[0]),
-    id: reader.readString(offsets[1]),
-    remarks: reader.readString(offsets[2]),
-    screening: reader.readString(offsets[3]),
+    createdAt: reader.readStringOrNull(offsets[0]),
+    followUpDate: reader.readString(offsets[1]),
+    id: reader.readString(offsets[2]),
+    remarks: reader.readString(offsets[3]),
+    screening: reader.readString(offsets[4]),
   );
   object.isar = id;
   return object;
@@ -101,12 +114,14 @@ P _remarksModelDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
+      return (reader.readString(offset)) as P;
+    case 4:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -209,6 +224,160 @@ extension RemarksModelQueryWhere
 
 extension RemarksModelQueryFilter
     on QueryBuilder<RemarksModel, RemarksModel, QFilterCondition> {
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'createdAt',
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'createdAt',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'createdAt',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
+      createdAtIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'createdAt',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<RemarksModel, RemarksModel, QAfterFilterCondition>
       followUpDateEqualTo(
     String value, {
@@ -811,6 +980,18 @@ extension RemarksModelQueryLinks
 
 extension RemarksModelQuerySortBy
     on QueryBuilder<RemarksModel, RemarksModel, QSortBy> {
+  QueryBuilder<RemarksModel, RemarksModel, QAfterSortBy> sortByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterSortBy> sortByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<RemarksModel, RemarksModel, QAfterSortBy> sortByFollowUpDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'followUpDate', Sort.asc);
@@ -863,6 +1044,18 @@ extension RemarksModelQuerySortBy
 
 extension RemarksModelQuerySortThenBy
     on QueryBuilder<RemarksModel, RemarksModel, QSortThenBy> {
+  QueryBuilder<RemarksModel, RemarksModel, QAfterSortBy> thenByCreatedAt() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
+  }
+
+  QueryBuilder<RemarksModel, RemarksModel, QAfterSortBy> thenByCreatedAtDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
+  }
+
   QueryBuilder<RemarksModel, RemarksModel, QAfterSortBy> thenByFollowUpDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'followUpDate', Sort.asc);
@@ -927,6 +1120,13 @@ extension RemarksModelQuerySortThenBy
 
 extension RemarksModelQueryWhereDistinct
     on QueryBuilder<RemarksModel, RemarksModel, QDistinct> {
+  QueryBuilder<RemarksModel, RemarksModel, QDistinct> distinctByCreatedAt(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'createdAt', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<RemarksModel, RemarksModel, QDistinct> distinctByFollowUpDate(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -961,6 +1161,12 @@ extension RemarksModelQueryProperty
   QueryBuilder<RemarksModel, int, QQueryOperations> isarProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isar');
+    });
+  }
+
+  QueryBuilder<RemarksModel, String?, QQueryOperations> createdAtProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'createdAt');
     });
   }
 
