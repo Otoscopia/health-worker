@@ -1,8 +1,17 @@
 class AssignmentEntity {
+  // assignment id
   final String id;
+
+  // nurse id
   final String nurse;
+
+  // school id
   final String school;
+
+  // assignment start date
   final String startDate;
+
+  // assignment end date
   final String? endDate;
 
   AssignmentEntity({

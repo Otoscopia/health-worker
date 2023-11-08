@@ -1,12 +1,25 @@
 // import 'package:health_worker/features/features.dart';
 
 class TableEntity {
+  // patient id (foreign key)
   final String patientId;
+
+  // patient name
   final String name;
+
+  // patient age
   final String age;
+
+  // patient gender
   final String gender;
+
+  // medical record status
   final String status;
+
+  // patient doctor
   final String doctor;
+
+  // patient school
   final String school;
 
   TableEntity({
