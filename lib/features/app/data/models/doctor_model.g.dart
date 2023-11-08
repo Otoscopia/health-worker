@@ -98,7 +98,6 @@ DoctorModel _doctorModelDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = DoctorModel(
-    id,
     email: reader.readString(offsets[0]),
     id: reader.readString(offsets[1]),
     name: reader.readString(offsets[2]),
@@ -106,6 +105,7 @@ DoctorModel _doctorModelDeserialize(
     role: reader.readString(offsets[4]),
     workAddress: reader.readString(offsets[5]),
   );
+  object.isar = id;
   return object;
 }
 
