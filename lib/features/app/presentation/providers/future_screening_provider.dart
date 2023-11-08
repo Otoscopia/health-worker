@@ -4,9 +4,8 @@ import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/app/app.dart';
 
 final futureScreeningProvider = FutureProvider<List<ScreeningEntity>>((ref) async {
-  final getScreeningsUsecase = GetScreeningsRemoteUseCase(repository: applicationRepository);
-
-  final List<ScreeningEntity> screenings = await getScreeningsUsecase.execute();
+  final List<ScreeningEntity> screenings = await useCases.screeningsUseCases.getRemoteScreenings();
+  await useCases.screeningsUseCases.setScreenings(screenings);
 
   ref.read(screeningsProvider.notifier).setScreenings(screenings);
   return screenings;

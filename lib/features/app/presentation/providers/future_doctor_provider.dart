@@ -4,9 +4,8 @@ import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
 final futureDoctorsProvider = FutureProvider<List<UserEntity>>((ref) async {
-  final doctorUseCase = GetRemoteDoctorsUseCase(repository: applicationRepository);
-  final doctors = await doctorUseCase.execute();
-
+  final doctors = await useCases.doctorsUseCases.getRemoteDoctors();
+  await useCases.doctorsUseCases.setDoctors(doctors);
   ref.read(doctorsProvider.notifier).setDoctors(doctors);
 
   return doctors;

@@ -8,17 +8,15 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
   PatientNotifier({required this.ref}) : super(emptyPatient);
 
   addPatient(PatientEntity patient) async {
-    final addPatientLocalUseCase = SetPatientLocalUseCase(repository: applicationRepository);
-    await addPatientLocalUseCase.execute(patient: patient);
-    
-    final addPatientRemoteUseCase = SetPatientRemoteUseCase(repository: applicationRepository);
-    await addPatientRemoteUseCase.execute(patient: patient);
+    await useCases.patientsUseCases.setLocalPatient(patient);
+    await useCases.patientsUseCases.setRemotePatient(patient);
 
     state = patient;
   }
 }
 
-final patientProvider = StateNotifierProvider<PatientNotifier, PatientEntity>((ref) {
+final patientProvider =
+    StateNotifierProvider<PatientNotifier, PatientEntity>((ref) {
   return PatientNotifier(ref: ref);
 });
 
@@ -33,15 +31,16 @@ PatientEntity emptyPatient = PatientEntity(
   guardiansPhone: "",
   creator: "",
   doctor: "",
+  createdAt: '',
 );
 
-
 class PatientLoadingNotifier extends StateNotifier<bool> {
-  PatientLoadingNotifier(): super(false);
-  
+  PatientLoadingNotifier() : super(false);
+
   setLoading() => state = !state;
 }
 
-final patientLoadingProvider = StateNotifierProvider<PatientLoadingNotifier, bool>((ref) {
+final patientLoadingProvider =
+    StateNotifierProvider<PatientLoadingNotifier, bool>((ref) {
   return PatientLoadingNotifier();
 });

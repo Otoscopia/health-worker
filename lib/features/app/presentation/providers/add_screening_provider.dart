@@ -7,13 +7,8 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
   ScreeningNotifier() : super(emptyScreening);
 
   setScreening(ScreeningEntity screening) {
-    final AddScreeningLocalUseCase local =
-        AddScreeningLocalUseCase(repository: applicationRepository);
-    local.execute(screening: screening);
-
-    final AddScreeningRemoteUseCase remote =
-        AddScreeningRemoteUseCase(repository: applicationRepository);
-    remote.execute(screening: screening);
+    useCases.screeningsUseCases.setLocalScreening(screening);
+    useCases.screeningsUseCases.setRemoteScreening(screening);
 
     state = screening;
   }
@@ -43,4 +38,5 @@ ScreeningEntity emptyScreening = ScreeningEntity(
   takingMedicationMessage: "",
   status: "",
   createdAt: "",
+  images: [],
 );
