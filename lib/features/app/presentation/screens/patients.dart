@@ -81,16 +81,18 @@ class PatientTableSource extends m.DataTableSource {
     // final DecrpytUseCase decrypt = DecrpytUseCase(repository: applicationRepository);
 
     final PatientEntity patient = PatientEntity(
-        id: row.id,
-        name: row.name,
-        gender: row.gender,
-        birthdate: row.birthdate,
-        school: row.school,
-        schoolID: row.schoolID,
-        guardiansName: row.guardiansName,
-        guardiansPhone: row.guardiansPhone,
-        creator: row.creator,
-        doctor: row.doctor);
+      id: row.id,
+      name: row.name,
+      gender: row.gender,
+      birthdate: row.birthdate,
+      school: row.school,
+      schoolID: row.schoolID,
+      guardiansName: row.guardiansName,
+      guardiansPhone: row.guardiansPhone,
+      creator: row.creator,
+      doctor: row.doctor,
+      createdAt: row.createdAt,
+    );
 
     final String doctor = ref.read(doctorsProvider).firstWhere((element) => element.id == patient.doctor).name;
     final String school = ref.read(schoolsProvider).firstWhere((element) => element.id == patient.school).name;

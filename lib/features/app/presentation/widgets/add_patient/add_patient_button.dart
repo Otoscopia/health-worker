@@ -61,6 +61,7 @@ PatientEntity patientFunction(WidgetRef ref) {
     guardiansPhone: guardiansPhone,
     creator: creator.id,
     doctor: doctors.first.id,
+    createdAt: DateTime.now().toIso8601String(),
   );
 }
 
