@@ -13,12 +13,6 @@ class School extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<SchoolEntity> schools = ref.read(schoolsProvider);
-    final List<AssignmentEntity> assignments = ref.read(assignmentProvider);
-    final String user = ref.read(userProvider).id;
-
-    assignments.removeWhere((element) => element.nurse != user);
-
-    schools.removeWhere((element) => assignments.any((assignment) => assignment.school != element.id));
 
     SchoolsTableSource source = SchoolsTableSource(schools, ref);
 
@@ -42,6 +36,13 @@ class School extends ConsumerWidget {
           columns: [
             DataColumn2(
               label: const Text("Code"),
+              size: ColumnSize.S,
+              onSort: ((columnIndex, ascending) {
+                debugPrint("constant: $ascending, $columnIndex");
+              }),
+            ),
+            DataColumn2(
+              label: const Text("Abbreviation"),
               size: ColumnSize.M,
               onSort: ((columnIndex, ascending) {
                 debugPrint("constant: $ascending, $columnIndex");
@@ -90,6 +91,7 @@ class SchoolsTableSource extends m.DataTableSource {
       color: m.MaterialStateProperty.all(transparent),
       cells: [
         m.DataCell(Text(row.code)),
+        m.DataCell(Text(row.abbr)),
         m.DataCell(Text(row.name)),
         m.DataCell(Text(row.address)),
       ],
