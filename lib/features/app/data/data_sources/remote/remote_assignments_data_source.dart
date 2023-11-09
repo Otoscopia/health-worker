@@ -15,7 +15,7 @@ class RemoteAssignmentsDataSource {
         databaseId: Env.database,
         collectionId: Env.assignment,
         queries: [
-          Query.equal("nurse", id),
+          Query.equal("nurse", id), Query.limit(100),
         ],
       );
 

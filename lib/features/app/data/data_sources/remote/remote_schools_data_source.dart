@@ -13,6 +13,9 @@ class RemoteSchoolsDataSource {
       final DocumentList response = await _database.listDocuments(
         databaseId: Env.database,
         collectionId: Env.schools,
+        queries: [
+          Query.limit(100),
+        ]
       );
 
       return response;

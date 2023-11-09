@@ -15,6 +15,9 @@ class RemotePatientsDataSource {
       final DocumentList response = await _databases.listDocuments(
         databaseId: Env.database,
         collectionId: Env.patients,
+        queries: [
+          Query.limit(100),
+        ],
       );
 
       return response;
@@ -27,20 +30,21 @@ class RemotePatientsDataSource {
   Future<void> setPatient({required PatientEntity patient}) async {
     try {
       await _databases.createDocument(
-          databaseId: Env.database,
-          collectionId: Env.patients,
-          documentId: patient.id,
-          data: {
-            "name": patient.name,
-            "gender": patient.gender,
-            "birthdate": patient.birthdate,
-            "school": patient.school,
-            "schoolID": patient.schoolID,
-            "guardiansName": patient.guardiansName,
-            "guardiansPhone": patient.guardiansPhone,
-            "creator": patient.creator,
-            "doctor": patient.doctor,
-          });
+        databaseId: Env.database,
+        collectionId: Env.patients,
+        documentId: patient.id,
+        data: {
+          "name": patient.name,
+          "gender": patient.gender,
+          "birthdate": patient.birthdate,
+          "school": patient.school,
+          "schoolID": patient.schoolID,
+          "guardiansName": patient.guardiansName,
+          "guardiansPhone": patient.guardiansPhone,
+          "creator": patient.creator,
+          "doctor": patient.doctor,
+        },
+      );
     } on AppwriteException catch (error) {
       throw Exception(error.message);
     }

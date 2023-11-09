@@ -18,6 +18,9 @@ class RemoteScreeningsDataSource {
       final DocumentList response = await _database.listDocuments(
         databaseId: Env.database,
         collectionId: Env.screening,
+        queries: [
+          Query.limit(100),
+        ],
       );
 
       return response;
@@ -70,7 +73,8 @@ class RemoteScreeningsDataSource {
     }
   }
 
-  Future<void> uploadScreeningImages({required List<String> ids, required List<String> paths}) async {
+  Future<void> uploadScreeningImages(
+      {required List<String> ids, required List<String> paths}) async {
     try {
       await Future.forEach(paths, (path) async {
         await _storage.createFile(

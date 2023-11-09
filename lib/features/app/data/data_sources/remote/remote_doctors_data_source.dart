@@ -14,7 +14,10 @@ class RemoteDoctorsDataSource {
       final DocumentList response = await _databases.listDocuments(
         databaseId: Env.database,
         collectionId: Env.users,
-        queries: [Query.equal('role', 'doctor')],
+        queries: [
+          Query.equal('role', 'doctor'),
+          Query.limit(100),
+        ],
       );
 
       return response;
