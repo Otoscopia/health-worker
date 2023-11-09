@@ -14,8 +14,8 @@ class AssignmentsRepositoryImpl implements AssignmentsRepository {
 
   // Get assignments from remote assignment data source
   @override
-  Future<List<AssignmentEntity>> getRemoteAssignments() async {
-    final DocumentList response = await _remote.getAssignment();
+  Future<List<AssignmentEntity>> getRemoteAssignments({required String id}) async {
+    final DocumentList response = await _remote.getAssignment(id: id);
 
     final List<AssignmentEntity> assignments =
         response.documents.map((Document document) {

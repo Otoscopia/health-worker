@@ -7,8 +7,8 @@ class AssignmentsUseCase {
       : _repository = repository;
 
   // Get assignments from remote database using the assignment repository
-  Future<List<AssignmentEntity>> getRemoteAssignments() async {
-    return await _repository.getRemoteAssignments();
+  Future<List<AssignmentEntity>> getRemoteAssignments({required String id}) async {
+    return await _repository.getRemoteAssignments(id: id);
   }
 
   // Get assignments from local database using the assignment repository
