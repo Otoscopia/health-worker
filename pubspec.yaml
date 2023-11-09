@@ -15,7 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   data_table_2: ^2.5.8
   encrypt: ^5.0.3
-  envied: ^0.3.0+3
+  envied: ^0.5.1
   fluent_ui: ^4.7.7
   flutter:
     sdk: flutter
@@ -38,22 +38,11 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.4.6
-  envied_generator: ^0.3.0+3
+  envied_generator: ^0.5.1
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
   isar_generator: ^3.1.0+1
-
-dependency_overrides:
-  envied:
-    git:
-      url: https://github.com/petercinibulk/envied.git
-      path: packages/envied
-
-  envied_generator:
-    git:
-      url: https://github.com/petercinibulk/envied.git
-      path: packages/envied_generator
 
 flutter:
   uses-material-design: true
