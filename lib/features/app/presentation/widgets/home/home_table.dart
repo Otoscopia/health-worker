@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/config/config.dart';
 import 'package:health_worker/core/core.dart';
-import 'package:health_worker/features/app/presentation/providers/future_table_provider.dart';
 import 'package:health_worker/features/features.dart';
 
 class HomeTable extends ConsumerWidget {
