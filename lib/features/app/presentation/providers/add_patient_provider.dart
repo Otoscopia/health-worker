@@ -33,14 +33,3 @@ PatientEntity emptyPatient = PatientEntity(
   doctor: "",
   createdAt: '',
 );
-
-class PatientLoadingNotifier extends StateNotifier<bool> {
-  PatientLoadingNotifier() : super(false);
-
-  setLoading() => state = !state;
-}
-
-final patientLoadingProvider =
-    StateNotifierProvider<PatientLoadingNotifier, bool>((ref) {
-  return PatientLoadingNotifier();
-});
