@@ -9,11 +9,14 @@ class RemoteAssignmentsDataSource {
   RemoteAssignmentsDataSource() : _databases = database;
 
   // Get assignments from appwrite database
-  Future<DocumentList> getAssignment() async {
+  Future<DocumentList> getAssignment({required String id}) async {
     try {
       final DocumentList response = await _databases.listDocuments(
         databaseId: Env.database,
         collectionId: Env.assignment,
+        queries: [
+          Query.equal("nurse", id),
+        ],
       );
 
       return response;
