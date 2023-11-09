@@ -31,37 +31,39 @@ class AddPatient extends ConsumerWidget {
                   ),
                   mediumHeight,
                   Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const ProgressButtons(status: 1),
-                        Container(
-                          constraints: const BoxConstraints(maxWidth: 295),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const FullNameInput(),
-                              mediumHeight,
-                              const GenderWidget(),
-                              if (genderError) const GenderError(),
-                              mediumHeight,
-                              const BirthdateWidget(),
-                              if (birthdayError) const BirthdayError(),
-                              mediumHeight,
-                              const GuardiansFullNameInput(),
-                              mediumHeight,
-                              const ContactNumberInput(),
-                              mediumHeight,
-                              const SchoolNameInput(),
-                              mediumHeight,
-                              const SchoolIdInput(),
-                              largeHeight,
-                              AddPatientButton(globalKey: key)
-                            ],
-                          ),
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const ProgressButtons(status: 1),
+                      largeHeight,
+                      Container(
+                        constraints: const BoxConstraints(maxWidth: 295),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const FullNameInput(),
+                            mediumHeight,
+                            const GenderWidget(),
+                            if (genderError) const GenderError(),
+                            mediumHeight,
+                            const BirthdateWidget(),
+                            if (birthdayError) const BirthdayError(),
+                            mediumHeight,
+                            const GuardiansFullNameInput(),
+                            mediumHeight,
+                            const ContactNumberInput(),
+                            mediumHeight,
+                            const SchoolNameInput(),
+                            mediumHeight,
+                            const SchoolIdInput(),
+                            largeHeight,
+                            AddPatientButton(globalKey: key)
+                          ],
                         ),
-                      ])
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
