@@ -62,14 +62,17 @@ export 'widgets/progress_buttons.dart';
 
 export 'providers/add_patient_provider.dart';
 export 'providers/add_screening_provider.dart';
-export 'providers/dashboard_tab_provider.dart';
 export 'providers/dashboard_page_provider.dart';
+export 'providers/dashboard_tab_provider.dart';
 export 'providers/future_assignment_provider.dart';
 export 'providers/future_doctor_provider.dart';
 export 'providers/future_patient_provider.dart';
 export 'providers/future_schools_provider.dart';
-export 'providers/future_user_provider.dart';
 export 'providers/future_screening_provider.dart';
+export 'providers/future_table_provider.dart';
+export 'providers/future_user_provider.dart';
+export 'providers/patient_information.dart';
+export 'providers/record_tab_provider.dart';
 
 export 'providers/add_patient_providers/birthdate_provider.dart';
 export 'providers/add_patient_providers/contact_number_provider.dart';
