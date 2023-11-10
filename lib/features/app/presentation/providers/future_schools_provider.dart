@@ -4,6 +4,7 @@ import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
 final futureSchoolsProvider = FutureProvider<List<SchoolEntity>>((ref) async {
+  ref.watch(authenticationStateProvider);
   final response = await useCases.schoolsUseCase.getRemoteSchools();
   
   if (response.isNotEmpty) {

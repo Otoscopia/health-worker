@@ -4,11 +4,16 @@ import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
 final futureUserProvider = FutureProvider<UserEntity>((ref) async {
-  final user = await useCases.userUseCases.getRemoteUser();
-  await useCases.userUseCases.setUser(user: user);
+  final auth = ref.watch(authenticationStateProvider);
+  late final UserEntity user;
 
-  ref.read(userProvider.notifier).addUser(user);
-  
+  if (auth?.email != null) {
+    user = await useCases.userUseCases.getRemoteUser();
+    await useCases.userUseCases.setUser(user: user);
+
+    ref.read(userProvider.notifier).addUser(user);
+  }
+
   return user;
 });
 

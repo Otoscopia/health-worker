@@ -4,6 +4,7 @@ import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
 final futureAssignmentProvider = FutureProvider<List<AssignmentEntity>>((ref) async {
+  ref.watch(authenticationStateProvider);
   final UserEntity user = ref.watch(userProvider);
   List<AssignmentEntity> assignments = await useCases.assignmentsUseCase.getRemoteAssignments(id: user.id);
   await useCases.assignmentsUseCase.setAssignments(assignments);

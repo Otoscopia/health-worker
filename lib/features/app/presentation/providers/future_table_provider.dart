@@ -1,9 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/core/core.dart';
-import 'package:health_worker/features/app/app.dart';
+import 'package:health_worker/features/features.dart';
 
 final futureTableProvider = FutureProvider<List<TableEntity>>((ref) async {
+  ref.watch(authenticationStateProvider);
   final List<UserEntity> doctors = await useCases.doctorsUseCases.getLocalDoctors();
   final List<SchoolEntity> schools = await useCases.schoolsUseCase.getLocalSchools();
   final List<ScreeningEntity> screenings = await useCases.screeningsUseCases.getLocalScreenings();

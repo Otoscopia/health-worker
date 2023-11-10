@@ -4,6 +4,7 @@ import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
 final futurePatientsProvider = FutureProvider<List<PatientEntity>>((ref) async {
+  ref.watch(authenticationStateProvider);
   final patients = await useCases.patientsUseCases.getRemotePatients();
   await useCases.patientsUseCases.setPatients(patients);
   
