@@ -5,6 +5,7 @@ export 'entities/patient_entity.dart';
 export 'entities/remarks_entity.dart';
 export 'entities/school_entity.dart';
 export 'entities/screening_entity.dart';
+export 'entities/sync_entity.dart';
 export 'entities/tab_entity.dart';
 export 'entities/table_entity.dart';
 export 'entities/user_entity.dart';
@@ -18,6 +19,7 @@ export 'repositories/patients_repository.dart';
 export 'repositories/remarks_repository.dart';
 export 'repositories/schools_repository.dart';
 export 'repositories/screenings_repository.dart';
+export 'repositories/sync_repository.dart';
 export 'repositories/user_repository.dart';
 
 // Use Cases Directory
@@ -28,4 +30,6 @@ export 'use_cases/patients_use_cases.dart';
 export 'use_cases/remarks_use_case.dart';
 export 'use_cases/schools_use_cases.dart';
 export 'use_cases/screenings_use_cases.dart';
+export 'use_cases/sync_use_case.dart';
 export 'use_cases/user_use_cases.dart';
+export 'use_cases/use_cases.dart';

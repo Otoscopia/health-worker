@@ -25,6 +25,7 @@ export 'models/patient_model.dart';
 export 'models/remarks_model.dart';
 export 'models/school_model.dart';
 export 'models/screening_model.dart';
+export 'models/sync_model.dart';
 export 'models/user_model.dart';
 
 // Repository Directory
