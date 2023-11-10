@@ -9,9 +9,13 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
 
   addPatient(PatientEntity patient) async {
     await useCases.patientsUseCases.setLocalPatient(patient);
-    await useCases.patientsUseCases.setRemotePatient(patient);
-
-    state = patient;
+  
+    if (ref.read(networkProvider)) {
+      await useCases.patientsUseCases.setRemotePatient(patient);
+    } else {
+    // TODO: ADD DATA TO SYNC TALBLE
+    }
+      state = patient;
   }
 }
 
