@@ -47,4 +47,9 @@ class ScreeningsUseCases {
   Future<List<File>> getScreeningImages(List<String> ids, List<String> paths) async {
     return await _repository.getScreeningImages(ids: ids, paths: paths);
   }
+
+  // Remove screening from local database using screening repository
+  Future<void> removeScreenings() async {
+    return await _repository.removeScreenings();
+  }
 }

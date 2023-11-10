@@ -58,4 +58,16 @@ class LocalPatientsDataSource {
       throw Exception(error.message);
     }
   }
+
+  // Remove patients from isar database
+  Future<void> removePatients() async {
+    try {
+      await _isar.writeTxn(() async {
+        // clear patients collection
+        await _isar.patientModels.clear();
+      });
+    } on IsarError catch (error) {
+      throw Exception(error.message);
+    }
+  }
 }

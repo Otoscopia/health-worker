@@ -12,4 +12,7 @@ abstract class DoctorsRepository {
 
   // Find doctor from local database
   Future<UserEntity?> findDoctorLocal({required String id});
+
+  // Remove doctors from local database
+  Future<void> removeDoctors();
 }

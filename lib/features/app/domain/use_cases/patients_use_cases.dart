@@ -35,4 +35,9 @@ class PatientsUseCases {
   Future<PatientEntity?> findPatient(String id) async {
     return await _repository.findPatient(id: id);
   }
+
+  // Remove patients from local database using patient repository
+  Future<void> removePatients() async {
+    return await _repository.removePatients();
+  }
 }

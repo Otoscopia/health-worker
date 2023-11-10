@@ -12,4 +12,7 @@ abstract class SchoolsRepository {
 
   // Find school from local database
   Future<SchoolEntity?> findSchool({required String id});
+
+  // Remove schools from local database
+  Future<void> removeSchools();
 }

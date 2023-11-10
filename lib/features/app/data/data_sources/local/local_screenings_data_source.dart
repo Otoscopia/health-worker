@@ -54,4 +54,14 @@ class LocalScreeningsDataSource {
       throw Exception(error.message);
     }
   }
+
+  Future<void> removeScreenings() async {
+    try {
+      await _isar.writeTxn(() async {
+        await _isar.screeningModels.clear();
+      });
+    } on IsarError catch (error) {
+      throw Exception(error.message);
+    }
+  }
 }

@@ -136,4 +136,10 @@ class PatientsRepositoryImpl extends PatientsRepository {
       return patient;
     }
   }
+
+  // Remove patients from local patients data source
+  @override
+  Future<void> removePatients() async {
+    await _local.removePatients();
+  }
 }

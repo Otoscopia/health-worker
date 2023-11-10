@@ -19,4 +19,9 @@ class UserUseCases {
   Future<UserEntity?> getUser({required String id}) async {
     return await _repository.getUser();
   }
+
+  // Remove user from local database using user repository
+  Future<void> removeUser() async {
+    return await _repository.removeUser();
+  }
 }

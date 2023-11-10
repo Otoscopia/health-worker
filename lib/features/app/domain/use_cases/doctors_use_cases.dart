@@ -25,4 +25,9 @@ class DoctorsUseCases {
   Future<UserEntity?> findDoctor(String id) async {
     return await _repository.findDoctorLocal(id: id);
   }
+
+  // Remove doctors from local database using the doctor repository
+  Future<void> removeDoctors() async {
+    return await _repository.removeDoctors();
+  }
 }

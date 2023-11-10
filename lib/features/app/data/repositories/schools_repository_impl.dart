@@ -87,4 +87,10 @@ class SchoolsRepositoryImpl implements SchoolsRepository {
       return null;
     }
   }
+
+  // Remove schools from local schools data source
+  @override
+  Future<void> removeSchools() async {
+    await _local.removeSchools();
+  }
 }

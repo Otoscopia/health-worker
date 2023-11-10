@@ -187,4 +187,10 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
   Future<void> uploadScreeningImages({required List<String> ids, required List<String> path}) async {
     await _remote.uploadScreeningImages(ids: ids, paths: path);
   }
+  
+  // Remove screenings from local screenings data source
+  @override
+  Future<void> removeScreenings() async {
+    await _local.removeScreenings();
+  }
 }

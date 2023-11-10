@@ -59,4 +59,10 @@ class RemarksRepositoryImpl implements RemarksRepository {
       return null;
     }
   }
+
+  // Remove remarks from local remarks data source
+  @override
+  Future<void> removeRemark() async {
+    await _local.removeRemarks();
+  }
 }

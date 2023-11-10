@@ -25,4 +25,9 @@ class SchoolsUseCase {
   Future<SchoolEntity?> findSchool(String id) async {
     return await _repository.findSchool(id: id);
   }
+
+  // Remove schools from local database using the school repository
+  Future<void> removeSchools() async {
+    return await _repository.removeSchools();
+  }
 }

@@ -9,4 +9,7 @@ abstract class RemarksRepository {
 
   // Find remark to local database
   Future<RemarksEntity?> findLocalRemark({required String id}); 
+
+  // Remove remark from local database
+  Future<void> removeRemark();
 }

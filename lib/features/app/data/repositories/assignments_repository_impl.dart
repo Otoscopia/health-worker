@@ -85,4 +85,9 @@ class AssignmentsRepositoryImpl implements AssignmentsRepository {
       return assignment;
     }
   }
+  
+  @override
+  Future<void> removeAssignments() {
+    return _local.removeAssignments();
+  }
 }

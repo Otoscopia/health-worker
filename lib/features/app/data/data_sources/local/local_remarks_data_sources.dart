@@ -34,4 +34,16 @@ class LocalRemarksDataSource {
       throw Exception(error.message);
     }
   }
+
+  // Remove remarks from isar database
+  Future<void> removeRemarks() async {
+    try {
+      await _isar.writeTxn(() async {
+        // clear remarks collection
+        await _isar.remarksModels.clear();
+      });
+    } on IsarError catch (error) {
+      throw Exception(error.message);
+    }
+  }
 }

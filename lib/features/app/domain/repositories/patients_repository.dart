@@ -18,4 +18,7 @@ abstract class PatientsRepository {
 
   // Get patient from local database
   Future<PatientEntity?> findPatient({required String id});
+
+  // Remove patients from local database
+  Future<void> removePatients();
 }

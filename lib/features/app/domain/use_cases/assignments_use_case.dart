@@ -25,4 +25,9 @@ class AssignmentsUseCase {
   Future<AssignmentEntity?> findAssignment(String id) async {
     return await _repository.findAssignment(id: id);
   }
+
+  // Remove assignments from local database using the assignment repository
+  Future<void> removeAssignments() async {
+    return await _repository.removeAssignments();
+  }
 }

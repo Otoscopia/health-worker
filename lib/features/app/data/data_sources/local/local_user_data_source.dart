@@ -29,4 +29,14 @@ class LocalUserDataSource {
       throw Exception(error.message);
     }
   }
+
+  Future<void> removeUser() async {
+    try {
+      await _isar.writeTxn(() async {
+        await _isar.userModels.clear();
+      });
+    } on IsarError catch (error) {
+      throw Exception(error.message);
+    }
+  }
 }

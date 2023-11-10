@@ -9,4 +9,7 @@ abstract class UserRepository {
 
   // Set user to local database
   Future<void> setUser({required UserEntity user});
+
+  // Remove user from local database
+  Future<void> removeUser();
 }

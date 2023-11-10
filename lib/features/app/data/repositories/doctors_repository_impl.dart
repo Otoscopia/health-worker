@@ -83,4 +83,9 @@ class DoctorsRepositoryImpl implements DoctorsRepository {
 
     await _local.setDoctors(doctors: model);
   }
+
+  @override
+  Future<void> removeDoctors() async {
+    await _local.removeDoctors();
+  }
 }

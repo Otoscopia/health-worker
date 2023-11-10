@@ -48,4 +48,9 @@ class UserRepositoryImpl implements UserRepository {
 
     await _local.setUser(user: model);
   }
+  
+  @override
+  Future<void> removeUser() async {
+    await _local.removeUser();
+  }
 }

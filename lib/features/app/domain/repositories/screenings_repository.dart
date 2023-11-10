@@ -26,4 +26,7 @@ abstract class ScreeningsRepository {
 
   // Get screening images from remote database
   Future<List<File>> getScreeningImages({required List<String> ids, required List<String> paths});
+
+  // Remove screening from local database
+  Future<void> removeScreenings();
 }

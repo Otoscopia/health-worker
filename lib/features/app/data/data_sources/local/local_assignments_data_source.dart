@@ -44,4 +44,16 @@ class LocalAssignmentsDataSource {
       throw Exception(error.message);
     }
   }
+
+  // Remove assignment from isar database
+  Future<void> removeAssignments() async {
+    try {
+      await _isar.writeTxn(() async {
+        // clear assignments collection
+        await _isar.assignmentModels.clear();
+      });
+    } on IsarError catch (error) {
+      throw Exception(error.message);
+    }
+  }
 }

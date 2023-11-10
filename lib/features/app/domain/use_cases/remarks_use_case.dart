@@ -20,4 +20,9 @@ class RemarksUseCases {
   Future<RemarksEntity?> findLocalRemark({required String id}) async {
     return await _repository.findLocalRemark(id: id);
   }
+
+  // Remove remarks from local database using remarks repository
+  Future<void> removeRemark() async {
+    return await _repository.removeRemark();
+  }
 }

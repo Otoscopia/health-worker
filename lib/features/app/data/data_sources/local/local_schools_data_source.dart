@@ -41,4 +41,14 @@ class LocalSchoolsDataSource {
       throw Exception(error.message);
     }
   }
+
+  Future<void> removeSchools() async {
+    try {
+      await _isar.writeTxn(() async {
+        await _isar.schoolModels.clear();
+      });
+    } on IsarError catch (error) {
+      throw Exception(error.message);
+    }
+  }
 }

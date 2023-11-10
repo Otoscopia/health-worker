@@ -12,4 +12,7 @@ abstract class AssignmentsRepository {
 
   // find assignment from local database
   Future<AssignmentEntity?> findAssignment({required String id});
+
+  // Remove assignment from local database
+  Future<void> removeAssignments();
 }
