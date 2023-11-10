@@ -25,7 +25,7 @@ class Dashboard extends ConsumerWidget {
         ]),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return ErrorScreen(error: snapshot.error);
+            return ErrorScreen(errorStatus: snapshot.error);
           } else if (snapshot.hasData) {
             return const DashboardNavigation();
           }
