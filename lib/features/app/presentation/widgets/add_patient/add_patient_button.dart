@@ -12,18 +12,15 @@ class AddPatientButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool loading = ref.watch(patientLoadingProvider);
-    return loading
-        ? const ProgressRing()
-        : SizedBox(
-            width: 150,
-            child: FilledButton(
-              child: const Text(continueLabel),
-              onPressed: () {
-                addPatient(context, ref, globalKey);
-              },
-            ),
-          );
+    return SizedBox(
+      width: 150,
+      child: FilledButton(
+        child: const Text(continueLabel),
+        onPressed: () {
+          addPatient(context, ref, globalKey);
+        },
+      ),
+    );
   }
 }
 
