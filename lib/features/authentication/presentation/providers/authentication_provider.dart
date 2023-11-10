@@ -39,6 +39,13 @@ class AuthenticationStateNotifier extends StateNotifier<AuthenticationEntity?> {
   Future<void> signOut() async {
     final signOutUseCase = SignOutUseCase(authenticationRepository: authenticationRepository);
     await signOutUseCase.execute();
+    await useCases.userUseCases.removeUser();
+    await useCases.assignmentsUseCase.removeAssignments();
+    await useCases.doctorsUseCases.removeDoctors();
+    await useCases.patientsUseCases.removePatients();
+    await useCases.remarksUseCases.removeRemark();
+    await useCases.schoolsUseCase.removeSchools();
+    await useCases.screeningsUseCases.removeScreenings();
     state = null;
   }
   
