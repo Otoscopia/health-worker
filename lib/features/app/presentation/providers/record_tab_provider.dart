@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/core/constants/dashboard_constants.dart';
 import 'package:health_worker/features/app/app.dart';
-import 'package:health_worker/features/app/presentation/providers/patient_information.dart';
 
 class TabNotifier extends StateNotifier<TabEntity> {
   TabNotifier() : super(TabEntity(current: 0, length: 1, tabs: dashboardTabs));
