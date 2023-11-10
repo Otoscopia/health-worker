@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:appwrite/appwrite.dart';
-import 'package:encrypt/encrypt.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:health_worker/core/core.dart';
+import 'package:health_worker/core/util/repositories_injection.dart';
 import 'package:health_worker/features/features.dart';
 
 late final Uuid uuid;
@@ -15,12 +15,13 @@ late final Realtime realtime;
 late final Databases database;
 late final Teams team;
 late final Storage cloud;
-late final AuthenticationRepository authenticationRepository;
-late final ApplicationRepository applicationRepository;
 late final Isar isar;
 late final String applicationDirectory;
 late final String documentDirectory;
-late final EncryptionService encryptionService;
+
+late final AuthenticationRepository authenticationRepository;
+late final EncryptionRepository encryptionRepository;
+late final UseCases useCases;
 
 class DependencyInjection {
   DependencyInjection._();
@@ -42,15 +43,21 @@ class DependencyInjection {
     documentDirectory = applicationDocumentsDirectory.path;
 
     // Initialize Isar
-    isar = await Isar.open([
-      AssignmentModelSchema,
-      DoctorModelSchema,
-      PatientModelSchema,
-      RemarksModelSchema,
-      SchoolModelSchema,
-      ScreeningModelSchema,
-      UserModelSchema
-    ], directory: applicationDirectory, name: "db");
+    isar = await Isar.open(
+      [
+        ApplicationModelSchema,
+        AssignmentModelSchema,
+        DoctorModelSchema,
+        PatientModelSchema,
+        RemarksModelSchema,
+        SchoolModelSchema,
+        ScreeningModelSchema,
+        UserModelSchema,
+        SyncModelSchema,
+      ],
+      directory: applicationDirectory,
+      name: "db",
+    );
 
     // Initialize Appwrite using the appwrite function
     appwrite();
@@ -59,7 +66,8 @@ class DependencyInjection {
     authenticationRepository = createAuthenticationRepository();
 
     // Initialize ApplicationRepository using the createApplicationRepository function
-    applicationRepository = createApplicationRepository();
+    // applicationRepository = createApplicationRepository();
+    useCases = createUseCases();
   }
 
   // Appwrite Dependency Injection
@@ -83,30 +91,25 @@ class DependencyInjection {
     team = Teams(client);
   }
 
-  // Authentication Repository dependency injection
-  AuthenticationRepository createAuthenticationRepository() {
-    final AuthenticationDataSource dataSource = AuthenticationDataSource();
-    final AuthenticationRepositoryImpl repository =
-        AuthenticationRepositoryImpl(dataSource: dataSource);
-    return repository;
-  }
+  // Use Cases dependency injection
+  UseCases createUseCases() {
+    final AssignmentsRepository assignment = createAssignmentRepository();
+    final DoctorsRepository doctor = createDoctorRepository();
+    final PatientsRepository patient = createPatientRepository();
+    final RemarksRepository remarks = createRemarksRepository();
+    final SchoolsRepository school = createSchoolRepository();
+    final ScreeningsRepository screening = createScreeningRepository();
+    final UserRepository user = createUserRepository();
 
-  ApplicationRepository createApplicationRepository() {
-    final Key key = Key.fromBase64("+7b4f/rDQmecC/9ULyBeNwmi6Om2iirH3qLsFtxIn5U=");
-    final RemoteGetDataSource remoteGet = RemoteGetDataSource();
-    final RemoteSetDataSource remoteSet = RemoteSetDataSource();
-    final LocalGetDatabaseUseCase localGet = LocalGetDatabaseUseCase();
-    final LocalSetDatabaseUseCase localSet = LocalSetDatabaseUseCase();
-    final EncryptionDataSource encryption = EncryptionDataSource(key: key);
-
-    final ApplicationRepositoryImpl repository = ApplicationRepositoryImpl(
-      remoteGet: remoteGet,
-      remoteSet: remoteSet,
-      localGet: localGet,
-      localSet: localSet,
-      encryption: encryption,
+    final UseCases useCases = UseCases(
+      assignmentsRepository: assignment,
+      doctorsRepository: doctor,
+      patientsRepository: patient,
+      remarksRepository: remarks,
+      schoolsRepository: school,
+      screeningsRepository: screening,
+      userRepository: user,
     );
-
-    return repository;
+    return useCases;
   }
 }
