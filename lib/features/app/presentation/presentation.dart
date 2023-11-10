@@ -4,6 +4,7 @@ export 'screens/dashboard.dart';
 export 'screens/doctors.dart';
 export 'screens/home.dart';
 export 'screens/left_camera.dart';
+export 'screens/patient_information.dart';
 export 'screens/patient_record.dart';
 export 'screens/patients.dart';
 export 'screens/review_information.dart';
@@ -71,7 +72,6 @@ export 'providers/future_schools_provider.dart';
 export 'providers/future_screening_provider.dart';
 export 'providers/future_table_provider.dart';
 export 'providers/future_user_provider.dart';
-export 'providers/patient_information.dart';
 export 'providers/record_tab_provider.dart';
 
 export 'providers/add_patient_providers/birthdate_provider.dart';
