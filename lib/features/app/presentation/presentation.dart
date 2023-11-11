@@ -1,17 +1,21 @@
-export 'screens/account_information.dart';
-export 'screens/add_patient.dart';
-export 'screens/dashboard.dart';
-export 'screens/doctors.dart';
-export 'screens/home.dart';
-export 'screens/left_camera.dart';
-export 'screens/patient_information.dart';
-export 'screens/patient_record.dart';
-export 'screens/patients.dart';
-export 'screens/review_information.dart';
-export 'screens/right_camera.dart';
-export 'screens/schools.dart';
-export 'screens/screening.dart';
-export 'screens/settings.dart';
+export 'screens/dashboard_page.dart';
+export 'screens/doctors_page.dart';
+export 'screens/patients_page.dart';
+export 'screens/schools_page.dart';
+
+export 'screens/dashboard/home_page.dart';
+
+export 'screens/patient_information/patient_information.dart';
+export 'screens/patient_information/patient_record.dart';
+
+export 'screens/screening_process/left_camera.dart';
+export 'screens/screening_process/patient.dart';
+export 'screens/screening_process/review_information.dart';
+export 'screens/screening_process/right_camera.dart';
+export 'screens/screening_process/screening.dart';
+
+export 'screens/settings/account_information.dart';
+export 'screens/settings/settings_page.dart';
 
 export 'widgets/dashboard/application_header.dart';
 export 'widgets/dashboard/dashboard_navigation.dart';
