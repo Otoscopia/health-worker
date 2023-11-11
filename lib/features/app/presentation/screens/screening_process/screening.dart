@@ -5,8 +5,8 @@ import "package:ionicons/ionicons.dart";
 import "package:health_worker/core/core.dart";
 import "package:health_worker/features/features.dart";
 
-class ScreeningInformation extends ConsumerWidget {
-  const ScreeningInformation({super.key});
+class Screening extends ConsumerWidget {
+  const Screening({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

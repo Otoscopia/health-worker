@@ -378,7 +378,7 @@ class _CameraState extends ConsumerState<RightCamera> {
         Navigator.push(
           context,
           FluentPageRoute(
-            builder: (context) => const ScreeningInformation(),
+            builder: (context) => const Screening(),
           ),
         );
       } else {

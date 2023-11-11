@@ -25,7 +25,7 @@ class DoctorTab extends ConsumerWidget {
 List<Tab> doctorTabs = [
   Tab(
       text: const Text("Doctors"),
-      body: const Doctor(),
+      body: const Doctors(),
       closeIcon: null,
       icon: const Icon(FluentIcons.home),
       semanticLabel: "Doctors"),

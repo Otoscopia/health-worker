@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/config/config.dart';
 import 'package:health_worker/features/features.dart';
 
-class School extends ConsumerWidget {
-  const School({super.key});
+class Schools extends ConsumerWidget {
+  const Schools({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

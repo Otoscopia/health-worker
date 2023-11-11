@@ -8,8 +8,8 @@ import 'package:health_worker/config/config.dart';
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
-class Patient extends ConsumerWidget {
-  const Patient({super.key});
+class Patients extends ConsumerWidget {
+  const Patients({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

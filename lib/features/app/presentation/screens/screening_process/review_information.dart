@@ -37,7 +37,7 @@ class EditRecord extends ConsumerWidget {
       child: Column(
         children: [
           Expanded(child: AddPatient()),
-          Expanded(child: ScreeningInformation())
+          Expanded(child: Screening())
         ],
       ),
     );

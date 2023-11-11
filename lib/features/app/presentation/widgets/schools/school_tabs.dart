@@ -25,7 +25,7 @@ class SchoolTab extends ConsumerWidget {
 List<Tab> schoolTabs = [
   Tab(
       text: const Text("Assigned Schools"),
-      body: const School(),
+      body: const Schools(),
       closeIcon: null,
       icon: const Icon(FluentIcons.home),
       semanticLabel: "Assigned Schools"),

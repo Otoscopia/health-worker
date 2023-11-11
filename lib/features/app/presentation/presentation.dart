@@ -8,8 +8,8 @@ export 'screens/dashboard/home_page.dart';
 export 'screens/patient_information/patient_information.dart';
 export 'screens/patient_information/patient_record.dart';
 
+export 'screens/screening_process/add_patient.dart';
 export 'screens/screening_process/left_camera.dart';
-export 'screens/screening_process/patient.dart';
 export 'screens/screening_process/review_information.dart';
 export 'screens/screening_process/right_camera.dart';
 export 'screens/screening_process/screening.dart';
