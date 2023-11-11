@@ -5,14 +5,16 @@ import 'package:health_worker/features/features.dart';
 
 final futurePatientsProvider = FutureProvider<List<PatientEntity>>((ref) async {
   ref.watch(authenticationStateProvider);
-  
+
   late final List<PatientEntity> patients;
+  final List<PatientEntity> local = await useCases.patientsUseCases.getLocalPatients();
 
   if (ref.read(networkProvider)) {
     patients = await useCases.patientsUseCases.getRemotePatients();
+    patients.removeWhere((element) => local.contains(element));
     await useCases.patientsUseCases.setPatients(patients);
   } else {
-    patients = await useCases.patientsUseCases.getLocalPatients();
+    patients = local;
   }
 
   ref.read(patientsProvider.notifier).setPatient(patients);
