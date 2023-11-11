@@ -5,10 +5,19 @@ import 'package:health_worker/features/features.dart';
 
 final futureAssignmentProvider = FutureProvider<List<AssignmentEntity>>((ref) async {
   ref.watch(authenticationStateProvider);
+  
   final UserEntity user = ref.watch(userProvider);
-  List<AssignmentEntity> assignments = await useCases.assignmentsUseCase.getRemoteAssignments(id: user.id);
+
+  late final List<AssignmentEntity> assignments;
+
+  if (ref.read(networkProvider)) {
+    assignments = await useCases.assignmentsUseCase.getRemoteAssignments(id: user.id);
+    ref.read(assignmentProvider.notifier).setAssignment(assignments);
+  } else {
+    assignments = await useCases.assignmentsUseCase.getLocalAssignments();
+  }
+
   await useCases.assignmentsUseCase.setAssignments(assignments);
-  ref.read(assignmentProvider.notifier).setAssignment(assignments);
   return assignments;
 });
 
@@ -18,6 +27,7 @@ class AssignmentNotifier extends StateNotifier<List<AssignmentEntity>> {
   setAssignment(List<AssignmentEntity> assignment) => state = assignment;
 }
 
-final assignmentProvider = StateNotifierProvider<AssignmentNotifier, List<AssignmentEntity>>((ref) {
+final assignmentProvider =
+    StateNotifierProvider<AssignmentNotifier, List<AssignmentEntity>>((ref) {
   return AssignmentNotifier();
 });

@@ -5,20 +5,30 @@ import 'package:health_worker/features/features.dart';
 
 final futureSchoolsProvider = FutureProvider<List<SchoolEntity>>((ref) async {
   ref.watch(authenticationStateProvider);
-  final response = await useCases.schoolsUseCase.getRemoteSchools();
-  
-  if (response.isNotEmpty) {
-    final List<AssignmentEntity> assignments = ref.watch(assignmentProvider);
 
-    if (assignments.isNotEmpty) {
-      final school = response.where((element) => assignments.any((assignment) => assignment.school == element.id)).toList();
+  late final List<SchoolEntity> response;
 
-      await useCases.schoolsUseCase.setSchools(school);
-      
-      ref.read(schoolsProvider.notifier).setSchool(school);
+  if (ref.read(networkProvider)) {
+    response = await useCases.schoolsUseCase.getRemoteSchools();
 
-      return response;
+    if (response.isNotEmpty) {
+      final List<AssignmentEntity> assignments = ref.watch(assignmentProvider);
+
+      if (assignments.isNotEmpty) {
+        final school = response
+            .where((element) => assignments
+                .any((assignment) => assignment.school == element.id))
+            .toList();
+
+        await useCases.schoolsUseCase.setSchools(school);
+
+        ref.read(schoolsProvider.notifier).setSchool(school);
+
+        return response;
+      }
     }
+  } else {
+    response = await useCases.schoolsUseCase.getLocalSchools();
   }
 
   return response;
@@ -35,6 +45,7 @@ class SchoolsNotifier extends StateNotifier<List<SchoolEntity>> {
   }
 }
 
-final schoolsProvider = StateNotifierProvider<SchoolsNotifier, List<SchoolEntity>>((ref) {
+final schoolsProvider =
+    StateNotifierProvider<SchoolsNotifier, List<SchoolEntity>>((ref) {
   return SchoolsNotifier();
 });
