@@ -49,9 +49,11 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
   @override
   Future<List<ScreeningEntity>> getRemoteScreenings() async {
     final DocumentList response = await _remote.getScreenings();
-
+    
     final List<ScreeningEntity> screenings =
         response.documents.map((screening) {
+      final List<dynamic> images = screening.data['images'];
+
       return ScreeningEntity(
         id: screening.$id,
         patient: screening.data["patient"]["\$id"],
@@ -70,7 +72,7 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
         takingMedication: screening.data["takingMedication"],
         takingMedicationMessage: screening.data["takingMedicationMessage"],
         status: screening.data["status"],
-        images: screening.data["images"],
+        images: images.cast<String>(),
         createdAt: screening.$createdAt,
       );
     }).toList();
@@ -90,27 +92,27 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
   @override
   Future<void> setLocalScreening({required ScreeningEntity screening}) async {
     final ScreeningModel model = ScreeningModel(
-        id: screening.id,
-        patient: screening.patient,
-        assignment: screening.assignment,
-        historyOfIllness: screening.historyOfIllness,
-        healthWorkerRemarks: screening.healthWorkerRemarks,
-        temperature: screening.temperature,
-        height: screening.height,
-        weight: screening.weight,
-        hasSimilarCondition: screening.hasSimilarCondition,
-        chiefComplaint: screening.chiefComplaint,
-        chiefComplaintMessage: screening.chiefComplaintMessage,
-        hasAllergies: screening.hasAllergies,
-        typeOfAllergies: screening.typeOfAllergies,
-        undergoSurgery: screening.undergoSurgery,
-        takingMedication: screening.takingMedication,
-        takingMedicationMessage: screening.takingMedicationMessage,
-        status: screening.status,
-        images: screening.images,
-        createdAt: screening.createdAt,
-      );
-    
+      id: screening.id,
+      patient: screening.patient,
+      assignment: screening.assignment,
+      historyOfIllness: screening.historyOfIllness,
+      healthWorkerRemarks: screening.healthWorkerRemarks,
+      temperature: screening.temperature,
+      height: screening.height,
+      weight: screening.weight,
+      hasSimilarCondition: screening.hasSimilarCondition,
+      chiefComplaint: screening.chiefComplaint,
+      chiefComplaintMessage: screening.chiefComplaintMessage,
+      hasAllergies: screening.hasAllergies,
+      typeOfAllergies: screening.typeOfAllergies,
+      undergoSurgery: screening.undergoSurgery,
+      takingMedication: screening.takingMedication,
+      takingMedicationMessage: screening.takingMedicationMessage,
+      status: screening.status,
+      images: screening.images,
+      createdAt: screening.createdAt,
+    );
+
     await _local.setScreening(screenings: model);
   }
 
@@ -122,7 +124,8 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
 
   // Set screenings from local screenings data source
   @override
-  Future<void> setScreenings({required List<ScreeningEntity> screenings}) async {
+  Future<void> setScreenings(
+      {required List<ScreeningEntity> screenings}) async {
     final List<ScreeningModel> models = screenings.map((screening) {
       return ScreeningModel(
         id: screening.id,
@@ -184,10 +187,11 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
 
   // Set screening images from remote screenings data source
   @override
-  Future<void> uploadScreeningImages({required List<String> ids, required List<String> path}) async {
+  Future<void> uploadScreeningImages(
+      {required List<String> ids, required List<String> path}) async {
     await _remote.uploadScreeningImages(ids: ids, paths: path);
   }
-  
+
   // Remove screenings from local screenings data source
   @override
   Future<void> removeScreenings() async {
