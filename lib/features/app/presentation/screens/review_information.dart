@@ -9,7 +9,6 @@ import 'package:styled_widget/styled_widget.dart';
 
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/app/app.dart';
-import 'package:health_worker/features/app/presentation/providers/future_table_provider.dart';
 
 class ReviewInformation extends ConsumerWidget {
   const ReviewInformation({super.key});
@@ -211,14 +210,13 @@ class ReviewRecord extends ConsumerWidget {
                     List<UserEntity> doctor = ref.read(doctorsProvider);
                     List<SchoolEntity> school = ref.read(schoolsProvider);
 
-                    final int age = DateTime.now().year -
-                        DateTime.parse(patient.birthdate).year;
-                    final UserEntity patientDoctor = doctor
-                        .where((element) => element.id == patient.doctor)
-                        .first;
-                    final SchoolEntity patientSchool = school
-                        .where((element) => element.id == patient.school)
-                        .first;
+                    UserEntity patientDoctor = doctor
+                        .firstWhere((element) => element.id == patient.doctor);
+
+                    SchoolEntity patientSchool = school
+                        .firstWhere((element) => element.id == patient.school);
+
+                    final int age = DateTime.now().year - DateTime.parse(patient.birthdate).year;
 
                     TableEntity record = TableEntity(
                         patientId: patient.id,
@@ -230,7 +228,18 @@ class ReviewRecord extends ConsumerWidget {
                         school: patientSchool.name);
 
                     ref.read(tableRecordsProvider.notifier).add(record);
-                    Navigator.popUntil(context, (route) => route.isFirst);
+
+                    if(ref.read(networkProvider)) {
+                      await useCases.patientsUseCases.setRemotePatient(patient);
+                      await useCases.screeningsUseCases.setRemoteScreening(screening);
+                    } else {
+                      SyncModel sync = SyncModel(patient: patient.id, screening: screening.id);
+                      await useCases.syncUseCases.addSync(sync: sync);
+                    }
+
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.popUntil(context, (route) => route.isFirst);
+                    });
                   },
                   child: const Text("Submit Medical Record"),
                 ),
