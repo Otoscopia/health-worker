@@ -5,7 +5,7 @@ abstract class UserRepository {
   Future<UserEntity> getRemoteUser();
 
   // Get user from local database
-  Future<UserEntity?> getUser();
+  Future<UserEntity> getUser();
 
   // Set user to local database
   Future<void> setUser({required UserEntity user});

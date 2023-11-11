@@ -4,7 +4,6 @@ import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
 final futureUserProvider = FutureProvider<UserEntity>((ref) async {
-  // TODO: [OT-40] Add offline support
   final auth = ref.watch(authenticationStateProvider);
   late final UserEntity user;
 
@@ -12,6 +11,8 @@ final futureUserProvider = FutureProvider<UserEntity>((ref) async {
     if (ref.read(networkProvider)) {
       user = await useCases.userUseCases.getRemoteUser();
       await useCases.userUseCases.setUser(user: user);
+    } else {
+      user = await useCases.userUseCases.getUser();
     }
   }
 

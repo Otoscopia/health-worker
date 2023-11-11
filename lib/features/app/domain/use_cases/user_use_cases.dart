@@ -16,7 +16,7 @@ class UserUseCases {
   }
 
   // Find user from local database using user repository
-  Future<UserEntity?> getUser({required String id}) async {
+  Future<UserEntity> getUser() async {
     return await _repository.getUser();
   }
 
