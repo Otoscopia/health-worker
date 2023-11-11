@@ -2,23 +2,23 @@ import 'package:encrypt/encrypt.dart';
 
 import 'package:health_worker/features/features.dart';
 
-  // Authentication Repository dependency injection
-  AuthenticationRepository createAuthenticationRepository() {
-    final AuthenticationDataSource dataSource = AuthenticationDataSource();
-    final AuthenticationRepositoryImpl repository =
-        AuthenticationRepositoryImpl(dataSource: dataSource);
-    return repository;
-  }
+// Authentication Repository dependency injection
+AuthenticationRepository createAuthenticationRepository() {
+  final AuthenticationDataSource dataSource = AuthenticationDataSource();
+  final AuthenticationRepositoryImpl repository =
+      AuthenticationRepositoryImpl(dataSource: dataSource);
+  return repository;
+}
 
-  // Encryption Repository dependency injection
-  EncryptionRepository createEncryptionRepository(String globalKey) {
-    final Key global = Key.fromBase64(globalKey);
-    final EncryptionDataSource encryption = EncryptionDataSource(key: global);
+// Encryption Repository dependency injection
+EncryptionRepository createEncryptionRepository(String globalKey) {
+  final Key global = Key.fromBase64(globalKey);
+  final EncryptionDataSource encryption = EncryptionDataSource(key: global);
 
-    final EncryptionRepositoryImpl repository =
-        EncryptionRepositoryImpl(encryption: encryption);
-    return repository;
-  }
+  final EncryptionRepositoryImpl repository =
+      EncryptionRepositoryImpl(encryption: encryption);
+  return repository;
+}
 
 // Assignment Repository dependency injection
 AssignmentsRepository createAssignmentRepository() {
@@ -96,5 +96,12 @@ ApplicationRepository createApplicationRepository() {
 
   final ApplicationRepositoryImpl repository =
       ApplicationRepositoryImpl(application: application);
+  return repository;
+}
+
+SyncRepository createSyncRepository() {
+  final SyncDataSource sync = SyncDataSource();
+
+  final SyncRepositoryImpl repository = SyncRepositoryImpl(sync: sync);
   return repository;
 }

@@ -1,11 +1,11 @@
 import 'package:health_worker/features/features.dart';
 
-class SyncUseCase {
+class SyncUseCases {
   final SyncRepository _syncRepository;
 
-  SyncUseCase(this._syncRepository);
+  SyncUseCases({required SyncRepository repository}) : _syncRepository = repository;
 
-  Future<void> call() async {
-    await _syncRepository.sync();
-  }
+  Future<void> addSync({required SyncModel sync}) async => await _syncRepository.addSync(sync: sync);
+
+  Future<void> sync() async => await _syncRepository.sync();
 }

@@ -100,6 +100,7 @@ class DependencyInjection {
     final SchoolsRepository school = createSchoolRepository();
     final ScreeningsRepository screening = createScreeningRepository();
     final UserRepository user = createUserRepository();
+    final SyncRepository sync = createSyncRepository();
 
     final UseCases useCases = UseCases(
       assignmentsRepository: assignment,
@@ -109,6 +110,7 @@ class DependencyInjection {
       schoolsRepository: school,
       screeningsRepository: screening,
       userRepository: user,
+      syncRepository: sync,
     );
     return useCases;
   }

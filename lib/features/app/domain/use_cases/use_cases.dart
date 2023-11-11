@@ -8,6 +8,7 @@ class UseCases {
   final PatientsRepository _patientsRepository;
   final DoctorsRepository _doctorsRepository;
   final AssignmentsRepository _assignment;
+  final SyncRepository _sync;
 
   UseCases({
     required UserRepository userRepository,
@@ -16,14 +17,16 @@ class UseCases {
     required RemarksRepository remarksRepository,
     required PatientsRepository patientsRepository,
     required DoctorsRepository doctorsRepository,
-    required AssignmentsRepository assignmentsRepository
+    required AssignmentsRepository assignmentsRepository,
+    required SyncRepository syncRepository,
   })  : _userRepository = userRepository,
         _screeningsRepository = screeningsRepository,
         _schoolsRepository = schoolsRepository,
         _remarksRepository = remarksRepository,
         _patientsRepository = patientsRepository,
         _doctorsRepository = doctorsRepository,
-        _assignment = assignmentsRepository;
+        _assignment = assignmentsRepository,
+        _sync = syncRepository;
   
   // User use cases
   AssignmentsUseCase get assignmentsUseCase => AssignmentsUseCase(repository: _assignment);
@@ -39,4 +42,6 @@ class UseCases {
   ScreeningsUseCases get screeningsUseCases => ScreeningsUseCases(repository: _screeningsRepository);
 
   UserUseCases get userUseCases => UserUseCases(repository: _userRepository);
+
+  SyncUseCases get syncUseCases => SyncUseCases(repository: _sync);
 }

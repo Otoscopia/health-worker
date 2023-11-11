@@ -1,5 +1,6 @@
 export 'data_sources/application_data_source.dart';
 export 'data_sources/encryption_data_source.dart';
+export 'data_sources/sync_data_source.dart';
 
 export 'data_sources/local/local_assignments_data_source.dart';
 export 'data_sources/local/local_doctors_data_source.dart';
@@ -37,4 +38,5 @@ export 'repositories/patients_repository_impl.dart';
 export 'repositories/remarks_repository_impl.dart';
 export 'repositories/schools_repository_impl.dart';
 export 'repositories/screenings_repository_impl.dart';
+export 'repositories/sync_repository_impl.dart';
 export 'repositories/user_repository_impl.dart';
