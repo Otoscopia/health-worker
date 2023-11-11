@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,40 +24,10 @@ class AddPatientButton extends ConsumerWidget {
 
 bool isBirthdateToday(DateTime birthdate) {
   DateTime today = DateTime.now();
-  return birthdate.day == today.day &&
-      birthdate.month == today.month &&
-      birthdate.year == today.year;
-}
-
-PatientEntity patientFunction(WidgetRef ref) {
-  String id = uuid.v4();
-  String name = ref.read(fullnameProvider);
-  int gender = ref.read(genderProvider);
-  DateTime birthdate = ref.read(birthdateProvider);
-  String guardiansName = ref.read(guardianFullnameProvider);
-  String guardiansPhone = ref.read(contactNumberProvider);
-  String school = ref.read(schoolNameProvider);
-  String schoolID = ref.read(schoolIdProvider);
-
-  // shuffle doctors to randomize the doctor assigned to the patient
-  List<UserEntity> doctors = ref.read(doctorsProvider);
-  doctors.shuffle(Random(Random().nextInt(1000)));
-
-  UserEntity creator = ref.read(userProvider);
-
-  return PatientEntity(
-    id: id,
-    name: name,
-    gender: genders[gender],
-    birthdate: birthdate.toIso8601String(),
-    school: school,
-    schoolID: schoolID,
-    guardiansName: guardiansName,
-    guardiansPhone: guardiansPhone,
-    creator: creator.id,
-    doctor: doctors.first.id,
-    createdAt: DateTime.now().toIso8601String(),
-  );
+  final bool day = birthdate.day == today.day;
+  final bool month = birthdate.month == today.month;
+  final bool year = birthdate.year == today.year;
+  return day && month && year;
 }
 
 void addPatient(BuildContext context, WidgetRef ref, GlobalKey<FormState> validate) async {
@@ -69,9 +37,7 @@ void addPatient(BuildContext context, WidgetRef ref, GlobalKey<FormState> valida
   bool checkpoint = validate.currentState!.validate() && gender != 3 && !isBirthdateToday(birthdate);
 
   if (checkpoint) {
-    PatientEntity patient = patientFunction(ref);
-    ref.read(patientProvider.notifier).addPatient(patient);
-    ref.read(patientsProvider.notifier).addPatient(patient);
+    ref.read(patientProvider.notifier).addPatient();
 
     Navigator.push(context, FluentPageRoute(builder: (context) => const LeftCamera()));
   } else {
