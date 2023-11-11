@@ -24,7 +24,7 @@ class PatientsRepositoryImpl extends PatientsRepository {
             name: patient.data["name"],
             gender: patient.data["gender"],
             birthdate: patient.data["birthdate"],
-            school: patient.data["school"],
+            school: patient.data["school"]["\$id"],
             schoolID: patient.data["schoolID"],
             guardiansName: patient.data["guardiansName"],
             guardiansPhone: patient.data["guardiansPhone"],
