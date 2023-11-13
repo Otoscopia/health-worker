@@ -19,12 +19,72 @@ class HomeTable extends ConsumerWidget {
 
     final Color color = FluentTheme.of(context).cardColor;
 
+    final screeningCollection =
+        'databases.${Env.database}.collections.${Env.screening}.documents';
+
     final realtimeTable = realtime.subscribe([
-      'databases.${Env.database}.collections.${Env.remarks}',
-      'databases.${Env.database}.collections.${Env.screening}',
+      // 'databases.${Env.database}.collections.${Env.remarks}.documents',
+      screeningCollection,
     ]);
 
-    realtimeTable.stream.listen((event) {});
+    realtimeTable.stream.listen((event) {
+      print(event.channels.contains(screeningCollection));
+
+      if (event.channels.contains(screeningCollection)) {
+        final List<ScreeningEntity> screenings = ref.read(screeningsProvider);
+
+        ScreeningEntity screening = ScreeningEntity(
+          id: event.payload["\$id"],
+          patient: event.payload["patient"]["\$id"],
+          assignment: event.payload["assignment"]["\$id"],
+          historyOfIllness: event.payload["historyOfIllness"],
+          healthWorkerRemarks: event.payload["healthWorkerRemarks"],
+          temperature: event.payload["temperature"],
+          height: event.payload["height"],
+          weight: event.payload["weight"],
+          hasSimilarCondition: event.payload["hasSimilarCondition"],
+          chiefComplaint: event.payload["chiefComplaint"],
+          chiefComplaintMessage: event.payload["chiefComplaintMessage"],
+          hasAllergies: event.payload["hasAllergies"],
+          typeOfAllergies: event.payload["typeOfAllergies"],
+          undergoSurgery: event.payload["undergoSurgery"],
+          takingMedication: event.payload["takingMedication"],
+          takingMedicationMessage: event.payload["takingMedicationMessage"],
+          status: event.payload["status"],
+          images: event.payload["images"],
+          createdAt: event.payload["\$createdAt"],
+        );
+
+        // Find the index of the element with the same id
+        int index =
+            screenings.indexWhere((element) => element.id == screening.id);
+
+        // Update the values if the element with the same id is found
+        if (index != -1) {
+          screenings[index] = screening;
+        }
+
+        // Update the screenings provider
+        ref.read(screeningsProvider.notifier).setScreenings(screenings);
+
+        final int indexed = table
+            .indexWhere((element) => element.patientId == screening.patient);
+
+        final TableEntity modifiedTable = TableEntity(
+          patientId: table[indexed].patientId,
+          name: table[indexed].name,
+          age: table[indexed].age,
+          gender: table[indexed].gender,
+          status: screening.status,
+          doctor: table[indexed].doctor,
+          school: table[indexed].school,
+        );
+
+        if (indexed != -1) {
+          table[indexed] = modifiedTable;
+        }
+      }
+    });
 
     return m.Theme(
       data: m.ThemeData(
