@@ -96,7 +96,7 @@ addScreeningInformation(BuildContext context, WidgetRef ref, GlobalKey<FormState
   String medication = ref.read(takingMedicationProvider) == 1 ? "true" : "false";
   String medicationComment = ref.read(medicationProvider);
 
-  final List<AssignmentEntity> assignments = ref.read(assignmentProvider);
+  final List<AssignmentEntity> assignments = ref.read(assignmentsProvider);
   final String school = ref.read(patientProvider).school;
 
   assignments.removeWhere((element) => element.school != school);
@@ -105,7 +105,7 @@ addScreeningInformation(BuildContext context, WidgetRef ref, GlobalKey<FormState
     ScreeningEntity screening = ScreeningEntity(
       id: uuid.v4(),
       patient: ref.read(patientProvider).id,
-      assignment: ref.read(assignmentProvider).first.id,
+      assignment: ref.read(assignmentsProvider).first.id,
       historyOfIllness: historyOfIllness,
       healthWorkerRemarks: healthWorkerComment,
       temperature: temperature,
