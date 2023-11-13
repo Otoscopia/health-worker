@@ -2,6 +2,7 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/core/core.dart';
+import 'package:health_worker/features/app/presentation/providers/future_provider.dart';
 import 'package:health_worker/features/features.dart';
 
 class Dashboard extends ConsumerWidget {
@@ -14,15 +15,7 @@ class Dashboard extends ConsumerWidget {
 
     return ApplicationContainer(
       child: FutureBuilder(
-        future: Future.wait([
-          ref.watch(futureUserProvider.future),
-          ref.watch(futurePatientsProvider.future),
-          ref.watch(futureDoctorsProvider.future),
-          ref.watch(futureSchoolsProvider.future),
-          ref.watch(futureAssignmentProvider.future),
-          ref.watch(futureScreeningProvider.future),
-          ref.watch(futureTableProvider.future),
-        ]),
+        future: futureProvider(ref),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return ErrorScreen(errorStatus: snapshot.error);

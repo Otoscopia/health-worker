@@ -43,6 +43,13 @@ class TableRecordsNotifier extends StateNotifier<List<TableEntity>> {
   void addAll(List<TableEntity> entities) {
     state = entities;
   }
+
+  void modifty(TableEntity entity) {
+    final List<TableEntity> table = state;
+    final int index = table.indexWhere((element) => element.patientId == entity.patientId);
+    table[index] = entity;
+    state = table;
+  }
 }
 
 final tableRecordsProvider =

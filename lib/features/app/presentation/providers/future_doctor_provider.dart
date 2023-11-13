@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
-final futureDoctorsProvider = FutureProvider<List<UserEntity>>((ref) async {
-  ref.watch(authenticationStateProvider);
-
+Future<void> doctors(WidgetRef ref) async {
   late final List<UserEntity> doctors;
 
   if (ref.read(networkProvider)) {
@@ -16,8 +14,7 @@ final futureDoctorsProvider = FutureProvider<List<UserEntity>>((ref) async {
   }
 
   ref.read(doctorsProvider.notifier).setDoctors(doctors);
-  return doctors;
-});
+}
 
 class DoctorsNotifier extends StateNotifier<List<UserEntity>> {
   DoctorsNotifier() : super([]);
