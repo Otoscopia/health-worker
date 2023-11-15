@@ -17,30 +17,9 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
   Future<List<ScreeningEntity>> getLocalScreenings() async {
     final List<ScreeningModel> response = await _local.getScreenings();
 
-    final List<ScreeningEntity> screenings = response.map(
-      (screening) {
-        return ScreeningEntity(
-            id: screening.id,
-            patient: screening.patient,
-            assignment: screening.assignment,
-            historyOfIllness: screening.historyOfIllness,
-            healthWorkerRemarks: screening.healthWorkerRemarks,
-            temperature: screening.temperature,
-            height: screening.height,
-            weight: screening.weight,
-            hasSimilarCondition: screening.hasSimilarCondition,
-            chiefComplaint: screening.chiefComplaint,
-            chiefComplaintMessage: screening.chiefComplaintMessage,
-            hasAllergies: screening.hasAllergies,
-            typeOfAllergies: screening.typeOfAllergies,
-            undergoSurgery: screening.undergoSurgery,
-            takingMedication: screening.takingMedication,
-            takingMedicationMessage: screening.takingMedicationMessage,
-            status: screening.status,
-            images: screening.images,
-            createdAt: screening.createdAt);
-      },
-    ).toList();
+    final List<ScreeningEntity> screenings = response
+        .map((screening) => ScreeningEntity.fromModel(screening))
+        .toList();
 
     return screenings;
   }
@@ -49,33 +28,10 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
   @override
   Future<List<ScreeningEntity>> getRemoteScreenings() async {
     final DocumentList response = await _remote.getScreenings();
-    
-    final List<ScreeningEntity> screenings =
-        response.documents.map((screening) {
-      final List<dynamic> images = screening.data['images'];
 
-      return ScreeningEntity(
-        id: screening.$id,
-        patient: screening.data["patient"]["\$id"],
-        assignment: screening.data["assignment"]["\$id"],
-        historyOfIllness: screening.data["historyOfIllness"],
-        healthWorkerRemarks: screening.data["healthWorkerRemarks"],
-        temperature: screening.data["temperature"],
-        height: screening.data["height"],
-        weight: screening.data["weight"],
-        hasSimilarCondition: screening.data["hasSimilarCondition"],
-        chiefComplaint: screening.data["chiefComplaint"],
-        chiefComplaintMessage: screening.data["chiefComplaintMessage"],
-        hasAllergies: screening.data["hasAllergies"],
-        typeOfAllergies: screening.data["typeOfAllergies"],
-        undergoSurgery: screening.data["undergoSurgery"],
-        takingMedication: screening.data["takingMedication"],
-        takingMedicationMessage: screening.data["takingMedicationMessage"],
-        status: screening.data["status"],
-        images: images.cast<String>(),
-        createdAt: screening.$createdAt,
-      );
-    }).toList();
+    final List<ScreeningEntity> screenings = response.documents
+        .map((screening) => ScreeningEntity.fromDocument(screening))
+        .toList();
 
     return screenings;
   }
@@ -91,27 +47,7 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
   // Set screenings from local screenings data source
   @override
   Future<void> setLocalScreening({required ScreeningEntity screening}) async {
-    final ScreeningModel model = ScreeningModel(
-      id: screening.id,
-      patient: screening.patient,
-      assignment: screening.assignment,
-      historyOfIllness: screening.historyOfIllness,
-      healthWorkerRemarks: screening.healthWorkerRemarks,
-      temperature: screening.temperature,
-      height: screening.height,
-      weight: screening.weight,
-      hasSimilarCondition: screening.hasSimilarCondition,
-      chiefComplaint: screening.chiefComplaint,
-      chiefComplaintMessage: screening.chiefComplaintMessage,
-      hasAllergies: screening.hasAllergies,
-      typeOfAllergies: screening.typeOfAllergies,
-      undergoSurgery: screening.undergoSurgery,
-      takingMedication: screening.takingMedication,
-      takingMedicationMessage: screening.takingMedicationMessage,
-      status: screening.status,
-      images: screening.images,
-      createdAt: screening.createdAt,
-    );
+    final ScreeningModel model = ScreeningModel.toModel(screening);
 
     await _local.setScreening(screenings: model);
   }
@@ -126,29 +62,9 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
   @override
   Future<void> setScreenings(
       {required List<ScreeningEntity> screenings}) async {
-    final List<ScreeningModel> models = screenings.map((screening) {
-      return ScreeningModel(
-        id: screening.id,
-        patient: screening.patient,
-        assignment: screening.assignment,
-        historyOfIllness: screening.historyOfIllness,
-        healthWorkerRemarks: screening.healthWorkerRemarks,
-        temperature: screening.temperature,
-        height: screening.height,
-        weight: screening.weight,
-        hasSimilarCondition: screening.hasSimilarCondition,
-        chiefComplaint: screening.chiefComplaint,
-        chiefComplaintMessage: screening.chiefComplaintMessage,
-        hasAllergies: screening.hasAllergies,
-        typeOfAllergies: screening.typeOfAllergies,
-        undergoSurgery: screening.undergoSurgery,
-        takingMedication: screening.takingMedication,
-        takingMedicationMessage: screening.takingMedicationMessage,
-        status: screening.status,
-        images: screening.images,
-        createdAt: screening.createdAt,
-      );
-    }).toList();
+    final List<ScreeningModel> models = screenings
+        .map((screening) => ScreeningModel.toModel(screening))
+        .toList();
 
     await _local.setScreenings(screenings: models);
   }
@@ -161,27 +77,7 @@ class ScreeningsRepositoryImpl implements ScreeningsRepository {
     if (response == null) {
       return null;
     } else {
-      return ScreeningEntity(
-        id: response.id,
-        patient: response.patient,
-        assignment: response.assignment,
-        historyOfIllness: response.historyOfIllness,
-        healthWorkerRemarks: response.healthWorkerRemarks,
-        temperature: response.temperature,
-        height: response.height,
-        weight: response.weight,
-        hasSimilarCondition: response.hasSimilarCondition,
-        chiefComplaint: response.chiefComplaint,
-        chiefComplaintMessage: response.chiefComplaintMessage,
-        hasAllergies: response.hasAllergies,
-        typeOfAllergies: response.typeOfAllergies,
-        undergoSurgery: response.undergoSurgery,
-        takingMedication: response.takingMedication,
-        takingMedicationMessage: response.takingMedicationMessage,
-        status: response.status,
-        images: response.images,
-        createdAt: response.createdAt,
-      );
+      return ScreeningEntity.fromModel(response);
     }
   }
 

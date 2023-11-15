@@ -1,3 +1,7 @@
+import 'package:appwrite/models.dart';
+
+import 'package:health_worker/features/features.dart';
+
 class ScreeningEntity {
   // screening id
   final String id;
@@ -77,4 +81,76 @@ class ScreeningEntity {
     required this.images,
     required this.createdAt,
   });
+
+  factory ScreeningEntity.fromDocument(Document screening) {
+    final List<dynamic> images = screening.data['images'];
+
+    return ScreeningEntity(
+      id: screening.$id,
+      patient: screening.data["patient"]["\$id"],
+      assignment: screening.data["assignment"]["\$id"],
+      historyOfIllness: screening.data["historyOfIllness"],
+      healthWorkerRemarks: screening.data["healthWorkerRemarks"],
+      temperature: screening.data["temperature"],
+      height: screening.data["height"],
+      weight: screening.data["weight"],
+      hasSimilarCondition: screening.data["hasSimilarCondition"],
+      chiefComplaint: screening.data["chiefComplaint"],
+      chiefComplaintMessage: screening.data["chiefComplaintMessage"],
+      hasAllergies: screening.data["hasAllergies"],
+      typeOfAllergies: screening.data["typeOfAllergies"],
+      undergoSurgery: screening.data["undergoSurgery"],
+      takingMedication: screening.data["takingMedication"],
+      takingMedicationMessage: screening.data["takingMedicationMessage"],
+      status: screening.data["status"],
+      images: images.cast<String>(),
+      createdAt: screening.$createdAt,
+    );
+  }
+
+  factory ScreeningEntity.fromModel(ScreeningModel screening) {
+    return ScreeningEntity(
+      id: screening.id,
+      patient: screening.patient,
+      assignment: screening.assignment,
+      historyOfIllness: screening.historyOfIllness,
+      healthWorkerRemarks: screening.healthWorkerRemarks,
+      temperature: screening.temperature,
+      height: screening.height,
+      weight: screening.weight,
+      hasSimilarCondition: screening.hasSimilarCondition,
+      chiefComplaint: screening.chiefComplaint,
+      chiefComplaintMessage: screening.chiefComplaintMessage,
+      hasAllergies: screening.hasAllergies,
+      typeOfAllergies: screening.typeOfAllergies,
+      undergoSurgery: screening.undergoSurgery,
+      takingMedication: screening.takingMedication,
+      takingMedicationMessage: screening.takingMedicationMessage,
+      status: screening.status,
+      images: screening.images,
+      createdAt: screening.createdAt,
+    );
+  }
+
+  static Map<String, dynamic> toMap(ScreeningEntity screening) {
+    return {
+      "patient": screening.patient,
+      "assignment": screening.assignment,
+      "historyOfIllness": screening.historyOfIllness,
+      "healthWorkerRemarks": screening.healthWorkerRemarks,
+      "temperature": screening.temperature,
+      "height": screening.height,
+      "weight": screening.weight,
+      "hasSimilarCondition": screening.hasSimilarCondition,
+      "chiefComplaint": screening.chiefComplaint,
+      "chiefComplaintMessage": screening.chiefComplaintMessage,
+      "hasAllergies": screening.hasAllergies,
+      "typeOfAllergies": screening.typeOfAllergies,
+      "undergoSurgery": screening.undergoSurgery,
+      "takingMedication": screening.takingMedication,
+      "takingMedicationMessage": screening.takingMedicationMessage,
+      "status": screening.status,
+      "images": screening.images,
+    };
+  }
 }

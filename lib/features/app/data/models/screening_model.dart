@@ -30,4 +30,28 @@ class ScreeningModel extends ScreeningEntity {
     required super.images,
     required super.createdAt,
   });
+
+  factory ScreeningModel.toModel(ScreeningEntity screening) {
+    return ScreeningModel(
+      id: screening.id,
+      patient: screening.patient,
+      assignment: screening.assignment,
+      historyOfIllness: screening.historyOfIllness,
+      healthWorkerRemarks: screening.healthWorkerRemarks,
+      temperature: screening.temperature,
+      height: screening.height,
+      weight: screening.weight,
+      hasSimilarCondition: screening.hasSimilarCondition,
+      chiefComplaint: screening.chiefComplaint,
+      chiefComplaintMessage: screening.chiefComplaintMessage,
+      hasAllergies: screening.hasAllergies,
+      typeOfAllergies: screening.typeOfAllergies,
+      undergoSurgery: screening.undergoSurgery,
+      takingMedication: screening.takingMedication,
+      takingMedicationMessage: screening.takingMedicationMessage,
+      status: screening.status,
+      images: screening.images,
+      createdAt: screening.createdAt,
+    );
+  }
 }
