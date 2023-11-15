@@ -51,10 +51,18 @@ class PatientNotifier extends StateNotifier<PatientEntity> {
   }
 
   cleanState() => state = emptyPatient;
+
+  findPatient(String id) async {
+    late final List<PatientEntity> patients;
+
+    patients = ref.read(patientsProvider);
+
+    return patients.where((element) => element.id == id).first;
+  }
 }
 
 final patientProvider =
-StateNotifierProvider<PatientNotifier, PatientEntity>((ref) {
+    StateNotifierProvider<PatientNotifier, PatientEntity>((ref) {
   return PatientNotifier(ref: ref);
 });
 
