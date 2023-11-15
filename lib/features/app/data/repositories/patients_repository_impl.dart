@@ -17,22 +17,9 @@ class PatientsRepositoryImpl extends PatientsRepository {
   Future<List<PatientEntity>> getRemotePatients() async {
     final DocumentList response = await _remote.getPatients();
 
-    final List<PatientEntity> patients = response.documents.map(
-      (patient) {
-        return PatientEntity(
-            id: patient.$id,
-            name: patient.data["name"],
-            gender: patient.data["gender"],
-            birthdate: patient.data["birthdate"],
-            school: patient.data["school"]["\$id"],
-            schoolID: patient.data["schoolID"],
-            guardiansName: patient.data["guardiansName"],
-            guardiansPhone: patient.data["guardiansPhone"],
-            creator: patient.data["creator"]["\$id"],
-            doctor: patient.data["doctor"]["\$id"],
-            createdAt: patient.$createdAt);
-      },
-    ).toList();
+    final List<PatientEntity> patients = response.documents
+        .map((patient) => PatientEntity.fromDocument(patient))
+        .toList();
 
     return patients;
   }
@@ -42,22 +29,8 @@ class PatientsRepositoryImpl extends PatientsRepository {
   Future<List<PatientEntity>> getLocalPatients() async {
     final List<PatientModel> response = await _local.getPatients();
 
-    final List<PatientEntity> patients = response.map(
-      (patient) {
-        return PatientEntity(
-            id: patient.id,
-            name: patient.name,
-            gender: patient.gender,
-            birthdate: patient.birthdate,
-            school: patient.school,
-            schoolID: patient.schoolID,
-            guardiansName: patient.guardiansName,
-            guardiansPhone: patient.guardiansPhone,
-            creator: patient.creator,
-            doctor: patient.doctor,
-            createdAt: patient.createdAt);
-      },
-    ).toList();
+    final List<PatientEntity> patients =
+        response.map((patient) => PatientEntity.fromModel(patient)).toList();
 
     return patients;
   }
@@ -65,22 +38,8 @@ class PatientsRepositoryImpl extends PatientsRepository {
   // Set patients to local patients data source
   @override
   Future<void> setPatients({required List<PatientEntity> patients}) async {
-    final List<PatientModel> models = patients.map(
-      (patient) {
-        return PatientModel(
-            id: patient.id,
-            name: patient.name,
-            gender: patient.gender,
-            birthdate: patient.birthdate,
-            school: patient.school,
-            schoolID: patient.schoolID,
-            guardiansName: patient.guardiansName,
-            guardiansPhone: patient.guardiansPhone,
-            creator: patient.creator,
-            doctor: patient.doctor,
-            createdAt: patient.createdAt);
-      },
-    ).toList();
+    final List<PatientModel> models =
+        patients.map((patient) => PatientModel.toModel(patient)).toList();
 
     await _local.setPatients(patients: models);
   }
@@ -88,19 +47,7 @@ class PatientsRepositoryImpl extends PatientsRepository {
   // Set patient to local patients data source
   @override
   Future<void> setLocalPatient({required PatientEntity patient}) async {
-    final PatientModel model = PatientModel(
-      id: patient.id,
-      name: patient.name,
-      gender: patient.gender,
-      birthdate: patient.birthdate,
-      school: patient.school,
-      schoolID: patient.schoolID,
-      guardiansName: patient.guardiansName,
-      guardiansPhone: patient.guardiansPhone,
-      creator: patient.creator,
-      doctor: patient.doctor,
-      createdAt: patient.createdAt,
-    );
+    final PatientModel model = PatientModel.toModel(patient);
 
     await _local.setPatient(patient: model);
   }
@@ -119,19 +66,7 @@ class PatientsRepositoryImpl extends PatientsRepository {
     if (response == null) {
       return null;
     } else {
-      PatientEntity patient = PatientEntity(
-        id: id,
-        name: response.name,
-        gender: response.gender,
-        birthdate: response.birthdate,
-        school: response.school,
-        schoolID: response.schoolID,
-        guardiansName: response.guardiansName,
-        guardiansPhone: response.guardiansPhone,
-        creator: response.creator,
-        doctor: response.doctor,
-        createdAt: response.createdAt,
-      );
+      PatientEntity patient = PatientEntity.fromModel(response);
 
       return patient;
     }
