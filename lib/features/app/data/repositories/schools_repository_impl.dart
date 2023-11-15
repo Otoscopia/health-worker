@@ -17,17 +17,8 @@ class SchoolsRepositoryImpl implements SchoolsRepository {
   Future<List<SchoolEntity>> getLocalSchools() async {
     final List<SchoolModel> response = await _local.getSchools();
 
-    final List<SchoolEntity> schools = response.map(
-      (school) {
-        return SchoolEntity(
-          id: school.id,
-          name: school.name,
-          abbr: school.abbr,
-          address: school.address,
-          code: school.code,
-        );
-      },
-    ).toList();
+    final List<SchoolEntity> schools =
+        response.map((school) => SchoolEntity.fromModel(school)).toList();
 
     return schools;
   }
@@ -37,17 +28,9 @@ class SchoolsRepositoryImpl implements SchoolsRepository {
   Future<List<SchoolEntity>> getRemoteSchools() async {
     final DocumentList response = await _remote.getSchools();
 
-    final List<SchoolEntity> schools = response.documents.map(
-      (school) {
-        return SchoolEntity(
-          id: school.$id,
-          name: school.data["name"],
-          abbr: school.data["abbr"],
-          address: school.data["address"],
-          code: school.data["code"],
-        );
-      },
-    ).toList();
+    final List<SchoolEntity> schools = response.documents
+        .map((school) => SchoolEntity.fromDocument(school))
+        .toList();
 
     return schools;
   }
@@ -57,13 +40,7 @@ class SchoolsRepositoryImpl implements SchoolsRepository {
   Future<void> setSchools({required List<SchoolEntity> schools}) async {
     final List<SchoolModel> response = schools.map(
       (school) {
-        return SchoolModel(
-          id: school.id,
-          name: school.name,
-          abbr: school.abbr,
-          address: school.address,
-          code: school.code,
-        );
+        return SchoolModel.toModel(school);
       },
     ).toList();
 
@@ -76,13 +53,7 @@ class SchoolsRepositoryImpl implements SchoolsRepository {
     final SchoolModel? response = await _local.findSchool(id: id);
 
     if (response != null) {
-      return SchoolEntity(
-        id: response.id,
-        name: response.name,
-        abbr: response.abbr,
-        address: response.address,
-        code: response.code,
-      );
+      return SchoolEntity.fromModel(response);
     } else {
       return null;
     }
