@@ -10,13 +10,18 @@ import 'package:health_worker/features/features.dart';
 class PatientSummary extends ConsumerWidget {
   final PatientEntity patient;
   final String school;
-  const PatientSummary({super.key, required this.patient, required this.school});
+  const PatientSummary({
+    super.key,
+    required this.patient,
+    required this.school,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final DateTime birthdate = DateTime.parse(patient.birthdate);
     final DateTime date = DateTime.now();
-    final int age = birthdate.year - date.year;
+    final int age = date.year - birthdate.year;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
