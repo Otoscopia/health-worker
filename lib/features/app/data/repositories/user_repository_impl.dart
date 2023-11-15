@@ -16,14 +16,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<UserEntity> getRemoteUser() async {
     final Document response = await _remote.getUser();
 
-    final UserEntity user = UserEntity(
-      id: response.$id,
-      name: response.data["name"],
-      email: response.data["email"],
-      role: response.data["role"],
-      phone: response.data["phone"],
-      workAddress: response.data["workAddress"],
-    );
+    final UserEntity user = UserEntity.fromDocument(response);
 
     return user;
   }
@@ -37,18 +30,11 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<void> setUser({required UserEntity user}) async {
-    final UserModel model = UserModel(
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      role: user.role,
-      workAddress: user.workAddress,
-    );
+    final UserModel model = UserModel.toModel(user);
 
     await _local.setUser(user: model);
   }
-  
+
   @override
   Future<void> removeUser() async {
     await _local.removeUser();

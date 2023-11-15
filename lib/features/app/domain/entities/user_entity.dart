@@ -1,3 +1,7 @@
+import 'package:appwrite/models.dart';
+
+import 'package:health_worker/features/app/app.dart';
+
 class UserEntity {
   // user id
   final String id;
@@ -17,6 +21,7 @@ class UserEntity {
   // user work address
   final String workAddress;
 
+  // user constructor with required parameters
   UserEntity({
     required this.id,
     required this.name,
@@ -25,4 +30,28 @@ class UserEntity {
     required this.role,
     required this.workAddress,
   });
+
+  // user factory constructor from document
+  factory UserEntity.fromDocument(Document document) {
+    return UserEntity(
+      id: document.$id,
+      name: document.data['name'],
+      email: document.data['email'],
+      phone: document.data['phone'],
+      role: document.data['role'],
+      workAddress: document.data['workAddress'],
+    );
+  }
+
+  // user factory constructor from model
+  factory UserEntity.fromDoctor(DoctorModel doctor) {
+    return UserEntity(
+      id: doctor.id,
+      name: doctor.name,
+      email: doctor.email,
+      phone: doctor.phone,
+      role: doctor.role,
+      workAddress: doctor.workAddress,
+    );
+  }
 }

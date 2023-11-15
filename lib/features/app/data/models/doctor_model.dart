@@ -17,4 +17,15 @@ class DoctorModel extends UserEntity {
     required super.role,
     required super.workAddress,
   });
+
+  factory DoctorModel.toModel(UserEntity doctor) {
+    return DoctorModel(
+      id: doctor.id,
+      name: doctor.name,
+      email: doctor.email,
+      phone: doctor.phone,
+      role: doctor.role,
+      workAddress: doctor.workAddress,
+    );
+  }
 }

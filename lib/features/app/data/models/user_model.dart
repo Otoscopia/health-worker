@@ -17,4 +17,15 @@ class UserModel extends UserEntity {
     required super.role,
     required super.workAddress,
   });
+
+  factory UserModel.toModel(UserEntity user) {
+    return UserModel(
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      role: user.role,
+      workAddress: user.workAddress,
+    );
+  }
 }
