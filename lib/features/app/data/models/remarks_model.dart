@@ -16,4 +16,14 @@ class RemarksModel extends RemarksEntity {
     required super.remarks,
     required super.createdAt,
   });
+
+  factory RemarksModel.toModel(RemarksEntity remarks) {
+    return RemarksModel(
+      id: remarks.id,
+      followUpDate: remarks.followUpDate,
+      screening: remarks.screening,
+      remarks: remarks.remarks,
+      createdAt: remarks.createdAt,
+    );
+  }
 }

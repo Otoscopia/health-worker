@@ -17,13 +17,7 @@ class RemarksRepositoryImpl implements RemarksRepository {
   Future<RemarksEntity> getRemoteRemark({required String id}) async {
     final Document response = await _remote.getRemarks(id: id);
 
-    final RemarksEntity remarks = RemarksEntity(
-      id: response.$id,
-      followUpDate: response.data["followUpDate"],
-      screening: response.data["screening"]["\$id"],
-      remarks: response.data["remarks"],
-      createdAt: response.$createdAt,
-    );
+    final RemarksEntity remarks = RemarksEntity.fromDocument(response);
 
     return remarks;
   }
@@ -31,13 +25,7 @@ class RemarksRepositoryImpl implements RemarksRepository {
   // Get remarks from local remarks data source
   @override
   Future<void> setRemarkLocal({required RemarksEntity remarks}) async {
-    final RemarksModel response = RemarksModel(
-      id: remarks.id,
-      followUpDate: remarks.followUpDate,
-      screening: remarks.screening,
-      remarks: remarks.remarks,
-      createdAt: remarks.createdAt,
-    );
+    final RemarksModel response = RemarksModel.toModel(remarks);
 
     await _local.setRemarks(remarks: response);
   }
@@ -48,13 +36,7 @@ class RemarksRepositoryImpl implements RemarksRepository {
     final RemarksModel? response = await _local.findRemarks(id: id);
 
     if (response != null) {
-      return RemarksEntity(
-        id: response.id,
-        followUpDate: response.followUpDate,
-        screening: response.screening,
-        remarks: response.remarks,
-        createdAt: response.createdAt,
-      );
+      return RemarksEntity.fromModel(response);
     } else {
       return null;
     }

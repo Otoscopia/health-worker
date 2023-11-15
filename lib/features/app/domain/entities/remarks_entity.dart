@@ -1,4 +1,8 @@
 
+import 'package:appwrite/models.dart';
+
+import 'package:health_worker/features/app/app.dart';
+
 class RemarksEntity {
   // remarks id
   final String id;
@@ -22,4 +26,24 @@ class RemarksEntity {
     required this.remarks,
     required this.createdAt,
   });
+
+  factory RemarksEntity.fromDocument(Document remarks) {
+    return RemarksEntity(
+      id: remarks.$id,
+      followUpDate: remarks.data["followUpDate"],
+      screening: remarks.data["screening"]["\$id"],
+      remarks: remarks.data["remarks"],
+      createdAt: remarks.$createdAt,
+    );
+  }
+
+  factory RemarksEntity.fromModel(RemarksModel remarks) {
+    return RemarksEntity(
+      id: remarks.id,
+      followUpDate: remarks.followUpDate,
+      screening: remarks.screening,
+      remarks: remarks.remarks,
+      createdAt: remarks.createdAt,
+    );
+  }
 }
