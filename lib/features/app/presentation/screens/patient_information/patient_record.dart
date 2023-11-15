@@ -12,13 +12,15 @@ class PatientRecord extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<PatientEntity> patients = ref.read(patientsProvider);
+    // Get patient
     final PatientEntity patient =
-        patients.where((element) => element.id == table.patientId).first;
-    final List<ScreeningEntity> screening = ref
-        .read(screeningsProvider)
-        .where((element) => element.patient == patient.id)
-        .toList();
+        ref.read(patientProvider.notifier).findPatient(table.patientId);
+
+    // Get screenings
+    final List<ScreeningEntity> screening =
+        ref.read(screeningProvider.notifier).list(patient.id);
+
+    // Get school
     final SchoolEntity school =
         ref.read(schoolsProvider.notifier).findSchool(patient.school);
 
@@ -42,12 +44,11 @@ class PatientRecord extends ConsumerWidget {
               mediumHeight,
               const TextSubtitle("List of Medical Records"),
               mediumHeight,
-              // Expanded(
-              //     child: Column(
-              //   children: screening
-              //       .map((record) => ScreeningRecord(screening: record))
-              //       .toList(),
-              // )),
+              Column(
+                children: screening
+                    .map((record) => ScreeningRecord(screening: record))
+                    .toList(),
+              ),
             ],
           ),
         ),
