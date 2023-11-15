@@ -5,7 +5,7 @@ import 'package:health_worker/features/app/app.dart';
 
 class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
   final StateNotifierProviderRef<ScreeningNotifier, ScreeningEntity> ref;
-  
+
   ScreeningNotifier(this.ref) : super(emptyScreening);
 
   setScreening(ScreeningEntity screening) {
@@ -26,6 +26,14 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
     ref.read(undergoSurgeryProvider.notifier).setState(3);
     ref.read(takingMedicationProvider.notifier).setState(3);
     ref.read(medicationProvider.notifier).setState("");
+  }
+
+  List<ScreeningEntity> list(String id) {
+    late final List<ScreeningEntity> screenings;
+
+    screenings = ref.read(screeningsProvider);
+
+    return screenings..where((element) => element.patient == id).toList();
   }
 }
 
