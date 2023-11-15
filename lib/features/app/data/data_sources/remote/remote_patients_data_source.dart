@@ -33,17 +33,7 @@ class RemotePatientsDataSource {
         databaseId: Env.database,
         collectionId: Env.patients,
         documentId: patient.id,
-        data: {
-          "name": patient.name,
-          "gender": patient.gender,
-          "birthdate": patient.birthdate,
-          "school": patient.school,
-          "schoolID": patient.schoolID,
-          "guardiansName": patient.guardiansName,
-          "guardiansPhone": patient.guardiansPhone,
-          "creator": patient.creator,
-          "doctor": patient.doctor,
-        },
+        data: PatientEntity.toMap(patient),
       );
     } on AppwriteException catch (error) {
       throw Exception(error.message);

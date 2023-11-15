@@ -81,4 +81,19 @@ class PatientEntity {
       createdAt: patient.createdAt,
     );
   }
+
+  // Convert patient entity to a map of string
+  static Map<String, dynamic> toMap(PatientEntity patient) {
+    return {
+      "name": patient.name,
+      "gender": patient.gender,
+      "birthdate": patient.birthdate,
+      "school": patient.school,
+      "schoolID": patient.schoolID,
+      "guardiansName": patient.guardiansName,
+      "guardiansPhone": patient.guardiansPhone,
+      "creator": patient.creator,
+      "doctor": patient.doctor,
+    };
+  }
 }
