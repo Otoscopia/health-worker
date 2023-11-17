@@ -2,8 +2,6 @@ import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/core/core.dart';
-import 'package:health_worker/features/app/presentation/widgets/patient_records/medical_record_card.dart';
-import 'package:health_worker/features/app/presentation/widgets/patient_records/patient_information.dart';
 import 'package:health_worker/features/features.dart';
 
 class PatientRecord extends ConsumerWidget {
@@ -45,9 +43,26 @@ class PatientRecord extends ConsumerWidget {
               const TextSubtitle("List of Medical Records"),
               mediumHeight,
               Column(
-                children: screening
-                    .map((record) => ScreeningRecord(screening: record))
-                    .toList(),
+                children: screening.map(
+                  (record) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            FluentPageRoute(
+                              builder: (context) =>
+                                  ScreeningInformation(screening: record),
+                            ),
+                          ),
+                          child: ScreeningRecord(screening: record),
+                        ),
+                      ),
+                    );
+                  },
+                ).toList(),
               ),
             ],
           ),
