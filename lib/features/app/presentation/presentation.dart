@@ -26,6 +26,13 @@ export 'widgets/home/floating_action_button.dart';
 export 'widgets/home/home_table.dart';
 export 'widgets/home/home_table_source.dart';
 
+export 'widgets/patient_records/information_card.dart';
+export 'widgets/patient_records/information_container.dart';
+export 'widgets/patient_records/medical_record/doctors_note.dart';
+export 'widgets/patient_records/medical_record/nurse_note.dart';
+export 'widgets/patient_records/medical_record_card.dart';
+export 'widgets/patient_records/patient_information.dart';
+
 export 'widgets/add_patient/add_patient_button.dart';
 export 'widgets/add_patient/birthdate_widget.dart';
 export 'widgets/add_patient/birthday_error.dart';
