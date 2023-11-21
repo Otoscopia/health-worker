@@ -16,7 +16,7 @@ class PatientRecord extends ConsumerWidget {
 
     // Get screenings
     final List<ScreeningEntity> screening =
-        ref.read(screeningProvider.notifier).list(patient.id);
+        ref.read(screeningProvider.notifier).getScreeningRecords(patient.id);
 
     // Get school
     final SchoolEntity school =

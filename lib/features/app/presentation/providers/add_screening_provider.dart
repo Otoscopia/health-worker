@@ -28,12 +28,12 @@ class ScreeningNotifier extends StateNotifier<ScreeningEntity> {
     ref.read(medicationProvider.notifier).setState("");
   }
 
-  List<ScreeningEntity> list(String id) {
+  List<ScreeningEntity> getScreeningRecords(String id) {
     late final List<ScreeningEntity> screenings;
 
     screenings = ref.read(screeningsProvider);
 
-    return screenings..where((element) => element.patient == id).toList();
+    return screenings.where((element) => element.patient == id).toList();
   }
 }
 
