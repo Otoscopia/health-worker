@@ -31,4 +31,16 @@ class TableEntity {
     required this.doctor,
     required this.school,
   });
+
+  factory TableEntity.toTable(TableEntity entity, String status) {
+    return TableEntity(
+      patientId: entity.patientId,
+      name: entity.name,
+      age: entity.age,
+      gender: entity.gender,
+      status: status,
+      doctor: entity.doctor,
+      school: entity.school,
+    );
+  }
 }
