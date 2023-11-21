@@ -25,8 +25,10 @@ class SearchBox extends ConsumerWidget {
       child: AutoSuggestBox(
         placeholder: searchPatientText,
         items: items,
-        // TODO: [OT-32] Implement search
-        onSelected: (value) => print(value.label),
+        onSelected: (value) => Navigator.push(
+            context,
+            FluentPageRoute(
+                builder: (context) => PatientRecord(table: value.value))),
         leadingIcon: const Padding(
           padding: EdgeInsets.only(left: 8.0),
           child: Icon(FluentIcons.search),
