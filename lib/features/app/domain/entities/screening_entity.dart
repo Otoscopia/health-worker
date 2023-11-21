@@ -109,6 +109,31 @@ class ScreeningEntity {
     );
   }
 
+  factory ScreeningEntity.fromPayload(Map<String, dynamic> payload) {
+    final List<dynamic> images = payload['images'];
+    return ScreeningEntity(
+      id: payload["\$id"],
+      patient: payload["patient"]["\$id"],
+      assignment: payload["assignment"]["\$id"],
+      historyOfIllness: payload["historyOfIllness"],
+      healthWorkerRemarks: payload["healthWorkerRemarks"],
+      temperature: payload["temperature"],
+      height: payload["height"],
+      weight: payload["weight"],
+      hasSimilarCondition: payload["hasSimilarCondition"],
+      chiefComplaint: payload["chiefComplaint"],
+      chiefComplaintMessage: payload["chiefComplaintMessage"],
+      hasAllergies: payload["hasAllergies"],
+      typeOfAllergies: payload["typeOfAllergies"],
+      undergoSurgery: payload["undergoSurgery"],
+      takingMedication: payload["takingMedication"],
+      takingMedicationMessage: payload["takingMedicationMessage"],
+      status: payload["status"],
+      images: images.cast<String>(),
+      createdAt: payload["\$createdAt"],
+    );
+  }
+
   factory ScreeningEntity.fromModel(ScreeningModel screening) {
     return ScreeningEntity(
       id: screening.id,
