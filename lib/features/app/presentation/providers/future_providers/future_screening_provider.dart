@@ -83,6 +83,15 @@ class ScreeningsNotifier extends StateNotifier<List<ScreeningEntity>> {
 
   void setScreenings(List<ScreeningEntity> screenings) => state = screenings;
 
+  void modifyScreening(ScreeningEntity screening, int index) {
+    final List<ScreeningEntity> screenings = state;
+    state = [];
+    screenings[index] = screening;
+    state = screenings;
+
+    useCases.screeningsUseCases.setScreenings(screenings);
+  }
+
   void addScreening(ScreeningEntity screening) {
     final List<ScreeningEntity> screenings = state;
     screenings.add(screening);
