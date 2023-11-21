@@ -1,4 +1,5 @@
 import 'package:appwrite/models.dart';
+import 'package:collection/collection.dart';
 
 import 'package:health_worker/features/features.dart';
 
@@ -152,5 +153,52 @@ class ScreeningEntity {
       "status": screening.status,
       "images": screening.images,
     };
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ScreeningEntity &&
+        id == other.id &&
+        patient == other.patient &&
+        assignment == other.assignment &&
+        historyOfIllness == other.historyOfIllness &&
+        healthWorkerRemarks == other.healthWorkerRemarks &&
+        temperature == other.temperature &&
+        height == other.height &&
+        weight == other.weight &&
+        hasSimilarCondition == other.hasSimilarCondition &&
+        chiefComplaint == other.chiefComplaint &&
+        chiefComplaintMessage == other.chiefComplaintMessage &&
+        hasAllergies == other.hasAllergies &&
+        typeOfAllergies == other.typeOfAllergies &&
+        undergoSurgery == other.undergoSurgery &&
+        takingMedication == other.takingMedication &&
+        takingMedicationMessage == other.takingMedicationMessage &&
+        status == other.status &&
+        const ListEquality().equals(images, other.images);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        patient.hashCode ^
+        assignment.hashCode ^
+        historyOfIllness.hashCode ^
+        healthWorkerRemarks.hashCode ^
+        temperature.hashCode ^
+        height.hashCode ^
+        weight.hashCode ^
+        hasSimilarCondition.hashCode ^
+        chiefComplaint.hashCode ^
+        chiefComplaintMessage.hashCode ^
+        hasAllergies.hashCode ^
+        typeOfAllergies.hashCode ^
+        undergoSurgery.hashCode ^
+        takingMedication.hashCode ^
+        takingMedicationMessage.hashCode ^
+        status.hashCode ^
+        const ListEquality().hash(images);
   }
 }
