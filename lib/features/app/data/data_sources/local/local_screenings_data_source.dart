@@ -23,6 +23,9 @@ class LocalScreeningsDataSource {
     try {
       // write screenings collection
       await _isar.writeTxn(() async {
+        // clear doctors collection
+        await _isar.screeningModels.clear();
+
         await _isar.screeningModels.putAll(screenings);
       });
     } on IsarError catch (error) {

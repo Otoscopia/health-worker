@@ -8,7 +8,7 @@ class LocalPatientsDataSource {
 
   LocalPatientsDataSource() : _isar = isar;
 
-  // Get patients from isar database
+  /// Get patients from isar database
   Future<List<PatientModel>> getPatients() async {
     try {
       final List<PatientModel> response =
@@ -20,7 +20,7 @@ class LocalPatientsDataSource {
     }
   }
 
-  // Set patients to isar database
+  /// Set patients to isar database
   Future<void> setPatients({required List<PatientModel> patients}) async {
     try {
       // write patients collection
@@ -32,9 +32,12 @@ class LocalPatientsDataSource {
     }
   }
 
-  // Set patient to isar database
+  /// Set patient to isar database
   Future<void> setPatient({required PatientModel patient}) async {
     try {
+      // clear doctors collection
+      await _isar.patientModels.clear();
+
       // write patients collection
       await _isar.writeTxn(() async {
         await _isar.patientModels.put(patient);
@@ -44,7 +47,7 @@ class LocalPatientsDataSource {
     }
   }
 
-  // Find patient from isar database
+  /// Find patient from isar database
   Future<PatientModel?> findPatient({required String id}) async {
     try {
       final PatientModel? response = await _isar.patientModels
@@ -59,7 +62,7 @@ class LocalPatientsDataSource {
     }
   }
 
-  // Remove patients from isar database
+  /// Remove patients from isar database
   Future<void> removePatients() async {
     try {
       await _isar.writeTxn(() async {
