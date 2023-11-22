@@ -54,7 +54,7 @@ class PatientRecord extends ConsumerWidget {
                             context,
                             FluentPageRoute(
                               builder: (context) =>
-                                  ScreeningInformation(screening: record),
+                                  ScreeningInformation(name: patient.name, screening: record),
                             ),
                           ),
                           child: ScreeningRecord(screening: record),
