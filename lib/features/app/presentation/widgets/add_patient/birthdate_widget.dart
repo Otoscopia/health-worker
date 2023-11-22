@@ -9,7 +9,6 @@ class BirthdateWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: [OT-33] Change width of the year to support the font size
     return DatePicker(
       fieldOrder: const [
         DatePickerField.month,
