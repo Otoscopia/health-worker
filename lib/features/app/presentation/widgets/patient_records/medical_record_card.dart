@@ -4,8 +4,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:styled_widget/styled_widget.dart';
 
 import 'package:health_worker/core/core.dart';
-import 'package:health_worker/features/app/presentation/widgets/patient_records/information_container.dart';
-import 'package:health_worker/features/app/presentation/widgets/patient_records/medical_record/nurse_note.dart';
 import 'package:health_worker/features/features.dart';
 
 class ScreeningRecord extends ConsumerWidget {
