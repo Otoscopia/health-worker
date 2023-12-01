@@ -83,4 +83,18 @@ class UserEntity {
       workAddress: doctor.workAddress,
     );
   }
+
+  /// Factory method to create an empty instance of UserEntity.
+  ///
+  /// This method creates an instance of UserEntity with all fields set to empty strings.
+  factory UserEntity.empty() {
+    return UserEntity(
+      id: "",
+      name: "",
+      email: "",
+      phone: "",
+      role: "",
+      workAddress: "",
+    );
+  }
 }
