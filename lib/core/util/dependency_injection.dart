@@ -6,43 +6,99 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:health_worker/core/core.dart';
-import 'package:health_worker/core/util/repositories_injection.dart';
 import 'package:health_worker/features/features.dart';
 
+/// The universally unique identifier generator.
 late final Uuid uuid;
+
+/// Appwrite API client for various services.
 late final Client client;
+
+/// Appwrite Realtime client for real-time updates.
 late final Realtime realtime;
+
+/// Appwrite Database client for database-related operations.
 late final Databases database;
+
+/// Appwrite Teams client for team-related operations.
 late final Teams team;
+
+/// Appwrite Storage client for cloud storage operations.
 late final Storage cloud;
+
+/// Isar database for local data storage and retrieval.
 late final Isar isar;
+
+/// The path to the application directory.
 late final String applicationDirectory;
+
+/// The path to the document directory.
 late final String documentDirectory;
 
+/// Repository for authentication-related operations.
 late final AuthenticationRepository authenticationRepository;
+
+/// Repository for encryption-related operations.
 late final EncryptionRepository encryptionRepository;
+
+/// Repository for various repositories.
+late final Repositories repositories;
+
+/// Container for various use cases utilizing repositories.
 late final UseCases useCases;
 
+/// Handles the dependency injection setup for the application.
+///
+/// The [DependencyInjection] class is responsible for initializing various
+/// dependencies used throughout the application, such as UUID generation,
+/// Appwrite API clients, database configurations (Isar), and repositories.
+/// It also provides a method to create instances of use cases that utilize
+/// these repositories.
+///
+/// Example usage:
+/// ```dart
+/// import 'dependency_injection.dart';
+///
+/// //* Initialize the dependencies.
+/// await DependencyInjection().initialize();
+///
+/// //* Access various dependencies.
+/// final uuid = DependencyInjection().uuid;
+/// final client = DependencyInjection().client;
+/// final isar = DependencyInjection().isar;
+/// final authenticationRepository = DependencyInjection().authenticationRepository;
+/// final useCases = DependencyInjection().useCases;
+/// ```
 class DependencyInjection {
+  /// Private constructor for the DependencyInjection class.
   DependencyInjection._();
 
+  /// Singleton instance of DependencyInjection.
   static final DependencyInjection _instance = DependencyInjection._();
 
+  /// Factory method to access the singleton instance.
   factory DependencyInjection() => _instance;
 
+  /// Initializes dependencies such as UUID, Isar, Appwrite, and repositories.
   Future<void> initialize() async {
-    // Initialize Uuid
+    // Initialize UUID generator from Uuid package.
     uuid = const Uuid();
 
+    // Initialize application support directory using the path_provider package.
     Directory applicationSupportDirectory =
         await getApplicationSupportDirectory();
+
+    // Set the application directory using the application support directory.
     applicationDirectory = applicationSupportDirectory.path;
 
+    // Initialize document directory using the path_provider package.
     Directory applicationDocumentsDirectory =
         await getApplicationDocumentsDirectory();
+
+    // Set the document directory using the application documents directory.
     documentDirectory = applicationDocumentsDirectory.path;
 
-    // Initialize Isar
+    // Initialize Isar database.
     isar = await Isar.open(
       [
         ApplicationModelSchema,
@@ -59,49 +115,54 @@ class DependencyInjection {
       name: "db",
     );
 
-    // Initialize Appwrite using the appwrite function
+    // Initialize Appwrite services.
     appwrite();
 
-    // Initialize AuthenticationRepository using the createAuthenticationRepository function
-    authenticationRepository = createAuthenticationRepository();
+    // Initialize repositories.
+    repositories = Repositories();
 
-    // Initialize ApplicationRepository using the createApplicationRepository function
-    // applicationRepository = createApplicationRepository();
+    // Initialize authentication repository.
+    authenticationRepository = repositories.createAuthenticationRepository();
+
+    // Initialize use cases repository.
     useCases = createUseCases();
   }
 
-  // Appwrite Dependency Injection
+  /// Configures Appwrite services such as Client, Realtime, Database, Storage, and Teams.
   void appwrite() {
-    // Initialize client
+    // Initialize Appwrite client.
     client = Client();
 
-    // Initialize client endpoint and project id
+    // Set the Appwrite endpoint and project ID.
     client.setEndpoint(Env.projectEndPoint).setProject(Env.projectID);
 
-    // Initialize realtime
+    // Initialize Appwrite realtime client.
     realtime = Realtime(client);
 
-    // Initialize database
+    // Initialize Appwrite database client.
     database = Databases(client);
 
-    // Initialize cloud
+    // Initialize Appwrite cloud storage client.
     cloud = Storage(client);
 
-    // Initialize team
+    // Initialize Appwrite teams client.
     team = Teams(client);
   }
 
-  // Use Cases dependency injection
+  /// Creates instances of use cases that utilize various repositories.
   UseCases createUseCases() {
-    final AssignmentsRepository assignment = createAssignmentRepository();
-    final DoctorsRepository doctor = createDoctorRepository();
-    final PatientsRepository patient = createPatientRepository();
-    final RemarksRepository remarks = createRemarksRepository();
-    final SchoolsRepository school = createSchoolRepository();
-    final ScreeningsRepository screening = createScreeningRepository();
-    final UserRepository user = createUserRepository();
-    final SyncRepository sync = createSyncRepository();
+    final AssignmentsRepository assignment =
+        repositories.createAssignmentRepository();
+    final DoctorsRepository doctor = repositories.createDoctorRepository();
+    final PatientsRepository patient = repositories.createPatientRepository();
+    final RemarksRepository remarks = repositories.createRemarksRepository();
+    final SchoolsRepository school = repositories.createSchoolRepository();
+    final ScreeningsRepository screening =
+        repositories.createScreeningRepository();
+    final UserRepository user = repositories.createUserRepository();
+    final SyncRepository sync = repositories.createSyncRepository();
 
+    // Initialize use cases.
     final UseCases useCases = UseCases(
       assignmentsRepository: assignment,
       doctorsRepository: doctor,
@@ -112,6 +173,8 @@ class DependencyInjection {
       userRepository: user,
       syncRepository: sync,
     );
+
+    // Return the use cases.
     return useCases;
   }
 }

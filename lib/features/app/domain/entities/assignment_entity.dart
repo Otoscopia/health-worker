@@ -2,23 +2,45 @@ import 'package:appwrite/models.dart';
 
 import 'package:health_worker/features/app/app.dart';
 
+/// Represents an assignment entity that includes information about a nurse's
+/// assignment to a specific school, along with the start and end dates.
+///
+/// This class is used to model assignment-related data within the application.
+///
+/// Example usage:
+/// ```dart
+/// //* Create an instance of AssignmentEntity.
+/// final assignment = AssignmentEntity(
+///   id: 'assignment_id',
+///   nurse: 'nurse_id',
+///   school: 'school_id',
+///   startDate: '2023-12-01',
+///   endDate: '2024-12-01',
+/// );
+///
+/// //* Create an instance of AssignmentEntity from a Document.
+/// final assignmentFromDocument = AssignmentEntity.fromDocument(document);
+///
+/// //* Create an instance of AssignmentEntity from an AssignmentModel.
+/// final assignmentFromModel = AssignmentEntity.fromModel(assignmentModel);
+/// ```
 class AssignmentEntity {
-  // assignment id
+  /// The unique identifier for the assignment.
   final String id;
 
-  // nurse id
+  /// The unique identifier of the nurse associated with the assignment.
   final String nurse;
 
-  // school id
+  /// The unique identifier of the school to which the nurse is assigned.
   final String school;
 
-  // assignment start date
+  /// The start date of the assignment.
   final String startDate;
 
-  // assignment end date
+  /// The optional end date of the assignment.
   final String? endDate;
 
-  // assignment constructor with required parameters
+  /// Constructor for the AssignmentEntity class.
   AssignmentEntity({
     required this.id,
     required this.nurse,
@@ -27,7 +49,10 @@ class AssignmentEntity {
     required this.endDate,
   });
 
-  // assignment factory constructor from document
+  /// Factory method to create an instance of AssignmentEntity from a Document.
+  ///
+  /// This method extracts data from the provided Document and constructs an
+  /// AssignmentEntity instance.
   factory AssignmentEntity.fromDocument(Document document) {
     return AssignmentEntity(
       id: document.$id,
@@ -38,7 +63,10 @@ class AssignmentEntity {
     );
   }
 
-  // assignment factory constructor from model
+  /// Factory method to create an instance of AssignmentEntity from an AssignmentModel.
+  ///
+  /// This method constructs an AssignmentEntity instance using data from the
+  /// provided AssignmentModel.
   factory AssignmentEntity.fromModel(AssignmentModel assignment) {
     return AssignmentEntity(
       id: assignment.id,

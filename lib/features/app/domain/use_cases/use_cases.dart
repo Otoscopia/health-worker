@@ -1,5 +1,12 @@
 import 'package:health_worker/features/app/app.dart';
 
+/// Aggregate class for managing and providing various use cases.
+///
+/// The [UseCases] class acts as a container for different use cases related
+/// to various features in the application. It initializes and provides access
+/// to instances of individual use case classes such as [AssignmentsUseCase],
+/// [DoctorsUseCases], [PatientsUseCases], [RemarksUseCases], [SchoolsUseCase],
+/// [ScreeningsUseCases], [UserUseCases], and [SyncUseCases].
 class UseCases {
   final UserRepository _userRepository;
   final ScreeningsRepository _screeningsRepository;
@@ -10,6 +17,7 @@ class UseCases {
   final AssignmentsRepository _assignment;
   final SyncRepository _sync;
 
+  /// Constructor for initializing [UseCases] with various repositories.
   UseCases({
     required UserRepository userRepository,
     required ScreeningsRepository screeningsRepository,
@@ -27,21 +35,34 @@ class UseCases {
         _doctorsRepository = doctorsRepository,
         _assignment = assignmentsRepository,
         _sync = syncRepository;
-  
-  // User use cases
-  AssignmentsUseCase get assignmentsUseCase => AssignmentsUseCase(repository: _assignment);
 
-  DoctorsUseCases get doctorsUseCases => DoctorsUseCases(repository: _doctorsRepository);
+  /// Get instance of [AssignmentsUseCase].
+  AssignmentsUseCase get assignmentsUseCase =>
+      AssignmentsUseCase(repository: _assignment);
 
-  PatientsUseCases get patientsUseCases => PatientsUseCases(repository: _patientsRepository);
+  /// Get instance of [DoctorsUseCases].
+  DoctorsUseCases get doctorsUseCases =>
+      DoctorsUseCases(repository: _doctorsRepository);
 
-  RemarksUseCases get remarksUseCases => RemarksUseCases(repository: _remarksRepository);
+  /// Get instance of [PatientsUseCases].
+  PatientsUseCases get patientsUseCases =>
+      PatientsUseCases(repository: _patientsRepository);
 
-  SchoolsUseCase get schoolsUseCase => SchoolsUseCase(repository: _schoolsRepository);
+  /// Get instance of [RemarksUseCases].
+  RemarksUseCases get remarksUseCases =>
+      RemarksUseCases(repository: _remarksRepository);
 
-  ScreeningsUseCases get screeningsUseCases => ScreeningsUseCases(repository: _screeningsRepository);
+  /// Get instance of [SchoolsUseCase].
+  SchoolsUseCase get schoolsUseCase =>
+      SchoolsUseCase(repository: _schoolsRepository);
 
+  /// Get instance of [ScreeningsUseCases].
+  ScreeningsUseCases get screeningsUseCases =>
+      ScreeningsUseCases(repository: _screeningsRepository);
+
+  /// Get instance of [UserUseCases].
   UserUseCases get userUseCases => UserUseCases(repository: _userRepository);
 
+  /// Get instance of [SyncUseCases].
   SyncUseCases get syncUseCases => SyncUseCases(repository: _sync);
 }

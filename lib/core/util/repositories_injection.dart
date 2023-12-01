@@ -2,106 +2,144 @@ import 'package:encrypt/encrypt.dart';
 
 import 'package:health_worker/features/features.dart';
 
-// Authentication Repository dependency injection
-AuthenticationRepository createAuthenticationRepository() {
-  final AuthenticationDataSource dataSource = AuthenticationDataSource();
-  final AuthenticationRepositoryImpl repository =
-      AuthenticationRepositoryImpl(dataSource: dataSource);
-  return repository;
-}
+/// Manages the creation of various repositories used in the application.
+///
+/// The [Repositories] class is responsible for creating instances of repositories
+/// related to authentication, encryption, assignments, doctors, patients, remarks,
+/// schools, screenings, user, application, and sync. Each repository is created
+/// with its corresponding data source implementation.
+///
+/// Example usage:
+/// ```dart
+/// import 'repositories_injection.dart';
+///
+/// //* Access the Repositories singleton instance.
+/// final repositories = Repositories();
+///
+/// //* Create an instance of the AuthenticationRepository.
+/// final authRepository = repositories.createAuthenticationRepository();
+///
+/// //* Create an instance of the AssignmentsRepository.
+/// final assignmentRepository = repositories.createAssignmentRepository();
+///
+/// //* ... (repeat for other repositories as needed)
+/// ```
+class Repositories {
+  /// Private constructor for the Repositories class.
+  Repositories._();
+  
+  /// Singleton instance of Repositories.
+  static final Repositories _instance = Repositories._();
 
-// Encryption Repository dependency injection
-EncryptionRepository createEncryptionRepository(String globalKey) {
-  final Key global = Key.fromBase64(globalKey);
-  final EncryptionDataSource encryption = EncryptionDataSource(key: global);
+  /// Factory method to access the singleton instance.
+  factory Repositories() => _instance;
 
-  final EncryptionRepositoryImpl repository =
-      EncryptionRepositoryImpl(encryption: encryption);
-  return repository;
-}
+  /// Creates an instance of the AuthenticationRepository.
+  AuthenticationRepository createAuthenticationRepository() {
+    final AuthenticationDataSource dataSource = AuthenticationDataSource();
 
-// Assignment Repository dependency injection
-AssignmentsRepository createAssignmentRepository() {
-  final LocalAssignmentsDataSource local = LocalAssignmentsDataSource();
-  final RemoteAssignmentsDataSource remote = RemoteAssignmentsDataSource();
+    final AuthenticationRepositoryImpl repository =
+        AuthenticationRepositoryImpl(dataSource: dataSource);
 
-  final AssignmentsRepositoryImpl repository =
-      AssignmentsRepositoryImpl(local: local, remote: remote);
-  return repository;
-}
+    return repository;
+  }
 
-// Doctor Repository dependency injection
-DoctorsRepository createDoctorRepository() {
-  final LocalDoctorsDataSource local = LocalDoctorsDataSource();
-  final RemoteDoctorsDataSource remote = RemoteDoctorsDataSource();
+  /// Creates an instance of the EncryptionRepository.
+  EncryptionRepository createEncryptionRepository(String globalKey) {
+    final Key global = Key.fromBase64(globalKey);
 
-  final DoctorsRepositoryImpl repository =
-      DoctorsRepositoryImpl(local: local, remote: remote);
-  return repository;
-}
+    final EncryptionDataSource encryption = EncryptionDataSource(key: global);
 
-// Patient Repository dependency injection
-PatientsRepository createPatientRepository() {
-  final LocalPatientsDataSource local = LocalPatientsDataSource();
-  final RemotePatientsDataSource remote = RemotePatientsDataSource();
+    final EncryptionRepositoryImpl repository =
+        EncryptionRepositoryImpl(encryption: encryption);
+    
+    return repository;
+  }
 
-  final PatientsRepositoryImpl repository =
-      PatientsRepositoryImpl(local: local, remote: remote);
-  return repository;
-}
+  /// Creates an instance of the AssignmentsRepository.
+  AssignmentsRepository createAssignmentRepository() {
+    final LocalAssignmentsDataSource local = LocalAssignmentsDataSource();
+    final RemoteAssignmentsDataSource remote = RemoteAssignmentsDataSource();
 
-// Remarks Repository dependency injection
-RemarksRepository createRemarksRepository() {
-  final LocalRemarksDataSource local = LocalRemarksDataSource();
-  final RemoteRemarksDataSource remote = RemoteRemarksDataSource();
+    final AssignmentsRepositoryImpl repository =
+        AssignmentsRepositoryImpl(local: local, remote: remote);
+    return repository;
+  }
 
-  final RemarksRepositoryImpl repository =
-      RemarksRepositoryImpl(local: local, remote: remote);
-  return repository;
-}
+  /// Creates an instance of the DoctorsRepository.
+  DoctorsRepository createDoctorRepository() {
+    final LocalDoctorsDataSource local = LocalDoctorsDataSource();
+    final RemoteDoctorsDataSource remote = RemoteDoctorsDataSource();
 
-// School Repository dependency injection
-SchoolsRepository createSchoolRepository() {
-  final LocalSchoolsDataSource local = LocalSchoolsDataSource();
-  final RemoteSchoolsDataSource remote = RemoteSchoolsDataSource();
+    final DoctorsRepositoryImpl repository =
+        DoctorsRepositoryImpl(local: local, remote: remote);
+    return repository;
+  }
 
-  final SchoolsRepositoryImpl repository =
-      SchoolsRepositoryImpl(local: local, remote: remote);
-  return repository;
-}
+  /// Creates an instance of the PatientsRepository.
+  PatientsRepository createPatientRepository() {
+    final LocalPatientsDataSource local = LocalPatientsDataSource();
+    final RemotePatientsDataSource remote = RemotePatientsDataSource();
 
-// Screening Repository dependency injection
-ScreeningsRepository createScreeningRepository() {
-  final LocalScreeningsDataSource local = LocalScreeningsDataSource();
-  final RemoteScreeningsDataSource remote = RemoteScreeningsDataSource();
+    final PatientsRepositoryImpl repository =
+        PatientsRepositoryImpl(local: local, remote: remote);
+    return repository;
+  }
 
-  final ScreeningsRepositoryImpl repository =
-      ScreeningsRepositoryImpl(local: local, remote: remote);
-  return repository;
-}
+  /// Creates an instance of the RemarksRepository.
+  RemarksRepository createRemarksRepository() {
+    final LocalRemarksDataSource local = LocalRemarksDataSource();
+    final RemoteRemarksDataSource remote = RemoteRemarksDataSource();
 
-// User Repository dependency injection
-UserRepository createUserRepository() {
-  final LocalUserDataSource local = LocalUserDataSource();
-  final RemoteUserDataSource remote = RemoteUserDataSource();
+    final RemarksRepositoryImpl repository =
+        RemarksRepositoryImpl(local: local, remote: remote);
+    return repository;
+  }
 
-  final UserRepositoryImpl repository =
-      UserRepositoryImpl(local: local, remote: remote);
-  return repository;
-}
+  /// Creates an instance of the SchoolsRepository.
+  SchoolsRepository createSchoolRepository() {
+    final LocalSchoolsDataSource local = LocalSchoolsDataSource();
+    final RemoteSchoolsDataSource remote = RemoteSchoolsDataSource();
 
-// Application Repository dependency injection
-ApplicationRepository createApplicationRepository() {
-  final ApplicationDataSource application = ApplicationDataSource();
+    final SchoolsRepositoryImpl repository =
+        SchoolsRepositoryImpl(local: local, remote: remote);
+    return repository;
+  }
 
-  final ApplicationRepositoryImpl repository =
-      ApplicationRepositoryImpl(application: application);
-  return repository;
-}
+  /// Creates an instance of the ScreeningsRepository.
+  ScreeningsRepository createScreeningRepository() {
+    final LocalScreeningsDataSource local = LocalScreeningsDataSource();
+    final RemoteScreeningsDataSource remote = RemoteScreeningsDataSource();
 
-SyncRepository createSyncRepository() {
-  final SyncDataSource sync = SyncDataSource();
+    final ScreeningsRepositoryImpl repository =
+        ScreeningsRepositoryImpl(local: local, remote: remote);
+    return repository;
+  }
 
-  final SyncRepositoryImpl repository = SyncRepositoryImpl(sync: sync);
-  return repository;
+  /// Creates an instance of the UserRepository.
+  UserRepository createUserRepository() {
+    final LocalUserDataSource local = LocalUserDataSource();
+    final RemoteUserDataSource remote = RemoteUserDataSource();
+
+    final UserRepositoryImpl repository =
+        UserRepositoryImpl(local: local, remote: remote);
+    return repository;
+  }
+
+  /// Creates an instance of the ApplicationRepository.
+  ApplicationRepository createApplicationRepository() {
+    final ApplicationDataSource application = ApplicationDataSource();
+
+    final ApplicationRepositoryImpl repository =
+        ApplicationRepositoryImpl(application: application);
+    return repository;
+  }
+
+  /// Creates an instance of the SyncRepository.
+  SyncRepository createSyncRepository() {
+    final SyncDataSource sync = SyncDataSource();
+
+    final SyncRepositoryImpl repository = SyncRepositoryImpl(sync: sync);
+    return repository;
+  }
 }

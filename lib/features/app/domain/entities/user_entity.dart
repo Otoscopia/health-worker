@@ -2,26 +2,49 @@ import 'package:appwrite/models.dart';
 
 import 'package:health_worker/features/app/app.dart';
 
+/// Represents a user entity that includes information about an application user,
+/// such as their name, email, phone number, role, and work address.
+///
+/// This class is used to model user-related data within the application.
+///
+/// Example usage:
+/// ```dart
+/// //* Create an instance of UserEntity.
+/// final user = UserEntity(
+///   id: 'user_id',
+///   name: 'John Doe',
+///   email: 'john.doe@example.com',
+///   phone: '123-456-7890',
+///   role: 'doctor',
+///   workAddress: '123 Main Street',
+/// );
+///
+/// //* Create an instance of UserEntity from a Document.
+/// final userFromDocument = UserEntity.fromDocument(document);
+///
+/// //* Create an instance of UserEntity from a DoctorModel.
+/// final userFromDoctor = UserEntity.fromDoctor(doctorModel);
+/// ```
 class UserEntity {
-  // user id
+  /// The unique identifier for the user.
   final String id;
 
-  // user name
+  /// The name of the user.
   final String name;
 
-  // user email
+  /// The email address of the user.
   final String email;
 
-  // user phone number
+  /// The phone number of the user.
   final String phone;
 
-  // user role
+  /// The role or designation of the user (e.g., doctor, nurse).
   final String role;
 
-  // user work address
+  /// The work address of the user.
   final String workAddress;
 
-  // user constructor with required parameters
+  /// Constructor for the UserEntity class.
   UserEntity({
     required this.id,
     required this.name,
@@ -31,7 +54,10 @@ class UserEntity {
     required this.workAddress,
   });
 
-  // user factory constructor from document
+  /// Factory method to create an instance of UserEntity from a Document.
+  ///
+  /// This method extracts data from the provided Document and constructs a
+  /// UserEntity instance.
   factory UserEntity.fromDocument(Document document) {
     return UserEntity(
       id: document.$id,
@@ -43,7 +69,10 @@ class UserEntity {
     );
   }
 
-  // user factory constructor from model
+  /// Factory method to create an instance of UserEntity from a DoctorModel.
+  ///
+  /// This method constructs a UserEntity instance using data from the
+  /// provided DoctorModel.
   factory UserEntity.fromDoctor(DoctorModel doctor) {
     return UserEntity(
       id: doctor.id,

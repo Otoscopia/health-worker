@@ -25,12 +25,12 @@ class ScreeningInformation extends ConsumerWidget {
       future: getImages(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return ErrorScreen(errorStatus: snapshot.error);
+          return ErrorPage(errorStatus: snapshot.error);
         } else if (snapshot.hasData) {
           return Information(name: name, screening: screening);
         }
 
-        return const LoadingAnimation();
+        return const LoadingPage();
       },
     ));
   }
