@@ -3,9 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:health_worker/core/core.dart';
 
-class ErrorScreen extends ConsumerWidget {
+class ErrorPage extends ConsumerWidget {
   final Object? errorStatus;
-  const ErrorScreen({super.key, required this.errorStatus});
+  const ErrorPage({super.key, required this.errorStatus});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

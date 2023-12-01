@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:health_worker/config/config.dart';
 import 'package:health_worker/core/core.dart';
 
-class LoadingAnimation extends ConsumerWidget {
-  const LoadingAnimation({super.key});
+class LoadingPage extends ConsumerWidget {
+  const LoadingPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
