@@ -8,11 +8,12 @@ const String pageTitle = 'Otoscopia';
 const String dashboardText = 'Dashboards';
 const String patientText = 'Patients';
 const String nurseText = 'Nurses';
+const String doctorsText = 'Doctors';
 const String schoolsText = 'Schools';
 
 const String searchPatientText = "Search For Someone";
 
-List<NavigationPaneItem> dashboard = [
+List<NavigationPaneItem> navigationItems = [
   PaneItem(
     icon: const Icon(FluentIcons.view_dashboard),
     title: const Text(dashboardText),
@@ -26,17 +27,17 @@ List<NavigationPaneItem> dashboard = [
   ),
   PaneItem(
     icon: const Icon(FluentIcons.e_discovery),
-    title: const Text("Schools"),
+    title: const Text(schoolsText),
     body: const Schools(),
   ),
   PaneItem(
     icon: const Icon(Ionicons.git_network_outline),
-    title: const Text("Doctors"),
+    title: const Text(doctorsText),
     body: const Doctors(),
   ),
 ];
 
-List<NavigationPaneItem> footerItems(WidgetRef ref) {
+List<NavigationPaneItem> navigationFooter(WidgetRef ref) {
   return [
     PaneItemSeparator(),
     PaneItem(
