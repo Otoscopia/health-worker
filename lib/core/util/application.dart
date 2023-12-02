@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
-class DashboardNavigation extends ConsumerWidget {
-  const DashboardNavigation({super.key});
+class Application extends ConsumerWidget {
+  const Application({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,12 +15,15 @@ class DashboardNavigation extends ConsumerWidget {
         actions: ApplicationHeader(),
       ),
       pane: NavigationPane(
+        toggleable: false,
         displayMode: PaneDisplayMode.compact,
         size: const NavigationPaneSize(openMaxWidth: 200),
-        selected: ref.watch(dashboardPageProvider),
-        onChanged: (index) => ref.read(dashboardPageProvider.notifier).setNav(index),
-        items: dashboard,
-        footerItems: footerItems(ref),
+        selected: ref.watch(applicationProvider),
+        onChanged: (index) {
+          ref.read(applicationProvider.notifier).setNav(index);
+        },
+        items: navigationItems,
+        footerItems: navigationFooter(ref),
       ),
     );
   }
