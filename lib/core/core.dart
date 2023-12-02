@@ -1,7 +1,7 @@
 // Constants Directory
 export 'constants/add_patient_constants.dart';
 export 'constants/constants.dart';
-export 'constants/dashboard_constants.dart';
+export 'constants/application_constants.dart';
 export 'constants/error_constants.dart';
 export 'constants/home_constants.dart';
 export 'constants/review_information_constants.dart';
@@ -16,13 +16,14 @@ export 'models/env_model.dart';
 export 'provider/network_provider.dart';
 
 // Util Directory
+export 'util/on_boarding.dart';
+export 'util/application.dart';
 export 'util/dependency_injection.dart';
 export 'util/encryption_service.dart';
+export 'util/repositories_injection.dart';
 
 // Screens Directory
-export 'screens/error.dart';
-export 'screens/loading.dart';
-export 'screens/navigation.dart';
+export 'util/navigation.dart';
 
 // Widgets Directory
 export 'widgets/application_container.dart';
