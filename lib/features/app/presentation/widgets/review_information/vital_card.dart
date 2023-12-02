@@ -20,7 +20,7 @@ class VitalCard extends ConsumerWidget {
           const SizedBox(width: 8),
           Column(
             children: [
-              Text(vitals[index]).bold(),
+              Text(vitals[index]),
               Text(amount).bold(),
             ],
           )
