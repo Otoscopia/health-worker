@@ -2,7 +2,7 @@ export 'add_patient_provider.dart';
 export 'add_screening_provider.dart';
 export 'application_provider.dart';
 export 'future_provider.dart';
-export 'tab_provider.dart';
+export 'home_tab_provider.dart';
 
 export 'future_providers/future_assignment_provider.dart';
 export 'future_providers/future_doctor_provider.dart';
