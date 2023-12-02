@@ -43,4 +43,6 @@ class TableEntity {
       school: entity.school,
     );
   }
+
+  factory TableEntity.empty() => TableEntity(patientId: "", name: "", age: "", gender: "", status: "", doctor: "", school: "");
 }
