@@ -27,7 +27,8 @@ class Schools extends ConsumerWidget {
         color: transparent,
         child: PaginatedDataTable2(
           showCheckboxColumn: false,
-          border: TableBorder.all(color: color),
+          border: TableBorder.all(color: transparent),
+          dividerThickness: 0,
           headingRowColor: m.MaterialStateProperty.resolveWith((states) => transparent),
           renderEmptyRowsInTheEnd: false,
           minWidth: 1000,

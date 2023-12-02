@@ -24,7 +24,8 @@ class Doctors extends ConsumerWidget {
         color: transparent,
         child: PaginatedDataTable2(
           showCheckboxColumn: false,
-          border: TableBorder.all(color: FluentTheme.of(context).cardColor),
+          border: TableBorder.all(color: transparent),
+          dividerThickness: 0,
           renderEmptyRowsInTheEnd: false,
           headingRowColor:
               m.MaterialStateProperty.resolveWith((states) => transparent),
