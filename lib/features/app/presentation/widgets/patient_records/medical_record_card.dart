@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:styled_widget/styled_widget.dart';
 
+import 'package:health_worker/config/config.dart';
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
@@ -12,22 +13,28 @@ class ScreeningRecord extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var icons = {
-          'Initial': Ionicons.medical_outline,
-          'Medical': Ionicons.warning_sharp,
-          'Pending': Ionicons.time_outline,
-          'Verified': Ionicons.checkmark_circle_outline,
+    IoniconsData icons = {
+          'Medical Attention': Ionicons.warning_sharp,
+          'Pending Diagnosis': Ionicons.time_outline,
+          'Final Diagnosis': Ionicons.checkmark_circle,
         }[screening.status] ??
         Ionicons.warning_sharp;
 
-    Icon icon = Icon(icons).iconSize(32).iconColor(Colors.red.light);
+    Color color = {
+          'Medical Attention': Colors.red.darker,
+          'Pending Diagnosis': Colors.orange,
+          'Final Diagnosis': primary,
+        }[screening.status] ??
+        Colors.red;
+
+    Icon icon = Icon(icons).iconSize(32).iconColor(color);
 
     return Card(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          icon,
+          Tooltip(message: screening.status, child: icon),
           mediumWidth,
           Expanded(
             child: Column(
