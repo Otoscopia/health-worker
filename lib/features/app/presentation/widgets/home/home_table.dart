@@ -30,55 +30,67 @@ class HomeTable extends ConsumerWidget {
       }
     });
 
-    return m.Theme(
-      data: m.ThemeData(
-        brightness: FluentTheme.of(context).brightness,
-        cardColor: color,
-      ),
-      child: m.Material(
-        color: transparent,
-        child: PaginatedDataTable2(
-          showCheckboxColumn: false,
-          border: TableBorder.all(color: color),
-          renderEmptyRowsInTheEnd: false,
-          headingRowColor:
-              m.MaterialStateProperty.resolveWith((states) => transparent),
-          minWidth: 1200,
-          rowsPerPage: 20,
-          sortArrowAnimationDuration: const Duration(milliseconds: 0),
-          columns: const [
-            DataColumn2(
-              label: Text(tableColumnName),
-              size: ColumnSize.M,
+    return Stack(children: [
+      m.Theme(
+        data: m.ThemeData(
+          brightness: FluentTheme.of(context).brightness,
+          cardColor: color,
+        ),
+        child: m.Material(
+          color: transparent,
+          child: PaginatedDataTable2(
+            showCheckboxColumn: false,
+            border: TableBorder.all(color: transparent),
+            dividerThickness: 0,
+            renderEmptyRowsInTheEnd: false,
+            headingRowColor:
+                m.MaterialStateProperty.resolveWith((states) => transparent),
+            minWidth: 1200,
+            rowsPerPage: 20,
+            sortArrowAnimationDuration: const Duration(milliseconds: 0),
+            columns: const [
+              DataColumn2(
+                label: Text(tableColumnName),
+                size: ColumnSize.M,
+              ),
+              DataColumn2(
+                label: Text(tableColumnAge),
+                fixedWidth: 90,
+                numeric: true,
+              ),
+              DataColumn2(
+                label: Text(tableColumnGender),
+                fixedWidth: 105,
+              ),
+              DataColumn2(
+                label: Text(tableColumnStatus),
+                size: ColumnSize.S,
+              ),
+              DataColumn2(
+                label: Text(tableColumnDoctor),
+                size: ColumnSize.M,
+              ),
+              DataColumn2(
+                label: Text(tableColumnSchool),
+                size: ColumnSize.M,
+              ),
+            ],
+            source: source,
+            empty: const Center(
+              child: TextSubtitle(noRecord),
             ),
-            DataColumn2(
-              label: Text(tableColumnAge),
-              size: ColumnSize.S,
-            ),
-            DataColumn2(
-              label: Text(tableColumnGender),
-              size: ColumnSize.S,
-            ),
-            DataColumn2(
-              label: Text(tableColumnStatus),
-              size: ColumnSize.S,
-            ),
-            DataColumn2(
-              label: Text(tableColumnDoctor),
-              size: ColumnSize.M,
-            ),
-            DataColumn2(
-              label: Text(tableColumnSchool),
-              size: ColumnSize.M,
-            ),
-          ],
-          source: source,
-          empty: const Center(
-            child: TextSubtitle(noRecord),
           ),
         ),
       ),
-    );
+      FloatingActionButton(
+        icon: FluentIcons.add,
+        tooltip: homeTooltip,
+        onPressed: () => Navigator.push(
+          context,
+          FluentPageRoute(builder: (context) => const AddPatient()),
+        ),
+      ),
+    ]);
   }
 }
 
