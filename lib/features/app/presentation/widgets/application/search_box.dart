@@ -22,6 +22,7 @@ class SearchBox extends ConsumerWidget {
 
     return SizedBox(
       width: 450,
+      height: 32,
       child: AutoSuggestBox(
         placeholder: searchPatientText,
         items: items,
