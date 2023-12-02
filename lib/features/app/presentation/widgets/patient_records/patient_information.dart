@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:styled_widget/styled_widget.dart';
@@ -23,27 +23,25 @@ class PatientSummary extends ConsumerWidget {
     final int age = date.year - birthdate.year;
 
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListTile(
-          title: Text(patient.name).bold(),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(width: double.infinity),
-              CustomRichText(
-                  title: birthdayTitle,
-                  value: DateFormat("MMM. dd, y").format(birthdate)),
-              CustomRichText(title: ageTitle, value: age.toString()),
-              CustomRichText(title: genderTitle, value: patient.gender),
-              CustomRichText(title: schoolTitle, value: school),
-              CustomRichText(
-                  title: guardianTitle, value: patient.guardiansPhone),
-              CustomRichText(
-                  title: contactNumberTitle, value: patient.guardiansPhone),
-              mediumHeight,
-            ],
-          ),
+      padding: const EdgeInsets.all(8),
+      child: ListTile(
+        title: Text(patient.name).bold(),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(width: double.infinity),
+            CustomRichText(
+                title: birthdayTitle,
+                value: DateFormat("MMM. dd, y").format(birthdate)),
+            CustomRichText(title: ageTitle, value: age.toString()),
+            CustomRichText(title: genderTitle, value: patient.gender),
+            CustomRichText(title: schoolTitle, value: school),
+            CustomRichText(
+                title: guardianTitle, value: patient.guardiansPhone),
+            CustomRichText(
+                title: contactNumberTitle, value: patient.guardiansPhone),
+            mediumHeight,
+          ],
         ),
       ),
     );
