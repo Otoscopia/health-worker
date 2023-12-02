@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:styled_widget/styled_widget.dart';
 
+import 'package:health_worker/config/config.dart';
 import 'package:health_worker/core/core.dart';
 import 'package:health_worker/features/features.dart';
 
@@ -13,9 +14,12 @@ class InformationContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    DateFormat dateFormat = DateFormat("MMM. dd, y hh:mm  ");
+    String date = dateFormat.format(DateTime.parse(record.createdAt));
+
     return Row(
       children: [
-        UploadCard(title: "Uploaded Date", subtitle: DateFormat("MMM. dd, y hh:mm  ").format(DateTime.parse(record.createdAt))),
+        UploadCard(title: "Uploaded Date", subtitle: date),
         VitalCard(index: 0, amount: "${record.weight} kg"),
         VitalCard(index: 1, amount: "${record.height} cm"),
         VitalCard(index: 2, amount: "${record.temperature} °C"),
@@ -35,9 +39,12 @@ class UploadCard extends ConsumerWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Ionicons.cloud).iconSize(32).iconColor(Colors.red.light),
-          const SizedBox(width: 8),
-          CustomRichText(title: title, value: subtitle)
+          const Icon(Ionicons.cloud).iconColor(secondary),
+          mediumWidth,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [mediumHeight, Text(title), Text(subtitle).bold()],
+          ),
         ],
       ),
     );
